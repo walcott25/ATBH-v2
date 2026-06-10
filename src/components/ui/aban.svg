@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg id="Aban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 892.37 892.37">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke-width: 90px;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g>
+    <polygon class="cls-1" points="64.35 191.63 318.9 446.18 64.35 700.74 191.63 828.02 446.18 573.46 700.74 828.02 828.02 700.74 573.46 446.18 828.02 191.63 700.74 64.35 446.18 318.9 191.63 64.35 64.35 191.63"/>
+    <rect class="cls-2" x="19.35" y="19.35" width="90" height="90" transform="translate(-26.65 64.35) rotate(-45)"/>
+    <rect class="cls-2" x="783.02" y="783.02" width="90" height="90" transform="translate(-342.98 828.02) rotate(-45)"/>
+    <rect class="cls-2" x="783.02" y="19.35" width="90" height="90" transform="translate(197.02 604.35) rotate(-45)"/>
+    <rect class="cls-2" x="19.35" y="783.02" width="90" height="90" transform="translate(-566.65 288.02) rotate(-45)"/>
+  </g>
+</svg>

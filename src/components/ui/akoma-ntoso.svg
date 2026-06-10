@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600">
+  <defs>
+    <style>
+      .a {
+        fill: #deddd4;
+      }
+
+      .b {
+        font-size: 26px;
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .c {
+        letter-spacing: -0.03711em;
+      }
+
+      .d {
+        letter-spacing: -0.01807em;
+      }
+
+      .e {
+        fill: #1d1d1b;
+      }
+    </style>
+  </defs>
+  <rect class="a" width="480" height="600" rx="60"/>
+  <g>
+    <text class="b" transform="translate(221.92832 471.67135)">14.<tspan x="-80.15186" y="31.2002">AKOM</tspan><tspan class="c" x="-0.71729" y="31.2002">A</tspan><tspan x="17.09424" y="31.2002" xml:space="preserve"> N</tspan><tspan class="d" x="43.09424" y="31.2002">T</tspan><tspan x="58.50635" y="31.2002">OSO</tspan></text>
+    <g>
+      <rect class="e" x="218.17261" y="62.07118" width="43.6552" height="355.85742" transform="translate(-99.41111 240.00023) rotate(-45.00002)"/>
+      <rect class="e" x="62.07108" y="218.17261" width="355.85741" height="43.65518" transform="translate(-99.41146 240.00002) rotate(-45.00002)"/>
+      <circle class="e" cx="240.00021" cy="239.99989" r="93.92698"/>
+      <path class="e" d="M281.62489,96.412C318.30563,59.73128,362.342,44.29642,399.02283,80.97717s21.24585,80.71707-15.43491,117.39784" transform="translate(0)"/>
+      <path class="e" d="M198.37517,383.58789c-36.68076,36.68078-80.71706,52.11575-117.39784,15.435s-21.24594-80.7172,15.43481-117.398" transform="translate(0)"/>
+      <path class="e" d="M96.41194,198.37539C59.73116,161.69464,44.29648,117.658,80.97723,80.97727s80.71689-21.24566,117.39766,15.43509" transform="translate(0)"/>
+      <path class="e" d="M383.58777,281.6251c36.68078,36.68074,52.1159,80.71688,15.43518,117.39766s-80.71735,21.24613-117.39812-15.43463" transform="translate(0)"/>
+    </g>
+  </g>
+</svg>

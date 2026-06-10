@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600">
+  <title>Adinkrahene</title>
+  <defs>
+    <style>
+      .a {
+        fill: #deddd4;
+      }
+
+      .b {
+        font-size: 26px;
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .c {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 30px;
+      }
+    </style>
+  </defs>
+  <rect class="a" width="480" height="600" rx="60"/>
+  <g>
+    <text class="b" transform="translate(229.1583 471.67135)">4.<tspan x="-85.21729" y="31.2002">ADINKRAHENE</tspan></text>
+    <g>
+      <circle class="c" cx="240" cy="240" r="45"/>
+      <circle class="c" cx="240" cy="240" r="105"/>
+      <circle class="c" cx="240" cy="240" r="165"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+node_modules/
+build/
+dist/
+dist - Copy/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+donations.db*
+
+.vercel
+
+# Large media files
+*.mp4
+*.mp3
+*.mov
+*.avi
+*.mkv
+*.webm
+*.exe
+*.apk
+*.dex
+*.class
