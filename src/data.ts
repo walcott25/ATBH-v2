@@ -13,6 +13,10 @@ export interface Attraction {
   rating?: number;
   /** URL to an equirectangular (2:1) panorama image for the 360° virtual tour */
   panorama?: string;
+  email?: string;
+  phone?: string;
+  bookingUrl?: string;
+  website?: string;
 }
 
 export const ATTRACTIONS: Attraction[] = [
@@ -106,7 +110,7 @@ export const ATTRACTIONS: Attraction[] = [
     id: 'santa-barbara',
     name: 'Santa Barbara Catholic Church',
     description: 'The first engineered catholic church ever built in Asuogyaman during the construction of the Akosombo dam with great histories.',
-    image: '/Images/santa barbara catholic church.png',
+    image: '/Images/santa barbara catholic church.jpg',
     category: 'Engineering',
     coordinates: [6.3500, 0.0500],
     rating: 4.8
@@ -220,6 +224,10 @@ export interface Business {
   coordinates?: [number, number];
   rating?: number;
   contact?: string;
+  email?: string;
+  phone?: string;
+  bookingUrl?: string;
+  website?: string;
   location?: string;
 }
 
@@ -233,6 +241,10 @@ export interface Event {
   rating?: number;
   date: string;
   duration: string;
+  email?: string;
+  phone?: string;
+  bookingUrl?: string;
+  website?: string;
 }
 
 export const DINING: Dining[] = [
@@ -266,7 +278,7 @@ export const DINING: Dining[] = [
     id: 'Adomi Bridge Gardens',
     name: 'Adomi Bridge Gardens',
     description: 'Casual restaurant with views of the Adomi Bridge and Volta River.',
-    image: '/Images/grill1.jpg',
+    image: '/Images/jollof1.jpg',
     category: 'Continental',
     coordinates: [6.2400, 0.0900],
     rating: 4.6,
@@ -700,7 +712,7 @@ export const BUSINESS: Business[] = [
     id: 'volta-river-authority',
     name: 'Volta River Authority',
     description: 'The state-owned agency responsible for the generation and transmission of electricity from the Akosombo Dam, a cornerstone of Ghana\'s energy sector.',
-    image: '/Images/VRA.png',
+    image: '/Images/VRA.jpg',
     category: 'Services',
     coordinates: [6.3005, 0.0597],
     rating: 4.7,
@@ -733,7 +745,7 @@ export const BUSINESS: Business[] = [
     id: 'goodroll-africa',
     name: 'GoodRoll Africa Ltd',
     description: 'An innovative agribusiness company focused on producing high-quality cassava-based products for local and international markets.',
-    image: '/Images/good roll.png',
+    image: '/Images/good roll.jpg',
     category: 'Agriculture',
     coordinates: [6.2400, 0.0900],
     rating: 4.5,
@@ -744,7 +756,7 @@ export const BUSINESS: Business[] = [
     id: 'tropo-farms',
     name: 'Tropo Farms Ltd',
     description: 'A leading aquaculture farm specialising in tilapia fish farming on Lake Volta, supplying fresh fish to markets across Ghana.',
-    image: '/Images/tropo.png',
+    image: '/Images/tropo.jpg',
     category: 'Agriculture',
     coordinates: [6.3500, 0.0500],
     rating: 4.6,
@@ -755,7 +767,7 @@ export const BUSINESS: Business[] = [
     id: 'west-africa-fish',
     name: 'West Africa Fish Ltd',
     description: 'A major fish processing and export company based on the Volta Lake, providing premium fish products to regional and international markets.',
-    image: '/Images/west.png',
+    image: '/Images/west.jpg',
     category: 'Agriculture',
     coordinates: [6.2500, 0.0800],
     rating: 4.5,
@@ -824,7 +836,7 @@ export const EVENTS: Event[] = [
     id: 'ampem-educamp',
     name: 'Ampem Educamp',
     description: 'An educational camp programme designed to mentor and empower young students through skills training, career guidance, and leadership development.',
-    image: '/Images/educamp.png',
+    image: '/Images/educamp.jpg',
     category: 'Cultural',
     coordinates: [6.2400, 0.0900],
     rating: 4.7,
@@ -846,7 +858,7 @@ export const EVENTS: Event[] = [
     id: 'peace-day',
     name: 'International Peace Day',
     description: 'A global observance promoting peace and unity, marked by community dialogues, cultural performances, and activities that foster harmony and conflict resolution.',
-    image: '/Images/peace.png',
+    image: '/Images/peace.jpg',
     category: 'National',
     coordinates: [6.2400, 0.0900],
     rating: 4.5,
@@ -912,7 +924,7 @@ export const EVENTS: Event[] = [
     id: 'farmers-day',
     name: 'Farmers Day Celebration',
     description: 'A national honour to recognise and celebrate the contributions of farmers and agricultural workers to food security and economic development.',
-    image: '/Images/farmers day.png',
+    image: '/Images/farmers day.jpg',
     category: 'Harvest',
     coordinates: [6.2400, 0.0900],
     rating: 4.5,

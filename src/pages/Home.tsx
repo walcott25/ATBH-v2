@@ -343,18 +343,17 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
             {/* Image side */}
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: easeOut }}
               className="h-full"
             >
-              <div className="relative overflow-hidden rounded-2xl h-full min-h-[320px]">
+              <div className="relative overflow-hidden rounded-2xl h-full min-h-[280px] md:min-h-[320px]">
                 <img
                   src="/Images/volta-river-landscape.jpg"
                   alt="Serene Volta River landscape"
-                  className="absolute inset-0 w-full h-full object-cover block max-w-none"
-                  style={{ height: '100%' }}
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
@@ -363,20 +362,18 @@ export default function Home() {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden">
                   <div className="absolute -inset-full top-0 -left-full w-full h-full group-hover:left-full transition-all duration-1000" style={{ background: 'linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.06) 45%, transparent 55%)' }} />
                 </div>
-                {/* Floating stat card — 3D world-class */}
+                {/* Floating stat card — world-class */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20, rotateX: 15 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                  whileHover={{ scale: 1.03, rotateY: -3, rotateX: 3 }}
-                  className="absolute bottom-4 right-4 md:bottom-6 md:right-6 rounded-xl p-4 md:p-5 shadow-2xl shadow-black/30 cursor-default"
+                  className="absolute bottom-3 right-3 md:bottom-6 md:right-6 rounded-xl p-3 md:p-5 shadow-2xl shadow-black/30 cursor-default will-change-transform"
                   style={{
                     background: 'linear-gradient(135deg, rgba(20,20,20,0.85), rgba(30,30,30,0.75))',
-                    backdropFilter: 'blur(24px)',
-                    WebkitBackdropFilter: 'blur(24px)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
                     border: '1px solid rgba(255,255,255,0.08)',
-                    perspective: '800px',
                     boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3), 0 10px 24px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
                   }}
                 >
@@ -393,8 +390,8 @@ export default function Home() {
 
             {/* Text side */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: easeOut, delay: 0.1 }}
               className="flex flex-col justify-center space-y-6"
@@ -440,7 +437,7 @@ export default function Home() {
                 to="/attractions"
                 className="group inline-flex items-center gap-2 text-xs font-medium text-accent hover:text-accent/80 transition-colors pt-1"
               >
-                Explore the region <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                Explore Asuogyaman <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </motion.div>
           </div>

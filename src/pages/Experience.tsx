@@ -117,7 +117,7 @@ export default function Experience() {
             <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-6 py-3 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
               Start Exploring <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
-            <a href="/experience" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm">
+            <a href="#explore" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm">
               <Compass className="w-4 h-4" /> All Activities
             </a>
           </motion.div>
@@ -200,7 +200,7 @@ export default function Experience() {
                   return (
                     <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.4, delay: i * 0.03 }}>
-                      <Link to="/attractions" className="group block h-full">
+                      <div className="group block h-full">
                         <GlassCard hover="glow" className="h-full">
                           <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '66%' }}>
                             <img src={item.image} alt={item.name}
@@ -234,7 +234,7 @@ export default function Experience() {
                             </div>
                           </div>
                         </GlassCard>
-                      </Link>
+                      </div>
                     </motion.div>
                   )
                 })}
@@ -286,9 +286,9 @@ export default function Experience() {
               <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
                 Book an Experience <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
-              <a href="/attractions" className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-xl text-muted border border-border hover:text-fg hover:border-fg/30 transition-all duration-300">
+              <Link to="/attractions" className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-xl text-muted border border-border hover:text-fg hover:border-fg/30 transition-all duration-300">
                 Explore Attractions
-              </a>
+              </Link>
             </div>
           </RevealSection>
         </div>

@@ -44,7 +44,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const activeVideoUrl = '/Images/dodi vid.mp4';
+  const activeVideoUrl = '/video/dodi vid.mp4';
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();

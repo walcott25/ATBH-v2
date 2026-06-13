@@ -6,7 +6,7 @@ import AnimatedCounter from '../components/ui/animated-counter'
 import AnimatedSection from '../components/animations/animated-section'
 import RevealSection from '../components/animations/reveal-section'
 import {
-  Search, X, ArrowRight, Sparkles, MapPin, Phone, Mail,
+  Search, X, ArrowRight, Sparkles, MapPin, Phone, Mail, ExternalLink,
   GraduationCap, BookOpen, ChevronDown, School
 } from 'lucide-react'
 
@@ -215,6 +215,12 @@ export default function Schools() {
                                     <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()}
                                       className="flex items-center gap-1 text-[10px] text-muted hover:text-accent transition-colors">
                                       <Mail className="w-3 h-3" />Email
+                                    </a>
+                                  )}
+                                  {item.website && (
+                                    <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                                      className="flex items-center gap-1 text-[10px] text-muted hover:text-accent transition-colors">
+                                      <ExternalLink className="w-3 h-3" />Website
                                     </a>
                                   )}
                                 </div>

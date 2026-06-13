@@ -1,12 +1,13 @@
 import { useState, useRef, useMemo } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { BUSINESS } from '../data'
+import { Link } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import AnimatedSection from '../components/animations/animated-section'
 import RevealSection from '../components/animations/reveal-section'
 import {
-  Star, Search, X, Compass, ArrowRight, Sparkles, MapPin, Phone,
+  Star, Search, X, Compass, ArrowRight, Sparkles, MapPin, Phone, Mail, ExternalLink,
   Building2, Store, Truck, Wrench, Factory, Hotel
 } from 'lucide-react'
 
@@ -190,10 +191,30 @@ export default function Business() {
                                 <MapPin className="w-3 h-3 shrink-0" /><span>{item.location}</span>
                               </div>
                             )}
-                            {item.contact && (
+                            {item.phone && (
+                              <div className="flex items-center gap-1.5 text-[10px] text-muted">
+                                <Phone className="w-3 h-3 shrink-0" /><span>{item.phone}</span>
+                              </div>
+                            )}
+                            {item.contact && !item.phone && (
                               <div className="flex items-center gap-1.5 text-[10px] text-muted">
                                 <Phone className="w-3 h-3 shrink-0" /><span>{item.contact}</span>
                               </div>
+                            )}
+                            {item.email && (
+                              <a href={`mailto:${item.email}`} className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
+                                <Mail className="w-3 h-3 shrink-0" /><span>Email</span>
+                              </a>
+                            )}
+                            {item.website && (
+                              <a href={item.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
+                                <ExternalLink className="w-3 h-3 shrink-0" /><span>Website</span>
+                              </a>
+                            )}
+                            {item.bookingUrl && (
+                              <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[10px] text-accent hover:text-accent/80 transition-colors font-medium">
+                                <ExternalLink className="w-3 h-3 shrink-0" /><span>Book</span>
+                              </a>
                             )}
                             {item.rating && (
                               <div className="flex items-center gap-1.5 text-[10px]">
@@ -220,9 +241,9 @@ export default function Business() {
             <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Join our business community</h2>
             <p className="text-sm text-muted mb-8 leading-relaxed">Asuogyaman is open for business. Connect with local enterprises and discover opportunities in the Volta Region's fastest-growing district.</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
-              <a href="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
+              <Link to="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
                 Explore Opportunities <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+              </Link>
             </div>
           </RevealSection>
         </div>

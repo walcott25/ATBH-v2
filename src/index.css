@@ -73,6 +73,10 @@
   scrollbar-color: var(--color-border) transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply font-sans bg-bg text-fg antialiased;
   margin: 0;

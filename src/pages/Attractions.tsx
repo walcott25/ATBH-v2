@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { ATTRACTIONS } from '../data'
 import type { Attraction } from '../data'
+import { Link } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import SectionDivider from '../components/ui/section-divider'
@@ -15,6 +16,7 @@ import {
   ArrowRight, Sparkles, Landmark, Building2,
   ChevronDown, ChevronLeft,
   Grid3X3, Map as MapIcon,
+  Phone, Mail, ExternalLink,
   Quote, Navigation, Info, Sun, Clock
 } from 'lucide-react'
 
@@ -756,20 +758,20 @@ export default function Attractions() {
                 dining, stays, and cultural experiences that will leave you inspired.
               </p>
               <div className="flex items-center justify-center gap-3 flex-wrap">
-                <a
-                  href="/experience"
+                <Link
+                  to="/experience"
                   className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30"
                 >
                   Plan Your Visit
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </a>
-                <a
-                  href="/map"
+                </Link>
+                <Link
+                  to="/map"
                   className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-xl text-muted border border-border hover:text-fg hover:border-fg/30 transition-all duration-300"
                 >
                   <MapIcon className="w-4 h-4" />
                   View Map
-                </a>
+                </Link>
               </div>
             </RevealSection>
           </div>
@@ -926,6 +928,13 @@ function AttractionCard({ item, index, onClick }: { item: Attraction; index: num
             <p className="text-xs text-muted leading-relaxed line-clamp-2">
               {item.description}
             </p>
+            {(item.phone || item.email || item.bookingUrl) && (
+              <div className="flex items-center gap-2 pt-0.5">
+                {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
+                {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
+                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+              </div>
+            )}
             <div className="flex items-center justify-between pt-1">
               <span className={`text-[9px] font-semibold uppercase tracking-widest ${catColor}`}>
                 {item.category}
@@ -1278,6 +1287,51 @@ function AttractionDetailPanel({
                 ))}
               </div>
             </motion.div>
+
+            {/* Contact & Booking */}
+            {(attraction.phone || attraction.email || attraction.bookingUrl || attraction.website) && (
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.18 }}
+                className="mb-8"
+              >
+                <div className="flex items-center gap-5 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center ring-1 ring-brand-gold/20">
+                    <span className="text-brand-gold text-lg">📞</span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-serif text-white tracking-tight">Contact & Book</h2>
+                    <p className="text-white/30 text-[10px] uppercase tracking-[0.3em] font-bold mt-1">
+                      Get in touch or reserve your visit
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  {attraction.phone && (
+                    <a href={`tel:${attraction.phone}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all">
+                      <Phone className="w-4 h-4" />{attraction.phone}
+                    </a>
+                  )}
+                  {attraction.email && (
+                    <a href={`mailto:${attraction.email}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all">
+                      <Mail className="w-4 h-4" />Send Email
+                    </a>
+                  )}
+                  {attraction.website && (
+                    <a href={attraction.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all">
+                      <ExternalLink className="w-4 h-4" />Website
+                    </a>
+                  )}
+                  {attraction.bookingUrl && (
+                    <a href={attraction.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10">
+                      <ExternalLink className="w-4 h-4" />Book Now
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            )}
 
             {/* Map */}
             {attraction.coordinates && (

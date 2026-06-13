@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { EVENTS } from '../data'
 import type { Event } from '../data'
+import { Link } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import SectionDivider from '../components/ui/section-divider'
@@ -10,7 +11,8 @@ import RevealSection from '../components/animations/reveal-section'
 import {
   Star, MapPin, Search, X, SlidersHorizontal, Compass, Calendar,
   ArrowRight, Sparkles, Music, Church, Wheat, Palette, Flag,
-  ChevronDown, ChevronLeft, Clock, Navigation, Info, Sun, Quote
+  ChevronDown, ChevronLeft, Phone, Mail, ExternalLink,
+  Clock, Navigation, Info, Sun, Quote
 } from 'lucide-react'
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const
@@ -349,9 +351,9 @@ export default function Events() {
             <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Ready to join the celebration?</h2>
             <p className="text-sm text-muted mb-8 leading-relaxed">Plan your visit around one of Asuogyaman's vibrant festivals, cultural events, or community gatherings for an unforgettable experience.</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
-              <a href="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
+              <Link to="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
                 Plan Your Visit <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+              </Link>
             </div>
           </RevealSection>
         </div>
@@ -404,6 +406,13 @@ function EventCard({ item, index, onClick }: { item: Event; index: number; onCli
           <div className="p-4 md:p-5 space-y-2" style={{ transform: 'translateZ(20px)' }}>
             <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
+            {(item.phone || item.email || item.bookingUrl) && (
+              <div className="flex items-center gap-2 pt-0.5">
+                {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
+                {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
+                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+              </div>
+            )}
             <div className="flex items-center gap-2 text-[10px] text-muted pt-1">
               <Calendar className="w-3 h-3" /><span>{item.date}</span><span className="text-border">|</span><span>{item.duration}</span>
             </div>
@@ -509,6 +518,24 @@ function EventDetailPanel({ item, onClose, onNavigate }: { item: Event; onClose:
                 ))}
               </div>
             </motion.div>
+
+            {/* Contact & Booking */}
+            {(item.phone || item.email || item.bookingUrl || item.website) && (
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.18 }} className="mb-8">
+                <div className="flex items-center gap-5 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center ring-1 ring-brand-gold/20">
+                    <Calendar className="w-6 h-6 text-brand-gold" />
+                  </div>
+                  <div><h2 className="text-2xl font-serif text-white tracking-tight">Contact & Book</h2><p className="text-white/30 text-[10px] uppercase tracking-[0.3em] font-bold mt-1">Get in touch or register</p></div>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                  {item.phone && <a href={`tel:${item.phone}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><Phone className="w-4 h-4" />{item.phone}</a>}
+                  {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><Mail className="w-4 h-4" />Send Email</a>}
+                  {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><ExternalLink className="w-4 h-4" />Website</a>}
+                  {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10"><ExternalLink className="w-4 h-4" />Book Now</a>}
+                </div>
+              </motion.div>
+            )}
 
             {/* Map */}
             {item.coordinates && (

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useUser, SignInButton, UserButton } from '@clerk/react';
 import { motion, AnimatePresence } from 'motion/react';
-import Lenis from 'lenis';
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -26,22 +25,6 @@ export default function MainLayout() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
-      syncTouch: true,
-    });
-    function onFrame(time: number) { lenis.raf(time); requestAnimationFrame(onFrame); }
-    requestAnimationFrame(onFrame);
-    return () => lenis.destroy();
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);

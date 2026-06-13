@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { STAY } from '../data'
 import type { Stay } from '../data'
+import { Link } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import SectionDivider from '../components/ui/section-divider'
@@ -357,9 +358,9 @@ export default function StayPage() {
             <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Ready to book your stay?</h2>
             <p className="text-sm text-muted mb-8 leading-relaxed">From luxury lakeside resorts to charming budget guesthouses — find the perfect home base for your Asuogyaman adventure.</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
-              <a href="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
+              <Link to="/experience" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
                 Plan Your Stay <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+              </Link>
             </div>
           </RevealSection>
         </div>
@@ -414,6 +415,13 @@ function StayCard({ item, index, onClick }: { item: Stay; index: number; onClick
           <div className="p-4 md:p-5 space-y-2" style={{ transform: 'translateZ(20px)' }}>
             <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
+            {(item.phone || item.email || item.bookingUrl) && (
+              <div className="flex items-center gap-2 pt-0.5">
+                {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
+                {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
+                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+              </div>
+            )}
             <div className="flex items-center justify-between pt-1"><span className={`text-[9px] font-semibold uppercase tracking-widest ${catColor}`}>{item.category}</span>
               <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent/60 transition-colors"><ArrowRight className="w-3 h-3" />Explore</span></div>
           </div>
