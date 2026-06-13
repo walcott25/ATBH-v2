@@ -1,6 +1,9 @@
 <div align="center">
   <br/>
-  <img src="/Images/adomi-bridge-hero.jpg" alt="Adomi Bridge — Asuogyaman" width="800" height="auto" style="border-radius:12px;max-width:100%;" />
+  <picture>
+    <source media="(max-width: 768px)" srcset="og-image-mobile.jpg">
+    <img src="og-image.jpg" alt="Asuogyaman Tourism & Business Hub" width="800" height="auto" style="border-radius:12px;max-width:100%;" />
+  </picture>
   <br/>
   <br/>
   <h1>Asuogyaman Tourism & Business Hub</h1>
