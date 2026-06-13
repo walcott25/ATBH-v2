@@ -110,7 +110,7 @@ export const ATTRACTIONS: Attraction[] = [
     id: 'santa-barbara',
     name: 'Santa Barbara Catholic Church',
     description: 'The first engineered catholic church ever built in Asuogyaman during the construction of the Akosombo dam with great histories.',
-    image: '/Images/santa barbara catholic church.jpg',
+    image: '/Images/santa-barbara-church.jpg',
     category: 'Engineering',
     coordinates: [6.3500, 0.0500],
     rating: 4.8
