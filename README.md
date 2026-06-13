@@ -1,8 +1,8 @@
 <div align="center">
   <br/>
   <picture>
-    <source media="(max-width: 768px)" srcset="og-image-mobile.jpg">
-    <img src="og-image.jpg" alt="Asuogyaman Tourism & Business Hub" width="800" height="auto" style="border-radius:12px;max-width:100%;" />
+    <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/og-image-mobile.jpg">
+    <img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/og-image.jpg" alt="Asuogyaman Tourism & Business Hub" width="800" height="auto" style="border-radius:12px;max-width:100%;" />
   </picture>
   <br/>
   <br/>
