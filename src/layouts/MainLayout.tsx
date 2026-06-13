@@ -212,12 +212,18 @@ export default function MainLayout() {
                 {isLoaded && isSignedIn && isAdmin && (
                   <Link to="/admin" className="block py-2.5 text-sm text-muted hover:text-fg">Admin</Link>
                 )}
-                <div className="pt-2 border-t border-border mt-2">
+                <div className="pt-2 border-t border-border mt-2 space-y-1">
                   <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>
                   {isLoaded && !isSignedIn && (
                     <SignInButton mode="modal">
                       <button className="block py-2.5 text-sm text-muted">Sign In</button>
                     </SignInButton>
+                  )}
+                  {isLoaded && isSignedIn && (
+                    <div className="flex items-center gap-3 py-2.5">
+                      <UserButton />
+                      <span className="text-sm text-muted">{user?.fullName || user?.primaryEmailAddress?.emailAddress}</span>
+                    </div>
                   )}
                 </div>
               </div>

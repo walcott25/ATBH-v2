@@ -8,6 +8,8 @@ coverage/
 .env*
 !.env.example
 donations.db*
+donations.db-shm
+donations.db-wal
 
 .vercel
 
@@ -22,4 +24,22 @@ donations.db*
 *.apk
 *.dex
 *.class
-.vercel
+
+# IDE / editor directories
+.agent/
+.claude/
+.codebuddy/
+.codex/
+.continue/
+.cursor/
+.gemini/
+.idea/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
+.windsurf/
+
+# OS
+Thumbs.db

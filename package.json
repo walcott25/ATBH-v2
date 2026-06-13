@@ -1,8 +1,20 @@
 {
-  "name": "react-example",
+  "name": "asuogyaman-tourism-hub",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Explore the beauty, culture, and adventure of Asuogyaman District — your gateway to Ghana's Volta Region. Discover attractions, dining, events, and more.",
   "type": "module",
+  "keywords": ["tourism", "ghana", "asuogyaman", "volta-region", "travel", "adomi-bridge", "akosombo-dam", "atimpoku"],
+  "author": "Asuogyaman Tourism Board",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/walcott25/ATBH-v2.git"
+  },
+  "homepage": "https://atbh.vercel.app",
+  "bugs": {
+    "url": "https://github.com/walcott25/ATBH-v2/issues"
+  },
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "dev:proxy": "tsx server/index.ts",
