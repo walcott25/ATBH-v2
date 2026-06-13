@@ -101,7 +101,7 @@ function ContactCard({
       whileHover={{ scale: 1.02, x: 4 }}
       className={`flex items-start gap-4 p-5 rounded-2xl border transition-all duration-300 group cursor-pointer ${
         primary
-          ? 'bg-gradient-to-br from-brand-gold/[0.15] to-brand-gold/[0.08] border-brand-gold/20 hover:border-brand-gold/40 shadow-lg shadow-brand-gold/5'
+          ? 'bg-brand-gold/[0.12] border-brand-gold/20 hover:border-brand-gold/40 shadow-lg shadow-brand-gold/5'
           : 'bg-brand-dark/60 backdrop-blur-sm border-white/[0.08] hover:bg-white/[0.06] hover:border-white/20'
       }`}
     >
@@ -145,9 +145,9 @@ function ContactCard({
 function Divider() {
   return (
     <div className="flex items-center gap-3 my-16">
-      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <span className="flex-1 h-px bg-white/10" />
       <span className="w-2 h-2 bg-brand-gold/40 rounded-full" />
-      <span className="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <span className="flex-1 h-px bg-white/10" />
     </div>
   );
 }
@@ -237,16 +237,17 @@ export default function DetailPanel({
           <motion.img
             src={item.image}
             alt={item.name}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ y: heroParallax, scale: 1.1 }}
+            className="absolute inset-0 w-full h-full object-cover block max-w-none"
+            loading="lazy"
+            style={{ y: heroParallax, scale: 1.1, height: '100%' }}
           />
           <motion.div
             style={{ opacity: heroOpacity }}
-            className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/50 to-brand-dark/20"
+            className="absolute inset-0 bg-brand-dark/70"
           />
           <motion.div
             style={{ opacity: heroOpacity }}
-            className="absolute inset-0 bg-gradient-to-r from-brand-dark/70 via-transparent to-brand-dark/40"
+
           />
 
           {/* Animated organic glow */}
@@ -291,8 +292,7 @@ export default function DetailPanel({
 
           {/* Subtle static glow lines - static for performance */}
           <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] pointer-events-none opacity-30">
-            <div className="absolute top-1/2 left-1/2 w-[50%] h-[1px] bg-gradient-to-r from-transparent via-brand-gold/10 to-transparent -translate-x-1/2" />
-            <div className="absolute top-1/2 left-1/2 w-[35%] h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-1/2 rotate-45" />
+
           </div>
 
           {/* Back button */}
@@ -321,12 +321,11 @@ export default function DetailPanel({
           </motion.div>
 
           {/* Hero text */}
-          <div className="absolute bottom-0 left-0 right-0 z-20">
-            <div className="max-w-7xl mx-auto px-8 md:px-16 pb-12 md:pb-20">
+          <div className="absolute bottom-0 left-0 right-0 z-20">              <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16 pb-8 md:pb-12 lg:pb-20">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 <div className="flex flex-wrap items-center gap-4 mb-5">
                   <span className="text-brand-gold text-[10px] uppercase tracking-[0.35em] font-bold">
@@ -339,14 +338,14 @@ export default function DetailPanel({
                     </div>
                   )}
                 </div>
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white leading-[0.88] tracking-tighter max-w-4xl drop-shadow-2xl">
+                <h1 className="text-3xl md:text-5xl lg:text-7xl font-serif text-white leading-[0.88] tracking-tighter max-w-4xl drop-shadow-2xl">
                   {item.name}
                 </h1>
                 {type === 'school' && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
+                    transition={{ duration: 0.4, delay: 0.35 }}
                     className="flex items-center gap-2 mt-5 text-white/60 text-sm"
                   >
                     <MapPin className="w-4 h-4 text-brand-gold" />
@@ -358,26 +357,25 @@ export default function DetailPanel({
           </div>
 
           {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-dark to-transparent pointer-events-none z-10" />
+
         </div>
 
         {/* Body */}          <div className="relative z-20 -mt-16">
-            <div className="max-w-7xl mx-auto px-6 pb-12" style={{ minHeight: 'calc(100dvh - 70vh + 4rem)' }}>
+            <div className="max-w-7xl mx-auto px-4 md:px-6 pb-12" style={{ minHeight: 'calc(100dvh - 70vh + 4rem)' }}>
             {/* Description Card */}
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-              className="relative bg-gradient-to-b from-brand-dark/80 to-brand-dark/60 backdrop-blur-sm border border-white/[0.08] rounded-[2.5rem] p-8 md:p-12 mb-8 overflow-hidden shadow-2xl shadow-black/20"
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              className="relative bg-brand-dark/70 backdrop-blur-sm border border-white/[0.08] rounded-[1.5rem] md:rounded-[2.5rem] p-5 md:p-8 lg:p-12 mb-8 overflow-hidden shadow-2xl shadow-black/20"
             >
               {/* Gold accent line */}
-              <div className="absolute top-0 left-12 right-12 h-[1px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
+              <div className="absolute top-0 left-12 right-12 h-[1px] bg-brand-gold/30" />
               {/* Subtle glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/[0.04] rounded-full blur-[100px] pointer-events-none" />
 
-              <div className="flex items-start gap-6 mb-8">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-gold/5 flex items-center justify-center shrink-0 ring-1 ring-brand-gold/20">
+              <div className="flex items-start gap-6 mb-8">                  <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center shrink-0 ring-1 ring-brand-gold/20">
                   {type === 'school' ? <GraduationCap className="w-6 h-6 text-brand-gold" /> : <Utensils className="w-6 h-6 text-brand-gold" />}
                 </div>
                 <div>
@@ -403,11 +401,11 @@ export default function DetailPanel({
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.5 }}
                   className="mb-8"
                 >
                   <div className="flex items-center gap-5 mb-10">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-gold/5 flex items-center justify-center ring-1 ring-brand-gold/20">
+                    <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center ring-1 ring-brand-gold/20">
                       {type === 'school' ? <GraduationCap className="w-6 h-6 text-brand-gold" /> : type === 'event' ? <Calendar className="w-6 h-6 text-brand-gold" /> : <Star className="w-6 h-6 text-brand-gold" />}
                     </div>
                     <div>
@@ -456,10 +454,10 @@ export default function DetailPanel({
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                   className="lg:col-span-3 h-[400px] rounded-[2rem] overflow-hidden border border-white/[0.08] shadow-2xl shadow-black/20 relative group"
                 >
-                  <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                   <MapContainer
                     center={item.coordinates}
                     zoom={15}
@@ -492,11 +490,11 @@ export default function DetailPanel({
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
                 className="lg:col-span-2 space-y-4"
               >
                 <div className="flex items-center gap-5 mb-8">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-gold/5 flex items-center justify-center ring-1 ring-brand-gold/20">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center ring-1 ring-brand-gold/20">
                     <Phone className="w-6 h-6 text-brand-gold" />
                   </div>
                   <div>
@@ -568,14 +566,14 @@ export default function DetailPanel({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.4 }}
               className="text-center"
             >
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onClose}
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-brand-dark/60 to-brand-dark/40 backdrop-blur-sm border border-white/[0.08] text-white/60 hover:text-white px-10 py-4 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all hover:bg-brand-dark/80 hover:border-white/20 shadow-xl shadow-black/10"
+                className="inline-flex items-center gap-3 bg-brand-dark/60 backdrop-blur-sm border border-white/[0.08] text-white/60 hover:text-white px-10 py-4 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold transition-all hover:bg-brand-dark/80 hover:border-white/20 shadow-xl shadow-black/10"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 Back to {type === 'stay' ? 'Accommodations' : type === 'school' ? 'Schools' : type === 'event' ? 'Events' : 'Dining'}

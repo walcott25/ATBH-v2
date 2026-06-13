@@ -1,14 +1,20 @@
-import { useState, useMemo } from 'react'
-import { motion } from 'motion/react'
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
+import { Link } from 'react-router-dom'
 import { EXPERIENCES } from '../data'
-import type { Experience } from '../data'
+import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
-import { useNavigate } from 'react-router-dom'
-import { Anchor, Compass, Mountain, Landmark, Utensils, Heart, Star, Clock, MapPin, ChevronRight, ArrowUpRight, Sparkles, Users, Ship } from 'lucide-react'
-import AdinkraBg from '../components/ui/adinkra-bg'
+import AnimatedSection from '../components/animations/animated-section'
+import RevealSection from '../components/animations/reveal-section'
+import {
+  ArrowRight, Sparkles, Ship, Compass, Mountain, Landmark,
+  Utensils, Heart, Star, Quote, Clock, Search, X
+} from 'lucide-react'
 
-const categoryIcons: Record<string, typeof Anchor> = {
-  'Water Adventures': Anchor,
+const easeOut = [0.25, 0.1, 0.25, 1] as const
+
+const categoryIcons: Record<string, typeof Ship> = {
+  'Water Adventures': Ship,
   'Cultural Tours': Compass,
   'Nature & Hiking': Mountain,
   'Heritage & History': Landmark,
@@ -16,384 +22,277 @@ const categoryIcons: Record<string, typeof Anchor> = {
   'Wellness & Relaxation': Heart,
 }
 
-const categoryDescriptions: Record<string, string> = {
-  'Water Adventures': 'Cruises, boat tours, and aquatic thrills on Lake Volta',
-  'Cultural Tours': 'Immersive journeys into Akwamu heritage and traditions',
-  'Nature & Hiking': 'Trails, forests, and wildlife encounters in the wild',
-  'Heritage & History': 'Landmarks, engineering marvels, and historical sites',
-  'Food & Dining': 'Culinary experiences from lake to table',
-  'Wellness & Relaxation': 'Spa days, resort escapes, and peaceful retreats',
+const categoryColors: Record<string, string> = {
+  'Water Adventures': 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+  'Cultural Tours': 'text-rose-400 bg-rose-500/10 border-rose-500/20',
+  'Nature & Hiking': 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+  'Heritage & History': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+  'Food & Dining': 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+  'Wellness & Relaxation': 'text-purple-400 bg-purple-500/10 border-purple-500/20',
 }
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const } },
+function FloatingOrbs() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[120px] animate-pulse-soft" />
+      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/3 rounded-full blur-[100px] animate-pulse-soft" style={{ animationDelay: '-2s' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/2 rounded-full blur-[150px] animate-pulse-soft" style={{ animationDelay: '-4s' }} />
+    </div>
+  )
 }
 
-const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+function DotGrid() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
+      <div className="w-full h-full" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+        backgroundSize: '32px 32px'
+      }} />
+    </div>
+  )
 }
 
-const categories = ['All', 'Water Adventures', 'Cultural Tours', 'Nature & Hiking', 'Heritage & History', 'Food & Dining', 'Wellness & Relaxation']
+const categories = ['All', ...Object.keys(categoryIcons)]
 
 export default function Experience() {
-  const navigate = useNavigate()
-  const [activeCategory, setActiveCategory] = useState<string>('All')
-  const filtered = useMemo(() =>
-    activeCategory === 'All' ? EXPERIENCES : EXPERIENCES.filter(e => e.category === activeCategory),
-  [activeCategory])
+  const [activeCategory, setActiveCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [reviewIndex, setReviewIndex] = useState(0)
 
-  const featured = useMemo(() =>
-    [...EXPERIENCES].sort((a, b) => (b.rating || 0) - (a.rating || 0))[0],
-  [])
+  const heroRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const heroImgY = useTransform(heroScroll, [0, 1], ['0%', '25%'])
+  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0])
+  const heroScale = useTransform(heroScroll, [0, 0.8], [1, 0.95])
+
+  const filtered = EXPERIENCES
+    .filter((e) => {
+      if (activeCategory !== 'All' && e.category !== activeCategory) return false
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase()
+        return e.name.toLowerCase().includes(q) || e.description.toLowerCase().includes(q)
+      }
+      return true
+    })
+
+  const reviews = [
+    { user: 'Kwame A.', text: 'The Dodi Princess cruise was the highlight of our trip. The lake is vast and beautiful, and the onboard experience was unforgettable.', rating: 5, location: 'Accra, Ghana' },
+    { user: 'Elena R.', text: 'The cultural village tour gave me a profound appreciation for Akwamu heritage. The chief\'s palace visit was awe-inspiring.', rating: 5, location: 'Madrid, Spain' },
+    { user: 'Sarah M.', text: 'Hiking through Akwamu Gorge with a local guide was an adventure I\'ll never forget. The views are breathtaking.', rating: 5, location: 'London, UK' },
+    { user: 'David C.', text: 'The luxury resort day pass was worth every cedi. Infinity pool overlooking the lake — pure bliss.', rating: 4, location: 'Singapore' },
+  ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* ========== SPLIT-SCREEN HERO ========== */}
-      <section className="relative overflow-hidden bg-white">
-        <div className="grid lg:grid-cols-2 min-h-screen">
-          {/* LEFT — Image panel */}
-          <motion.div
-            initial={{ clipPath: 'inset(0 0 0 100%)' }}
-            animate={{ clipPath: 'inset(0 0 0 0)' }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative h-[60vh] lg:h-auto overflow-hidden"
-          >
-            <motion.div
-              initial={{ scale: 1.15 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
-              className="absolute inset-0"
-            >
-              <img
-                src="/Images/dodi-princess.jpg"
-                alt="Experiences in Asuogyaman"
-                className="w-full h-full object-cover"
-                fetchPriority="high"
-                style={{ willChange: 'transform' }}
-              />
-            </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/30 to-brand-dark/10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/60 via-transparent to-transparent" />
-            <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,0.4)]" />
-            <div className="absolute bottom-0 left-0 p-10 lg:p-16 text-left">
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="w-10 h-[2px] bg-brand-gold" />
-                  <span className="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-gold">Curated Adventures</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-serif text-white leading-[0.95] tracking-tighter mb-4">
-                  Experiences<br />
-                  <span className="text-brand-gold">Collection</span>
-                </h3>
-                <p className="text-white/50 text-sm font-light max-w-md leading-relaxed">
-                  From cruising Lake Volta aboard the Dodi Princess to hiking the forest trails
-                  of Akwamu Gorge — every moment is designed to leave you with stories worth telling.
-                </p>
-              </motion.div>
-            </div>
+    <div className="min-h-screen bg-bg">
+      {/* HERO */}
+      <section ref={heroRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
+        <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
+          <img
+            src="/Images/hero-experience.jpg"
+            alt="Asuogyaman experiences"
+            className="absolute inset-0 w-full h-full object-cover block max-w-none"
+            style={{ height: '100%' }}
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/60 via-fg/40 to-fg/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" style={{ mixBlendMode: 'soft-light' }} />
+        </motion.div>
+        <FloatingOrbs />
+        <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 text-center px-5 max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium tracking-widest uppercase text-white/70 border border-white/10 bg-white/5 backdrop-blur-sm mb-6">
+              <Sparkles className="w-3 h-3" /> Curated Journey
+            </span>
           </motion.div>
-
-          {/* RIGHT — Content panel */}
-          <div className="relative flex items-center bg-white">
-            <div className="px-10 lg:px-20 py-20 max-w-xl">
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}>
-                <span className="text-brand-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-6 block">
-                  Explore Experiences
-                </span>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-[0.9] tracking-tighter text-brand-dark mb-8">
-                  {EXPERIENCES.length} Experiences
-                </h1>
-                <p className="text-brand-dark/50 text-base font-light leading-relaxed mb-12 max-w-md">
-                  From cruising the vast expanse of Lake Volta to hiking the forest trails of
-                  Akwamu Gorge — every experience is designed to leave you with stories worth telling.
-                </p>
-
-                <div className="flex flex-wrap gap-8 md:gap-12">
-                  {[
-                    { label: 'Activities', value: EXPERIENCES.length },
-                    { label: 'Categories', value: categories.length - 1 },
-                    { label: 'Top Rated', value: featured?.rating || 0 },
-                  ].map((stat) => (
-                    <div key={stat.label}>
-                      <div className="text-2xl md:text-3xl font-serif text-brand-gold tracking-tight">
-                        {typeof stat.value === 'number' ? (
-                          <>
-                            <AnimatedCounter value={stat.value} />
-                            {stat.label === 'Top Rated' && (
-                              <Star className="inline w-4 h-4 ml-1.5 text-brand-gold fill-brand-gold -mt-2" />
-                            )}
-                          </>
-                        ) : (
-                          stat.value
-                        )}
-                      </div>
-                      <div className="text-[9px] uppercase tracking-[0.3em] text-brand-dark/30 font-bold mt-1">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-cream/50 to-transparent z-10 pointer-events-none" />
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3, ease: easeOut }}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-sans text-white font-medium tracking-tight leading-none mb-6">
+            The Asuogyaman Experience
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
+            className="text-sm md:text-base text-white/60 max-w-xl mx-auto mb-10 leading-relaxed font-light">
+            From cruising Lake Volta to hiking the Akwamu Gorge — discover curated adventures that showcase the very best of the Volta Region.
+          </motion.p>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7, ease: easeOut }}
+            className="flex items-center justify-center gap-4 flex-wrap">
+            <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-6 py-3 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
+              Start Exploring <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+            <a href="/experience" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm">
+              <Compass className="w-4 h-4" /> All Activities
+            </a>
+          </motion.div>
+        </motion.div>
+        <motion.div style={{ opacity: heroOpacity }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity, ease: easeOut }}
+            className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1.5">
+            <div className="w-1 h-2 rounded-full bg-white/40" />
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* ========== FEATURED SPOTLIGHT ========== */}
-      {featured && (
-        <AdinkraBg variant="gye-nyame" opacity={0.025} color="#c8a96e">
-        <section className="relative py-28 px-6 bg-white border-b border-brand-dark/5">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="grid md:grid-cols-2 gap-16 items-center"
-            >
-                  <div>
-                <span className="text-brand-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-6 block">Featured Experience</span>
-                <h2 className="text-4xl md:text-5xl font-serif leading-[0.9] tracking-tighter text-brand-dark mb-6">{featured.name}</h2>
-                <div className="flex items-center gap-4 text-sm text-brand-dark/50 mb-6">
-                  <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{featured.duration}</span>
-                  <span className="flex items-center gap-1.5"><Star className="w-4 h-4 text-brand-gold fill-brand-gold" />{featured.rating}</span>
-                  <span className="flex items-center gap-1.5"><Ship className="w-4 h-4" />{featured.price}</span>
-                </div>
-                <p className="text-brand-dark/60 leading-relaxed font-light text-lg mb-8">{featured.longDescription?.split('.')[0] || featured.description}</p>
-                {featured.highlights && (
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {featured.highlights.slice(0, 4).map((h) => (
-                      <span key={h} className="px-3 py-1.5 bg-brand-dark/[0.04] rounded-full text-[11px] text-brand-dark/50 font-medium">{h}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden group">
-                <img
-                  src={featured.image}
-                  alt={featured.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6">
-                  <span className="px-4 py-1.5 bg-brand-gold/20 backdrop-blur-sm rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/30">
-                    Editor's Pick
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+      {/* STATS */}
+      <AnimatedSection className="py-16 px-5 relative border-b border-border/40">
+        <DotGrid />
+        <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center relative">
+          <div>
+            <div className="text-3xl md:text-4xl font-medium text-fg mb-1 text-gradient"><AnimatedCounter value={EXPERIENCES.length} suffix="+" /></div>
+            <div className="text-xs text-muted tracking-wide">Experiences</div>
           </div>
-        </section>
-        </AdinkraBg>
-      )}
+          <div>
+            <div className="text-3xl md:text-4xl font-medium text-fg mb-1 text-gradient"><AnimatedCounter value={5.0} decimals={1} /></div>
+            <div className="text-xs text-muted tracking-wide">Top Rating</div>
+          </div>
+          <div>
+            <div className="text-3xl md:text-4xl font-medium text-fg mb-1 text-gradient"><AnimatedCounter value={categories.length - 1} /></div>
+            <div className="text-xs text-muted tracking-wide">Categories</div>
+          </div>
+        </div>
+      </AnimatedSection>
 
-      {/* ========== STICKY CATEGORY FILTER ========== */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-brand-dark/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1 overflow-x-auto py-4 scrollbar-none">
+      {/* FILTER BAR */}
+      <div id="explore" className="sticky top-0 z-50 bg-bg/80 backdrop-blur-xl border-b border-border/40">
+        <div className="max-w-7xl mx-auto px-5 py-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
+              <input type="text" placeholder="Search experiences..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 text-sm bg-surface border border-border rounded-xl text-fg placeholder:text-muted/60 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-all" />
+              {searchQuery && <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-fg transition-colors"><X className="w-4 h-4" /></button>}
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap mt-4">
             {categories.map((cat) => {
-              const Icon = cat === 'All' ? Sparkles : categoryIcons[cat]
+              const isActive = activeCategory === cat
+              const Icon = cat === 'All' ? Compass : (categoryIcons[cat] || Compass)
+              const color = cat === 'All' ? '' : categoryColors[cat]?.split(' ')[0] || 'text-accent'
               return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[11px] md:text-xs uppercase tracking-[0.15em] font-bold whitespace-nowrap transition-all duration-300 flex-shrink-0 ${
-                    activeCategory === cat
-                      ? 'bg-brand-dark text-white shadow-lg shadow-black/10'
-                      : 'bg-brand-dark/[0.04] text-brand-dark/50 hover:bg-brand-dark/[0.08]'
-                  }`}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  {cat === 'All' ? 'All Experiences' : cat}
-                </button>
+                <motion.button key={cat} layout onClick={() => setActiveCategory(cat)}
+                  className={`inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-lg border transition-all duration-200 ${
+                    isActive ? 'bg-accent text-accent-fg border-accent shadow-sm shadow-accent/20' : 'bg-surface text-muted border-border hover:text-fg hover:border-fg/30'
+                  }`}>
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? '' : color}`} />{cat}
+                </motion.button>
               )
             })}
           </div>
         </div>
       </div>
 
-      {/* ========== EXPERIENCES GRID ========== */}
-      <section className="py-24 px-6">
+      {/* EXPERIENCE CARDS */}
+      <section className="py-8 md:py-12 px-5 pb-24 relative">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            key={activeCategory}
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filtered.map((exp) => {
-              const Icon = categoryIcons[exp.category]
-              return (
-                <motion.div
-                  key={exp.id}
-                  variants={fadeInUp}
-                  className="group relative bg-white rounded-[2rem] border border-brand-dark/5 overflow-hidden hover:shadow-2xl hover:shadow-black/5 transition-all duration-500"
-                >
-                  {/* Image */}
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={exp.image}
-                      alt={exp.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/70 via-transparent to-transparent" />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[9px] uppercase tracking-[0.2em] font-bold text-white/80 border border-white/10">
-                        {exp.duration}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <div className="flex items-center gap-2 text-white/70 text-xs">
-                        <MapPin className="w-3.5 h-3.5 text-brand-gold" />
-                        <span>{exp.category}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-brand-gold" />
-                      </div>
-                      <span className="text-[9px] uppercase tracking-[0.2em] font-bold text-brand-gold">{exp.category}</span>
-                    </div>
-                    <h3 className="text-xl font-serif tracking-tight text-brand-dark mb-2">{exp.name}</h3>
-                    <p className="text-brand-dark/50 text-sm leading-relaxed font-light mb-4 line-clamp-2">{exp.description}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 text-xs text-brand-dark/40">
-                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{exp.duration}</span>
-                        {exp.rating && (
-                          <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-brand-gold fill-brand-gold" />{exp.rating}</span>
-                        )}
-                      </div>
-                      <span className="text-sm font-bold text-brand-dark">{exp.price}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </motion.div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-32">
-              <Compass className="w-16 h-16 text-brand-dark/10 mx-auto mb-6" />
-              <p className="text-brand-dark/30 text-lg font-light">No experiences found in this category.</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <AdinkraBg variant="akoma" opacity={0.03} color="#c8a96e">
-      {/* ========== CATEGORIES EXPLORER ========== */}
-      <section className="relative py-28 px-6 bg-brand-dark/[0.02] border-t border-brand-dark/5">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.span variants={fadeInUp} className="text-brand-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-6 block">
-              Browse by Category
-            </motion.span>
-            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-serif leading-[0.9] tracking-tighter text-brand-dark">
-              Find Your Adventure
-            </motion.h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.filter(c => c !== 'All').map((cat, idx) => {
-              const Icon = categoryIcons[cat]
-              const count = EXPERIENCES.filter(e => e.category === cat).length
-              return (
-                <motion.button
-                  key={cat}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  onClick={() => {
-                    setActiveCategory(cat)
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
-                  className="group relative p-8 rounded-[2rem] bg-white border border-brand-dark/5 text-left hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 via-transparent to-brand-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-2xl bg-brand-dark flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-brand-gold transition-all duration-500">
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-serif tracking-tight text-brand-dark mb-2">{cat}</h3>
-                    <p className="text-brand-dark/40 text-sm font-light mb-3">{categoryDescriptions[cat]}</p>
-                    <p className="text-brand-gold text-xs font-bold tracking-wide">{count} experience{count !== 1 ? 's' : ''}</p>
-                  </div>
-                  <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-brand-dark/20 group-hover:text-brand-gold group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-                </motion.button>
-              )
-            })}
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-xs text-muted">{filtered.length} {filtered.length === 1 ? 'experience' : 'experiences'} found</p>
           </div>
+          <AnimatePresence mode="wait">
+            {filtered.length === 0 ? (
+              <motion.div key="empty" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="text-center py-20">
+                <Compass className="w-12 h-12 text-muted/30 mx-auto mb-4" />
+                <p className="text-sm text-muted">No experiences match your search.</p>
+                <button onClick={() => { setSearchQuery(''); setActiveCategory('All') }} className="text-xs text-accent hover:text-accent/80 transition-colors mt-2">Reset filters</button>
+              </motion.div>
+            ) : (
+              <motion.div key={`${activeCategory}-${searchQuery}`} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filtered.map((item, i) => {
+                  const Icon = categoryIcons[item.category] || Compass
+                  const colorClass = categoryColors[item.category] || 'text-accent bg-accent/10 border-accent/20'
+                  return (
+                    <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.4, delay: i * 0.03 }}>
+                      <Link to="/attractions" className="group block h-full">
+                        <GlassCard hover="glow" className="h-full">
+                          <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '66%' }}>
+                            <img src={item.image} alt={item.name}
+                              className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 block max-w-none"
+                              style={{ height: '100%' }} loading={i < 4 ? 'eager' : 'lazy'} />
+                            <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                            <div className="absolute inset-0 ring-1 ring-inset ring-white/0 group-hover:ring-accent/20 transition-all duration-500 pointer-events-none" />
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 80%, rgba(197,149,74,0.12), transparent 60%)' }} />
+                            <div className="absolute top-3 left-3 md:top-4 md:left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-white/10 bg-white/10 text-white/90">
+                              <Icon className="w-3 h-3" />{item.category}
+                            </div>
+                            <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 flex items-center gap-2">
+                              <span className="inline-flex items-center gap-1 bg-black/40 backdrop-blur-xl px-2.5 py-1 rounded-full text-[9px] font-medium text-white/80">
+                                <Clock className="w-2.5 h-2.5" />{item.duration}
+                              </span>
+                              {item.rating && (
+                                <span className="inline-flex items-center gap-1 bg-black/40 backdrop-blur-xl px-2.5 py-1 rounded-full text-[9px] font-semibold text-accent">
+                                  <Star className="w-2.5 h-2.5 fill-accent" />{item.rating}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="p-4 md:p-5 space-y-2">
+                            <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
+                            <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
+                            <div className="flex items-center justify-between pt-1">
+                              <span className="text-[9px] font-mono font-semibold text-accent">{item.price}</span>
+                              <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent/60 transition-colors">
+                                Discover <ArrowRight className="w-3 h-3" />
+                              </span>
+                            </div>
+                          </div>
+                        </GlassCard>
+                      </Link>
+                    </motion.div>
+                  )
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
-      </AdinkraBg>
 
-      {/* ========== CTA ========== */}
-      <section className="relative py-32 px-6 bg-brand-dark overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/Images/Dodi4.jpg"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/80 to-brand-dark" />
+      {/* TESTIMONIALS */}
+      <AnimatedSection className="py-20 md:py-24 px-5 relative overflow-hidden bg-surface/50">
+        <FloatingOrbs />
+        <div className="max-w-3xl mx-auto text-center relative">
+          <RevealSection>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight mb-2">What Travellers Say</h2>
+            <p className="text-xs text-muted mb-10 max-w-md mx-auto">Real stories from visitors who have experienced Asuogyaman.</p>
+          </RevealSection>
+          <div className="relative min-h-[180px]">
+            <AnimatePresence mode="wait">
+              <motion.div key={reviewIndex}
+                initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
+                transition={{ duration: 0.4, ease: easeOut }} className="space-y-6">
+                <Quote className="w-8 h-8 text-accent/20 mx-auto" />
+                <p className="text-base md:text-lg text-fg leading-relaxed italic">&ldquo;{reviews[reviewIndex].text}&rdquo;</p>
+                <div>
+                  <div className="flex items-center justify-center gap-1 mb-2">{Array.from({ length: reviews[reviewIndex].rating }).map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-accent text-accent" />)}</div>
+                  <div className="text-sm text-muted font-medium">&mdash; {reviews[reviewIndex].user}</div>
+                  <div className="text-[10px] text-muted/60">{reviews[reviewIndex].location}</div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="flex items-center justify-center gap-2 mt-8">{reviews.map((_, i) => <button key={i} onClick={() => setReviewIndex(i)}
+            className={`h-1.5 rounded-full transition-all duration-500 ${i === reviewIndex ? 'w-6 bg-accent' : 'w-1.5 bg-border hover:bg-muted'}`} />)}</div>
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-brand-gold font-bold tracking-[0.4em] uppercase text-[10px] mb-8 block"
-          >
-            Start Your Journey
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-serif leading-[0.9] tracking-tighter text-white mb-8"
-          >
-            Asuogyaman
-            <br />
-            <span className="text-brand-gold">Awaits You</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-white/40 text-lg leading-relaxed font-light max-w-2xl mx-auto mb-12"
-          >
-            Every moment here is a story waiting to be written. From the tranquil waters
-            of Lake Volta to the rich traditions of the Akwamu Kingdom — your adventure
-            begins now.
-          </motion.p>
-          <motion.button
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            onClick={() => navigate('/attractions')}
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-brand-gold text-brand-dark font-bold rounded-full text-sm tracking-wide hover:bg-brand-gold/90 transition-all duration-300 shadow-xl shadow-brand-gold/20"
-          >
-            Explore Attractions
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </motion.button>
+      </AnimatedSection>
+
+      {/* CTA */}
+      <AnimatedSection className="py-24 md:py-28 px-5 text-center relative overflow-hidden">
+        <FloatingOrbs />
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent" />
+        <div className="max-w-lg mx-auto relative">
+          <RevealSection>
+            <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Ready for adventure?</h2>
+            <p className="text-sm text-muted mb-8 leading-relaxed">From lake cruises to cultural immersions — your Asuogyaman journey starts here.</p>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
+                Book an Experience <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <a href="/attractions" className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium rounded-xl text-muted border border-border hover:text-fg hover:border-fg/30 transition-all duration-300">
+                Explore Attractions
+              </a>
+            </div>
+          </RevealSection>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   )
 }

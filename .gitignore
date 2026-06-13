@@ -22,3 +22,4 @@ donations.db*
 *.apk
 *.dex
 *.class
+.vercel

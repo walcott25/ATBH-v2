@@ -1,5 +1,5 @@
 import { SignIn } from '@clerk/react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { Compass, Star, MapPin } from 'lucide-react';
 
@@ -21,23 +21,19 @@ const stats = [
 
 export default function SignInPage() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   return (
     <div ref={ref} className="min-h-screen flex flex-col md:flex-row bg-brand-dark overflow-hidden">
       {/* Left — Cinematic Brand Panel */}
-      <motion.div className="relative w-full md:w-[55%] h-[25vh] md:h-screen overflow-hidden">
-        {/* Background */}
-        <motion.div style={{ y: bgY }} className="absolute inset-0">
-          <img
-            src="/Images/Aylos bay1.jpg"
-            alt="Asuogyaman"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/60 to-brand-dark/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/30 via-transparent to-brand-dark/10" />
-        </motion.div>
+      <div
+        className="relative w-full md:w-[55%] h-[40vh] md:h-screen overflow-hidden"
+        style={{
+          backgroundImage: 'url("/Images/adomi-bridge-hero.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-brand-dark/60" />
 
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -100,7 +96,7 @@ export default function SignInPage() {
             >
               Welcome
               <br />
-              <span className="bg-gradient-to-r from-brand-gold via-white to-brand-gold bg-[length:200%_auto] animate-shimmer bg-clip-text text-transparent italic font-semibold">
+              <span className="text-brand-gold italic font-semibold">
                 Back
               </span>
             </motion.h1>
@@ -134,7 +130,7 @@ export default function SignInPage() {
             ))}
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Right — Sign-in Panel */}
       <motion.div
@@ -144,8 +140,8 @@ export default function SignInPage() {
         className="relative w-full md:w-[45%] h-auto md:h-screen overflow-y-auto flex flex-col items-center justify-center px-6 md:px-14 py-6 md:py-16 bg-brand-dark"
       >
         {/* Decorative line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent md:hidden" />
-        <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-gold/20 to-transparent hidden md:block" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-white/5 md:hidden" />
+        <div className="absolute top-0 bottom-0 left-0 w-px bg-white/5 hidden md:block" />
 
         <div className="w-full max-w-md">
           {/* Mobile logo (hidden on desktop) */}

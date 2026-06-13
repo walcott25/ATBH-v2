@@ -191,7 +191,7 @@ const ScrollExpandMedia = ({
             <img
               src={bgImageSrc}
               alt='Background'
-              className='w-screen h-screen'
+              className='absolute inset-0 w-screen h-screen'
               style={{
                 objectFit: 'cover',
                 objectPosition: 'center',
@@ -281,8 +281,9 @@ const ScrollExpandMedia = ({
                     <img
                       src={mediaSrc}
                       alt={title || 'Media content'}
-                      className='w-full h-full object-cover rounded-xl'
-                      style={{ willChange: 'transform' }}
+                      className='absolute inset-0 w-full h-full object-cover rounded-xl block max-w-none'
+                      style={{ height: '100%', willChange: 'transform' }}
+                      loading="lazy"
                     />
 
                     <motion.div

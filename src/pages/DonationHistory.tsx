@@ -60,7 +60,7 @@ export default function DonationHistory() {
       <AdinkraBg variant="gye-nyame" opacity={0.03} color="#c8a96e">
       <section className="relative pt-36 pb-20 px-6 overflow-hidden bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="flex items-center justify-center gap-3 mb-6">
               <span className="w-10 h-[2px] bg-brand-gold" />
               <span className="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-gold">Your Impact</span>
@@ -84,7 +84,7 @@ export default function DonationHistory() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="bg-white rounded-3xl shadow-xl shadow-brand-dark/5 border border-brand-dark/5 p-8 md:p-10"
           >
             {/* Email Search */}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ATBH</string>
+    <string name="title_activity_main">ATBH</string>
+    <string name="package_name">com.atbh.app</string>
+    <string name="custom_url_scheme">com.atbh.app</string>
+</resources>

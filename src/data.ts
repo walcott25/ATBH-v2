@@ -11,6 +11,8 @@ export interface Attraction {
   category: 'Nature' | 'Engineering' | 'Luxury' | 'Culture';
   coordinates?: [number, number];
   rating?: number;
+  /** URL to an equirectangular (2:1) panorama image for the 360° virtual tour */
+  panorama?: string;
 }
 
 export const ATTRACTIONS: Attraction[] = [
@@ -21,7 +23,8 @@ export const ATTRACTIONS: Attraction[] = [
     image: '/Images/adomi-bridge-aerial.jpg',
     category: 'Engineering',
     coordinates: [6.2386, 0.0958],
-    rating: 4.9
+    rating: 4.9,
+    panorama: '/Images/panorama-landscape.jpg'
   },
   {
     id: 'volta-lake',
@@ -30,7 +33,8 @@ export const ATTRACTIONS: Attraction[] = [
     image: '/Images/Dodi4.jpg',
     category: 'Nature',
     coordinates: [6.3500, 0.0500],
-    rating: 4.8
+    rating: 4.8,
+    panorama: '/Images/panorama-mountain.jpg'
   },
   {
     id: 'dodi-Island',
@@ -39,7 +43,8 @@ export const ATTRACTIONS: Attraction[] = [
     image: '/Images/Dodi3.jpg',
     category: 'Nature',
     coordinates: [6.3500, 0.0500],
-    rating: 4.8
+    rating: 4.8,
+    panorama: '/Images/panorama-landscape.jpg'
   },
   {
     id: 'akosombo-dam',
@@ -48,7 +53,8 @@ export const ATTRACTIONS: Attraction[] = [
     image: '/Images/dam1.jpg',
     category: 'Engineering',
     coordinates: [6.3005, 0.0597],
-    rating: 4.8
+    rating: 4.8,
+    panorama: '/Images/panorama-mountain.jpg'
   },
   {
     id: 'akwamu-gorge',
@@ -57,7 +63,8 @@ export const ATTRACTIONS: Attraction[] = [
     image: '/Images/Akwamu Gorge1.jpg',
     category: 'Nature',
     coordinates: [6.2500, 0.0800],
-    rating: 4.7
+    rating: 4.7,
+    panorama: '/Images/panorama-landscape.jpg'
   },
   {
     id: 'akwamu-islet',
@@ -87,47 +94,11 @@ export const ATTRACTIONS: Attraction[] = [
     rating: 4.9
   },
   {
-    id: 'royal-senchi',
-    name: 'The Royal Senchi',
-    description: 'A luxury resort on the Volta River that blends traditional Ghanaian architecture with modern elegance.',
-    image: '/Images/royal senchi1.jpg',
-    category: 'Luxury',
-    coordinates: [6.1850, 0.0920],
-    rating: 5.0
-  },
-  {
-    id: 'aylos-bay',
-    name: 'Aylos Bay Resort',
-    description: 'A serene lakeside resort good for relaxation, meals, and beautiful views of the Volta River.',
-    image: '/Images/Aylos bay1.jpg',
-    category: 'Luxury',
-    coordinates: [6.2300, 0.0900],
-    rating: 4.6
-  },
-  {
-    id: 'penninsula-hotel',
-    name: 'Penninsula Resort and Hotel',
-    description: 'One of the most beautiful resorts in Asuogyaman. You can enjoy boating, canoe races, and scenic sunsets on the water.',
-    image: '/Images/penn.jpg',
-    category: 'Luxury',
-    coordinates: [6.3500, 0.0500],
-    rating: 4.8
-  },
-  {
-    id: 'adomi-bridge Garden',
+    id: 'adomi-bridge-garden',
     name: 'Adomi Bridge Gardens',
-    description: 'Enjoy the sceneric view of the Adomi bridge, zoo, pool and cruise on the lake.',
+    description: 'Enjoy the scenic view of the Adomi bridge, zoo, pool and cruise on the lake.',
     image: '/Images/623867663_2071003400300427_61196.jpg',
     category: 'Nature',
-    coordinates: [6.3500, 0.0500],
-    rating: 4.8
-  },
-  {
-    id: 'bridge-view',
-    name: 'BridgeView Resort',
-    description: 'This is where culture meets luxury. Enjoy the fresh feeling of the lake. ',
-    image: '/Images/bridgeview.jpg',
-    category: 'Luxury',
     coordinates: [6.3500, 0.0500],
     rating: 4.8
   },
@@ -269,19 +240,19 @@ export const DINING: Dining[] = [
     id: 'eat-feel',
     name: 'Eat & Feel',
     description: 'Well-rated local restaurant in Atimpoku serving Ghanaian and continental dishes with a friendly atmosphere. Great for lunch or dinner after sightseeing.',
-    image: '/Images/banku.jpg',
+    image: '/Images/lunch.jpg',
     category: 'Local',
     coordinates: [6.2400, 0.0900],
     rating: 4.5,
     phone: '+233 24 123 4567',
     email: 'eatandfeel@gmail.com',
     amenities: ['WiFi', 'Air Conditioning', 'Outdoor Seating', 'Family Friendly', 'Takeaway'],
-    longDescription: 'Eat & Feel is a beloved dining spot in the heart of Atimpoku, offering a warm and inviting atmosphere that perfectly complements its diverse menu. The restaurant seamlessly blends traditional Ghanaian flavors with continental favorites, making it a favorite among locals and tourists alike. Whether you are stopping by for a quick lunch after visiting the Adomi Bridge or settling in for a relaxed dinner, the friendly staff and consistent quality ensure a memorable meal. Their signature grilled tilapia with banku and pepper sauce is a must-try, alongside their expertly prepared jollof rice.'
+    longDescription: 'A reliable Atimpoku standby serving both Ghanaian staples and continental dishes. The kitchen turns out consistent grilled tilapia with banku and pepper sauce, and their jollof rice holds its own against any in the district. The atmosphere is unfussy — tiled floors, ceiling fans, fluorescent lighting — the kind of place where the quality of the food, not the decor, brings people back. Well-suited for a post-sightseeing lunch or early dinner.'
   },
   {
     id: 'adomi-restaurant',
     name: 'Adomi Restaurant',
-    description: 'Classic local eatery on Asuogyaman-Atimpoku Road with traditional Ghanaian meals like grilled tilapia, jollof rice, and spicy stews.',
+    description: 'Classic local eatery on Asuogyaman-Atimpoku Road serving grilled tilapia, jollof rice, and spicy stews.',
     image: '/Images/buffet.jpg',
     category: 'Local',
     coordinates: [6.2400, 0.0900],
@@ -289,32 +260,32 @@ export const DINING: Dining[] = [
     phone: '+233 24 234 5678',
     email: 'adomirestaurant@yahoo.com',
     amenities: ['Parking', 'Air Conditioning', 'TV', 'Local Cuisine', 'Catering'],
-    longDescription: 'Situated along the bustling Asuogyaman-Atimpoku Road, Adomi Restaurant is a classic Ghanaian eatery that has been serving the community for years. Known for its authentic preparation of traditional dishes, the restaurant offers a genuine taste of local culinary heritage. The grilled tilapia, perfectly seasoned and fried to golden crisp, is the star of the menu. Pair it with their aromatic jollof rice or hearty light soup with fufu for a truly satisfying meal. The no-frills atmosphere focuses on what matters most — exceptional food that tastes like home.'
+    longDescription: 'Adomi Restaurant has been working the same stretch of road for years, and the formula is straightforward: properly prepared Ghanaian classics, no shortcuts. The tilapia arrives fried to a deep gold with a crisp edge, and the jollof rice carries the faint smokiness of its cooking vessel. The kitchen also does a reliable light soup with fufu. The dining room is bare-bones — plastic chairs, TV mounted in the corner, ceiling fans fighting the afternoon heat. You come here to eat well, not to linger.'
   },
   {
     id: 'Adomi Bridge Gardens',
     name: 'Adomi Bridge Gardens',
-    description: 'Highly rated casual restaurant with good local and possibly continental fare.',
-    image: '/Images/fried rice2.jpg',
+    description: 'Casual restaurant with views of the Adomi Bridge and Volta River.',
+    image: '/Images/grill1.jpg',
     category: 'Continental',
     coordinates: [6.2400, 0.0900],
     rating: 4.6,
     phone: '+233 24 345 6789',
     email: 'info@adomibridgegardens.com',
     amenities: ['Scenic Views', 'Pool Access', 'Parking', 'WiFi', 'Family Friendly'],
-    longDescription: 'Nestled within the lush grounds overlooking the iconic Adomi Bridge, Adomi Bridge Gardens offers a dining experience that combines excellent cuisine with breathtaking scenery. The restaurant serves a carefully curated menu that features both local Ghanaian specialties and well-executed continental dishes. Guests can enjoy their meals on the open-air terrace while taking in panoramic views of the Volta River and the historic suspension bridge. The gardens themselves are beautifully maintained, making it a popular spot for leisurely afternoon meals, family gatherings, and romantic dinners alike.'
+    longDescription: 'The draw here is the setting: an open-air terrace looking directly at the Adomi Bridge suspension span over the Volta. The menu covers both Ghanaian and continental dishes — grilled tilapia, fried rice, chicken and chips — executed competently if not memorably. The gardens surrounding the terrace are well-kept, and the pool is available to diners. It works best as a lunch stop where the view outweighs the food as the primary consideration.'
   },
   {
     id: 'dam-city',
     name: 'Dam City Asanka Local',
     description: 'Local dining spot in Atimpoku ideal for authentic Ghanaian home-style meals.',
-    image: '/Images/fufu1.jpg',
+    image: '/Images/waakye2.jpg',
     category: 'Local',
     coordinates: [6.2400, 0.0900],
     rating: 4.4,
     phone: '+233 24 456 7890',
     amenities: ['Local Cuisine', 'Takeaway', 'Budget Friendly', 'Family Style'],
-    longDescription: 'Dam City Asanka Local embodies the spirit of Ghanaian home cooking in every dish. This unpretentious dining spot in Atimpoku is where locals go for authentic, soul-satisfying meals that remind them of home. The menu changes daily based on fresh market ingredients, but you can always count on staples like fufu with groundnut soup, ampesi with kontomire stew, and their legendary waakye. The atmosphere is casual and welcoming, with the open kitchen allowing guests to watch their food being prepared with time-honored techniques passed down through generations.'
+    longDescription: 'An unapologetically local kitchen where the menu turns on whatever the market delivered that morning. Fufu with groundnut soup, ampesi with kontomire stew, and a waakye that draws a lunch crowd are the main events. The open kitchen lets you watch the cooking — women working over large pots with the confidence of decades of practice. No air conditioning, no pretense, just honest Ghanaian home cooking at prices that make it the best value meal in Atimpoku.'
   },
   {
     id: 'de-kitchen',
@@ -327,7 +298,7 @@ export const DINING: Dining[] = [
     phone: '+233 24 567 8901',
     email: 'dekitchenkpong@gmail.com',
     amenities: ['WiFi', 'Air Conditioning', 'Delivery', 'Catering', 'Private Events'],
-    longDescription: 'Located in the charming town of Kpong, just south of the main Asuogyaman attractions, De Kitchen has built a loyal following for its consistently delicious meals. The restaurant strikes a perfect balance between local and international cuisine, offering everything from perfectly grilled chicken and chips to fragrant Ghanaian stews. The interior is clean and modern, with air conditioning providing a cool retreat from the tropical heat. Their delivery service has made them particularly popular with local businesses and residents, while the catering option is ideal for events and gatherings.'
+    longDescription: 'De Kitchen operates out of a clean, air-conditioned dining room in Kpong and serves a dependable mix of Ghanaian and continental dishes. The grilled chicken with chips is a safe bet; the red-red and fried plantain satisfy when the craving hits. What distinguishes De Kitchen is the operational competence — online ordering, reliable delivery, and a catering service that handles events without the usual chaos. It is the kind of restaurant every town needs: unremarkable on paper, reliable in practice.'
   },
   {
     id: 'soul-berry',
@@ -340,7 +311,7 @@ export const DINING: Dining[] = [
     phone: '+233 24 678 9012',
     email: 'hello@soulberrycafe.com',
     amenities: ['WiFi', 'Coffee Bar', 'Outdoor Seating', 'Pastries', 'Breakfast'],
-    longDescription: 'Soul Berry Café is Atimpoku\'s premier coffee destination, offering a cozy and artistic space where travelers and locals alike can unwind with a perfectly brewed cup. The café prides itself on sourcing high-quality coffee beans and preparing them with care — from rich espressos to creamy lattes. The food menu features light meals, freshly baked pastries, sandwiches, and hearty breakfast options that are served all day. With its warm interior, free WiFi, and charming outdoor seating area shaded by tropical plants, Soul Berry is the perfect spot for remote work, catching up with friends, or simply enjoying a quiet afternoon.'
+    longDescription: 'Atimpoku\'s dedicated coffee address, run with the kind of care that regulars notice. Soul Berry serves properly extracted espresso drinks, pour-over coffee, and a food menu that punches above its weight — think breakfast served all day, fresh-baked pastries, sandwiches on good bread, and salads that show someone in the kitchen understands balance. WiFi is reliable, the outdoor seating is shaded by tropical plantings, and the general atmosphere is calm enough for remote work. It fills a genuine gap in Atimpoku\'s dining landscape: somewhere to sit with a drink and take your time.'
   },
   {
     id: 'alabama-pub',
@@ -352,7 +323,7 @@ export const DINING: Dining[] = [
     rating: 4.4,
     phone: '+233 24 789 0123',
     amenities: ['Live Music', 'Sports TV', 'Outdoor Seating', 'Bar Games', 'Late Night'],
-    longDescription: 'When the sun sets over Atimpoku, Alabama Pub & Grill comes alive as the go-to destination for evening entertainment and grilled delicacies. The pub offers a lively atmosphere with regular live music performances, sports screenings on large TVs, and a well-stocked bar serving everything from ice-cold beers to creative cocktails. The grill menu is the highlight — expect perfectly charred kebabs, smoky grilled chicken, and their famous barbeque ribs that keep customers coming back week after week. The outdoor seating area is perfect for enjoying the warm evening breeze with friends.'
+    longDescription: 'Alabama is Atimpoku\'s reliable evening option — a pub that understands its brief and executes it consistently. The grill does the heavy lifting: kebabs, smoked chicken, barbeque ribs, all coming off the fire with proper char. The bar is well-stocked, there are TVs for sports, and live music on weekends. The outdoor seating catches whatever breeze is moving. It is not a destination dining room; it is a place to eat grilled food and drink beer in company, and on those terms it delivers.'
   },
   {
     id: 'legacy-lounge',
@@ -365,12 +336,12 @@ export const DINING: Dining[] = [
     phone: '+233 24 890 1234',
     email: 'info@legacyloungepub.com',
     amenities: ['Live Music', 'VIP Lounge', 'Dance Floor', 'Cocktails', 'Private Events'],
-    longDescription: 'LEGACY LOUNGE & PUB represents the modern face of Atimpoku nightlife, combining sophisticated lounge aesthetics with the energetic spirit of a traditional pub. The venue features a stylish interior with mood lighting, comfortable seating areas, and a dedicated dance floor that fills up as the night progresses. Their cocktail menu is particularly impressive, with skilled bartenders crafting both classic and signature drinks. The food menu complements the drinks perfectly, offering everything from light bar snacks to substantial grilled meals. Whether you are looking for a relaxed evening with friends or a night of dancing, Legacy delivers.'
+    longDescription: 'The most polished nightlife option in Atimpoku. Legacy Lounge & Pub trades the rough edges of a standard local pub for mood lighting, a proper cocktail program, and a dance floor that sees action on weekends. The interior is deliberately styled — dark tones, comfortable seating, a VIP section for group bookings. The kitchen does bar food that is a cut above what the category demands. It is a venue designed for the evening hours, and in that context it succeeds.'
   },
   {
     id: 'royal-senchi-dining',
     name: 'The Royal Senchi Dining',
-    description: 'High-end resort with excellent restaurant options and riverside dining.',
+    description: 'Five-star resort dining on the Volta River with multiple restaurant options.',
     image: '/Images/buffet1.jpg',
     category: 'Resort Dining',
     coordinates: [6.1850, 0.0920],
@@ -379,7 +350,7 @@ export const DINING: Dining[] = [
     email: 'reservations@royalsenchi.com',
     bookingUrl: 'https://www.royalsenchi.com/dining',
     amenities: ['Riverside Dining', 'Fine Dining', 'Wine Cellar', 'Private Dining', 'Breakfast Buffet', 'Room Service'],
-    longDescription: 'The Royal Senchi Dining experience is the crown jewel of Asuogyaman\'s culinary scene. Set against the stunning backdrop of the Volta River, the resort\'s restaurants offer an unparalleled gastronomic journey that blends international sophistication with Ghanaian culinary traditions. The main restaurant features an elegant buffet with live cooking stations, while the à la carte menu showcases the creativity of the executive chef. Guests can also enjoy private dining on the river terrace, where the sounds of the water create a naturally serene ambiance. The wine cellar boasts an impressive selection of international labels carefully curated to complement the menu.'
+    longDescription: 'The Volta-facing dining operation at the Royal Senchi resort operates at a different standard from anything else in the district. The main restaurant runs an elaborate breakfast buffet and a dinner service with live cooking stations. The à la carte menu changes seasonally under the executive chef, who works Ghanaian ingredients into a contemporary framework — think smoked cassava purée paired with grilled river fish. The wine list is the most serious in the region, and the river terrace private dining is genuinely worth the premium. This is occasion dining, not everyday eating, and it owns that category completely.'
   },
   {
     id: 'aylos-bay-dining',
@@ -392,19 +363,19 @@ export const DINING: Dining[] = [
     phone: '+233 24 901 2345',
     email: 'aylosbay@gmail.com',
     amenities: ['Lake Views', 'Garden Setting', 'Outdoor Dining', 'Fresh Seafood', 'Family Friendly'],
-    longDescription: 'Aylos Bay Garden Restaurant offers a dining experience that engages all the senses. Perched on the shores of the Volta Lake, the restaurant\'s garden setting creates a tranquil oasis where guests can escape the hustle of daily life. The menu focuses on fresh, locally sourced ingredients with an emphasis on seafood — the lake provides an abundant supply of tilapia and other freshwater fish that are prepared with skill and creativity. The garden itself is a attraction, with winding paths through tropical foliage and strategically placed seating that offers every table a view of the glistening water.'
+    longDescription: 'The setting justifies the trip: a garden restaurant sloping toward the Volta Lake, with tables positioned to give every diner a water view. The kitchen leans into its lakeside location — tilapia and freshwater fish dominate the menu, simply prepared and let stand. The garden itself is a legitimate attraction, winding paths through mature tropical planting. Service operates on resort time. Worth it for a long lunch when the lake catches the afternoon light.'
   },
   {
     id: 'jamrok',
     name: 'Jamrok Pub',
-    description: 'Great catering services and restaurant that offers the best meals to tourists.',
-    image: '/Images/fufu1.jpg',
+    description: 'Local restaurant and catering service known for fufu and light soup.',
+    image: '/Images/fuufu1.jpg',
     category: 'Local',
     coordinates: [6.2400, 0.0900],
     rating: 4.4,
     phone: '+233 24 012 3456',
     amenities: ['Catering', 'Local Cuisine', 'Event Hosting', 'Takeaway', 'Outdoor Seating'],
-    longDescription: 'Jamrok Pub has earned its reputation as a go-to destination for both casual dining and special event catering in the Asuogyaman district. The pub\'s kitchen turns out consistently excellent Ghanaian dishes, with their fufu and light soup drawing particular praise from visitors. What sets Jamrok apart is their professional catering service, which has made them the preferred choice for community events, corporate gatherings, and private celebrations throughout the region. The pub itself has a welcoming, unpretentious atmosphere where tourists and locals mingle freely over plates of expertly prepared local food.'
+    longDescription: 'Jamrok operates a straightforward kitchen focused on Ghanaian staples, with fufu and light soup earning the most regular praise. The pub\'s primary distinction is its catering arm, which handles community events and corporate functions throughout Asuogyaman with reliability that has built a steady local clientele. The dining room itself is no-frills — the appeal is the food and the fact that it arrives quickly and tastes as expected. Tourists and regulars sit side by side, which is always a good sign in a local restaurant.'
   },
   {
     id: 'maritime-club',
@@ -417,7 +388,7 @@ export const DINING: Dining[] = [
     phone: '+233 24 111 2222',
     email: 'maritimeclub@yahoo.com',
     amenities: ['Lake Views', 'Live Sports', 'Bar', 'Parking', 'Family Friendly'],
-    longDescription: 'The Maritime Club House in Akosombo perfectly captures the relaxed lakeside lifestyle that makes the Volta region so special. With its prime location near the Akosombo Dam, the clubhouse offers panoramic views of the lake while serving some of the best local cuisine in the area. The menu features all the Ghanaian classics, but their kenkey with fried fish and shito is the dish that has achieved legendary status among regulars. The atmosphere is distinctly social, with friendly service and a bar that stays lively well into the evening.'
+    longDescription: 'Maritime Club House sits on the Akosombo lakefront and offers the kind of setting — open-sided bar overlooking the water — that makes it easy to stay longer than planned. The kitchen serves the full Ghanaian repertoire, but the kenkey with fried fish and shito has a genuine following. It draws a social crowd, with the bar doing steady business through the evening. The atmosphere is vocal and convivial, helped by a location that catches the lake breeze. Not a quiet dinner spot; a place to eat, drink, and be part of the room.'
   },
   {
     id: 'asuogyaman-foods',
@@ -429,12 +400,12 @@ export const DINING: Dining[] = [
     rating: 4.2,
     phone: '+233 24 222 3333',
     amenities: ['Quick Service', 'Market Location', 'Local Cuisine', 'Takeaway', 'Budget Friendly'],
-    longDescription: 'Located at the busy Atimpoku roundabout market, ASUOGYAMAN FOODS is the perfect pit stop for travelers seeking authentic, quick, and affordable Ghanaian street food. This bustling spot is particularly famous for its waakye — the beloved Ghanaian dish of rice and beans served with a choice of accompaniments including spaghetti, gari, fried plantain, and your choice of protein. The energy of the market surrounding the food spot adds to the experience, giving visitors a genuine taste of local life. It is the ideal place for a quick, satisfying meal between sightseeing stops.'
+    longDescription: 'A market-side operation at the Atimpoku roundabout, doing one thing well: waakye. Rice and beans served with the full suite of accompaniments — spaghetti, gari, fried plantain, boiled egg, and your choice of meat or fish. The pace is fast, the turnover constant, and the queue at lunch confirms the reputation. This is street-level eating, eaten on plastic stools or taken away. It is not a restaurant; it is a food spot that understands exactly what it is and executes with speed and consistency.'
   },
   {
     id: 'vannelles-kitchen',
     name: 'Vannelles Kitchen',
-    description: 'Highly rated small restaurant known for its home-cooked feel and delicious local dishes.',
+    description: 'Small home-style kitchen with daily specials based on fresh market ingredients.',
     image: '/Images/rice1.jpg',
     category: 'Local',
     coordinates: [6.2400, 0.0000],
@@ -442,13 +413,13 @@ export const DINING: Dining[] = [
     phone: '+233 24 333 4444',
     email: 'vannelleskitchen@gmail.com',
     amenities: ['Home Cooking', 'Daily Specials', 'Takeaway', 'Family Style', 'Fresh Ingredients'],
-    longDescription: 'Vannelles Kitchen is a hidden gem that has captured the hearts (and stomachs) of everyone who discovers it. Operating from a cozy space with just a few tables, the restaurant feels more like being invited to a friend\'s home for dinner than a commercial establishment. The menu is dictated by whatever is freshest at the market each morning, and the results are nothing short of spectacular. From perfectly seasoned jollof rice to tender meat stews, every dish is prepared with the kind of care and attention that only comes from genuine passion for cooking. The high rating is well-deserved.'
+    longDescription: 'Vannelles operates from a few-table dining room, and the menu reads like a shopping list from the morning market — because that is exactly what it is. The cook decides what to prepare based on what looked best at the stalls that day. The result is jollof rice with the proper smoked-bottom layer, meat stews that have cooked long enough for the flavors to settle, and daily specials that reward repeat visits. There is no menu board, no website, no pretense. You eat what is being cooked, and if the crowd of regulars is any indication, what is being cooked is worth building your day around.'
   },
   {
     id: 'akosombo-continental',
     name: 'Akosombo Continental Dining',
     description: 'Elegant dining experience with a mix of international and local cuisine overlooking the dam area.',
-    image: '/Images/fried rice2.jpg',
+    image: '/Images/breakfast.jpg',
     category: 'Continental',
     coordinates: [6.3005, 0.0597],
     rating: 4.5,
@@ -456,7 +427,7 @@ export const DINING: Dining[] = [
     email: 'info@akosombocontinental.com',
     bookingUrl: 'https://akosombocontinental.com/reservations',
     amenities: ['Dam Views', 'Fine Dining', 'Wine List', 'Air Conditioning', 'Private Events', 'Valet Parking'],
-    longDescription: 'Akosombo Continental Dining brings a touch of elegance to the lakeside dining scene. The restaurant\'s sophisticated interior and professional service create an atmosphere suited for special occasions and romantic evenings. Floor-to-ceiling windows frame spectacular views of the Akosombo Dam, providing a dramatic backdrop to every meal. The menu is a thoughtful fusion of international cuisine and Ghanaian flavors, with dishes that are as beautifully presented as they are delicious. An extensive wine list and carefully crafted cocktail menu complement the dining experience.'
+    longDescription: 'Akosombo Continental occupies the formal-dining niche in the lakeside town, and it commits to the role. The dining room is air-conditioned and properly set, floor-to-ceiling windows frame the dam views, and the service follows a script that aims for professionalism. The menu splits between continental dishes — steaks, pastas, grilled fish — and Ghanaian offerings, presented with more plate discipline than the local norm. The wine list is short but sensible. It is the right call for a business dinner, an anniversary, or any meal that calls for a tablecloth and a reservation.'
   },
   {
     id: 'afrikiko-dining',
@@ -469,7 +440,7 @@ export const DINING: Dining[] = [
     phone: '+233 24 555 6666',
     email: 'info@afrikikoriverfront.com',
     amenities: ['Riverside Dining', 'Grill Specialties', 'Live Music', 'Bar', 'Outdoor Terrace', 'Parking'],
-    longDescription: 'Afrikiko River Front delivers an authentic riverside dining experience that captures the essence of leisure living along the Volta. The open-air terrace, perched directly above the water, offers a dining setting that few restaurants can match. The grill is the heart of the kitchen, producing expertly charred meats, fish, and vegetables that are infused with smoky flavor. The atmosphere is enhanced by regular live music performances that showcase local talent. As the sun sets over the river, the restaurant takes on a magical quality that makes every meal feel like a special occasion.'
+    longDescription: 'An open-air terrace perched over the Volta, a working grill, and live music on good nights — Afrikiko knows its strengths and sticks to them. The kitchen sends out grilled meats and fish with the proper char, alongside local staples done well enough to satisfy. The setting is the differentiator: the terrace sits directly above the water, and sunset turns the river into the kind of view that makes photography redundant. The live music programming leans local and adds genuine atmosphere without overwhelming the room. The kind of restaurant that would work anywhere with this view.'
   }
 ];
 

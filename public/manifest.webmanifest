@@ -1,0 +1,29 @@
+{
+  "name": "Asuogyaman Tourism & Business Hub",
+  "short_name": "ATBH",
+  "description": "Explore the beauty, culture, and adventure of Asuogyaman - your gateway to the Volta Region",
+  "theme_color": "#1A1A1A",
+  "background_color": "#FDFBF7",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

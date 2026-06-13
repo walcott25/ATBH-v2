@@ -25,7 +25,7 @@ export default function HorizontalScroll({
     <div ref={containerRef} className={`relative ${containerClassName}`}>
       <div className="sticky top-0 overflow-hidden" style={{ height: '60vh' }}>
         <motion.div
-          style={{ x, opacity }}
+          style={{ x, opacity, willChange: 'transform, opacity' }}
           className={`absolute inset-0 flex items-center ${className}`}
         >
           {children}

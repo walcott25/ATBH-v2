@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "magic": {
+      "type": "local",
+      "command": ["npx", "-y", "@21st-dev/magic@latest"],
+      "enabled": true,
+      "environment": {
+        "TWENTY_FIRST_API_KEY": "ff2456f3fde1b633321627f95ae0a21a2e8aef0844874251eee38f3e5f217fee"
+      }
+    }
+  }
+}

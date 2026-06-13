@@ -1,5 +1,5 @@
 import { SignUp } from '@clerk/react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { Compass, Star, MapPin } from 'lucide-react';
 
@@ -21,23 +21,19 @@ const stats = [
 
 export default function SignUpPage() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   return (
     <div ref={ref} className="min-h-screen flex flex-col md:flex-row bg-brand-dark overflow-hidden">
       {/* Left — Cinematic Brand Panel */}
-      <motion.div className="relative w-full md:w-[55%] h-[25vh] md:h-screen overflow-hidden">
-        {/* Background */}
-        <motion.div style={{ y: bgY }} className="absolute inset-0">
-          <img
-            src="/Images/Aylos bay1.jpg"
-            alt="Asuogyaman"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/60 to-brand-dark/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/30 via-transparent to-brand-dark/10" />
-        </motion.div>
+      <div
+        className="relative w-full md:w-[55%] h-[40vh] md:h-screen overflow-hidden"
+        style={{
+          backgroundImage: 'url("/Images/adomi-bridge-hero.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-brand-dark/60" />
 
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -71,7 +67,7 @@ export default function SignUpPage() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex items-center gap-3"
           >
             <div className="w-11 h-11 rounded-xl bg-brand-gold/10 flex items-center justify-center overflow-hidden p-2 ring-1 ring-brand-gold/20">
@@ -85,7 +81,7 @@ export default function SignUpPage() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <span className="inline-flex items-center gap-2.5 bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] px-5 py-2 rounded-full text-[9px] font-bold uppercase tracking-[0.35em] text-white/40">
                 <span className="w-1.5 h-1.5 bg-brand-gold rounded-full shadow-lg shadow-brand-gold/50" />
@@ -95,19 +91,19 @@ export default function SignUpPage() {
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.5, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-5xl md:text-6xl lg:text-7xl font-serif leading-[0.82] text-white tracking-[-0.03em]"
             >
               Join the
               <br />
-              <span className="bg-gradient-to-r from-brand-gold via-white to-brand-gold bg-[length:200%_auto] animate-shimmer bg-clip-text text-transparent italic font-semibold">
+              <span className="text-brand-gold italic font-semibold">
                 Journey
               </span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.5, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-white/50 text-sm md:text-base leading-[1.9] font-light max-w-sm"
             >
               Create an account to unlock exclusive guides, plan your itinerary, and experience
@@ -119,7 +115,7 @@ export default function SignUpPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex gap-10 md:gap-14"
           >
             {stats.map((s) => (
@@ -135,7 +131,7 @@ export default function SignUpPage() {
             ))}
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Right — Sign-up Panel */}
       <motion.div
@@ -145,8 +141,8 @@ export default function SignUpPage() {
         className="relative w-full md:w-[45%] h-auto md:h-screen overflow-y-auto flex flex-col items-center justify-center px-6 md:px-14 py-6 md:py-16 bg-brand-dark"
       >
         {/* Decorative line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent md:hidden" />
-        <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-gold/20 to-transparent hidden md:block" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-white/5 md:hidden" />
+        <div className="absolute top-0 bottom-0 left-0 w-px bg-white/5 hidden md:block" />
 
         <div className="w-full max-w-md">
           {/* Mobile logo (hidden on desktop) */}
@@ -182,7 +178,7 @@ export default function SignUpPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.5, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <SignUp
               routing="path"

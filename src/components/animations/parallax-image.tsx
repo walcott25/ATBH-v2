@@ -28,7 +28,8 @@ export default function ParallaxImage({
       <motion.img
         src={src}
         alt={alt}
-        style={{ y }}
+        style={{ y, willChange: 'transform' }}
+        loading="lazy"
         className={`w-full h-full object-cover ${className}`}
       />
     </div>

@@ -31,7 +31,8 @@ function Slide({ src, alt, index, total, progress }: Image & { index: number; to
         <img
           src={src}
           alt={alt || `Gallery image ${index + 1}`}
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover block max-w-none"
+          style={{ height: '100%' }}
           loading="lazy"
         />
       </div>
@@ -64,7 +65,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
     <div ref={container} className="relative h-[400vh]">
       <div className="sticky top-0 h-screen overflow-hidden bg-brand-dark flex items-center justify-center">
         <motion.div
-          style={{ transform }}
+          style={{ transform, willChange: 'transform' }}
           className="flex items-center h-full"
         >
           {images.map(({ src, alt }, index) => (

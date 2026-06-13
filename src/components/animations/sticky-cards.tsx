@@ -37,7 +37,7 @@ export default function StickyCards({ children, className = '' }: StickyCardsPro
         return (
           <motion.div
             key={i}
-            style={{ scale, opacity, y }}
+            style={{ scale, opacity, y, willChange: 'transform, opacity' }}
             className="sticky top-[15vh] h-[70vh] flex items-center justify-center"
           >
             {child}

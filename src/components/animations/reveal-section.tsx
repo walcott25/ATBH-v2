@@ -1,5 +1,5 @@
-import { useRef, type ReactNode } from 'react'
-import { motion, useInView } from 'motion/react'
+import { type ReactNode } from 'react'
+import { motion } from 'motion/react'
 
 type RevealVariant = 'fadeUp' | 'fadeIn' | 'slideRight' | 'slideLeft' | 'scaleIn' | 'clipUp'
 
@@ -13,9 +13,9 @@ interface RevealSectionProps {
   once?: boolean
 }
 
-const variants: Record<RevealVariant, { initial: Record<string, unknown>; animate: Record<string, unknown> }> = {
+const variants: Record<RevealVariant, { initial: Record<string, string | number>; animate: Record<string, string | number> }> = {
   fadeUp: {
-    initial: { opacity: 0, y: 60 },
+    initial: { opacity: 0, y: 40 },
     animate: { opacity: 1, y: 0 },
   },
   fadeIn: {
@@ -23,16 +23,16 @@ const variants: Record<RevealVariant, { initial: Record<string, unknown>; animat
     animate: { opacity: 1 },
   },
   slideRight: {
-    initial: { opacity: 0, x: -80 },
+    initial: { opacity: 0, x: -40 },
     animate: { opacity: 1, x: 0 },
   },
   slideLeft: {
-    initial: { opacity: 0, x: 80 },
+    initial: { opacity: 0, x: 40 },
     animate: { opacity: 1, x: 0 },
   },
   scaleIn: {
-    initial: { opacity: 0, scale: 0.9, filter: 'blur(4px)' },
-    animate: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
   },
   clipUp: {
     initial: { opacity: 0, clipPath: 'inset(100% 0 0 0)' },
@@ -45,21 +45,19 @@ export default function RevealSection({
   className = '',
   variant = 'fadeUp',
   delay = 0,
-  duration = 0.7,
-  margin = '-50px',
+  duration = 0.5,
+  margin = '-80px',
   once = true,
 }: RevealSectionProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once, margin })
   const v = variants[variant]
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={v.initial}
-      animate={isInView ? v.animate : v.initial}
-      transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      whileInView={v.animate}
+      viewport={{ once, margin }}
+      transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

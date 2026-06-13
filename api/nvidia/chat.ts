@@ -1,28 +1,26 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const OPENROUTER_API = 'https://openrouter.ai/api/v1/chat/completions';
+const GROQ_API = 'https://api.groq.com/openai/v1/chat/completions';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'API key not configured on server' });
   }
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 2500);
+  const timeout = setTimeout(() => controller.abort(), 60000);
 
   try {
-    const response = await fetch(OPENROUTER_API, {
+    const response = await fetch(GROQ_API, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://asuogyaman-tourism-hub.com',
-        'X-Title': 'Asuogyaman Tourism Hub',
       },
       body: JSON.stringify(req.body),
       signal: controller.signal,
