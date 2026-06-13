@@ -111,6 +111,24 @@ ATBH is a modern, feature-rich tourism platform built for the **Asuogyaman Distr
 - Fully responsive across all screen sizes
 - Dark/light theme via Tailwind classes
 
+## Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%"><strong>🏠 Home Page</strong><br/><img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/screenshot-home.jpg" alt="Home Page" width="100%" style="border-radius:8px;" /></td>
+      <td width="50%"><strong>🏞️ Attractions</strong><br/><img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/screenshot-attractions.jpg" alt="Attractions Page" width="100%" style="border-radius:8px;" /></td>
+    </tr>
+    <tr>
+      <td width="50%"><strong>🍽️ Dining</strong><br/><img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/screenshot-dining.jpg" alt="Dining Page" width="100%" style="border-radius:8px;" /></td>
+      <td width="50%"><strong>🏫 Schools</strong><br/><img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/screenshot-schools.jpg" alt="Schools Page" width="100%" style="border-radius:8px;" /></td>
+    </tr>
+    <tr>
+      <td width="50%" colspan="2"><strong>🗺️ Interactive Map</strong><br/><img src="https://raw.githubusercontent.com/walcott25/ATBH-v2/master/public/screenshot-map.jpg" alt="Map Page" width="100%" style="border-radius:8px;" /></td>
+    </tr>
+  </table>
+</div>
+
 ## Getting Started
 
 ### Prerequisites
