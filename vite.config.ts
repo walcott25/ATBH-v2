@@ -60,13 +60,13 @@ export default defineConfig(({mode}) => {
               },
             },
             {
-              urlPattern: /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg|ico)$/i,
+              urlPattern: /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg|ico|avif)$/i,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'image-cache',
                 expiration: {
-                  maxEntries: 200,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                  maxEntries: 500,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
                 },
               },
             },
