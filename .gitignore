@@ -43,3 +43,6 @@ donations.db-wal
 
 # OS
 Thumbs.db
+
+# CI workflow requires PAT with workflow scope — manually copy when ready
+.github/workflows/
