@@ -71,6 +71,14 @@ export default defineConfig(({mode}) => {
               },
             },
             {
+              urlPattern: /^(https:)?\/\/www\.googletagmanager\.com\/.*/i,
+              handler: 'NetworkOnly',
+            },
+            {
+              urlPattern: /^(https:)?\/\/www\.google-analytics\.com\/.*/i,
+              handler: 'NetworkOnly',
+            },
+            {
               urlPattern: /^https?:\/\/.*/i,
               handler: 'NetworkFirst',
               options: {
