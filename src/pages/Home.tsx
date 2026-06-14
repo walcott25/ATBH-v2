@@ -380,128 +380,79 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* About Asuogyaman — Cinematic Editorial */}
-      <section className="relative">
-        <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
-          <div className="absolute inset-0 bg-fg/10" />
-          <img
-            src="/Images/volta-river-landscape.jpg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/60 to-bg/10" />
-          <div className="absolute inset-0 bg-gradient-to-b from-fg/20 via-transparent to-transparent" />
+      {/* About Asuogyaman — Dark Cinematic Full-Image Panel */}
+      <section className="relative h-dvh overflow-hidden">
+        <img
+          src="/Images/volta-river-landscape.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-fg/90 via-fg/50 to-fg/10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-fg/30 via-transparent to-fg/90" />
+        <div className="absolute inset-0 bg-fg/20" />
 
-          <div className="absolute inset-0 flex items-center justify-center px-5">
-            <div className="text-center max-w-3xl">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-accent/90 block mb-4">
+        <div className="absolute inset-0 flex items-center px-5 md:px-10">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="max-w-3xl">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.4em] text-accent/80 block mb-5">
                 About Asuogyaman
               </span>
-              <h2 className="font-['Playfair_Display_SC'],serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-semibold tracking-wide leading-tight mb-5">
+              <h2 className="font-['Playfair_Display_SC'],serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-semibold tracking-wide leading-tight mb-6">
                 Where the Volta River
                 <br />
                 <span className="text-accent">shapes a landscape</span> of wonder
               </h2>
-              <div className="w-12 h-0.5 bg-accent/50 mx-auto" />
+              <p className="text-sm md:text-base text-white/60 max-w-2xl leading-relaxed mb-8">
+                Nestled in Ghana's Eastern Region, Asuogyaman is a district defined by the majestic Volta River. 
+                From the engineering marvel of the Akosombo Dam to the iconic Adomi Bridge, this land offers a 
+                rare blend of natural beauty, cultural richness, and modern adventure.
+              </p>
+
+              <div className="w-10 h-px bg-accent/40 mb-8" />
+
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-8">
+                {[
+                  { value: '1950s', label: 'Founded' },
+                  { value: '25+', label: 'Destinations' },
+                  { value: '4.9', label: 'Traveler Rating' },
+                ].map((s) => (
+                  <div key={s.label} className="flex items-center gap-3">
+                    <div className="w-1 h-1 rounded-full bg-accent/60" />
+                    <div>
+                      <span className="text-lg md:text-xl font-medium text-white tracking-tight">{s.value}</span>
+                      <span className="text-[11px] text-white/40 ml-2 tracking-wide">{s.label}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2.5 mb-10">
+                {[
+                  { icon: Droplets, label: 'Lake Volta', detail: 'World\'s largest man-made lake' },
+                  { icon: Landmark, label: 'Adomi Bridge', detail: 'Iconic suspension bridge' },
+                  { icon: TreePine, label: 'Akwamu Gorge', detail: 'Lush hiking trails' },
+                  { icon: Tent, label: 'Luxury Resorts', detail: 'World-class lakeside stays' },
+                ].map((f) => (
+                  <div key={f.label} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/8">
+                    <div className="w-6 h-6 rounded-md bg-accent/15 flex items-center justify-center shrink-0">
+                      <f.icon className="w-3 h-3 text-accent" />
+                    </div>
+                    <span className="text-[11px] text-white/70 font-medium">{f.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                to="/attractions"
+                className="inline-flex items-center gap-3 text-sm font-medium text-accent hover:text-accent/80"
+              >
+                Explore Asuogyaman
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
-
-        <section className="py-16 md:py-24 px-5 relative overflow-hidden">
-          <DotGrid />
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-5 gap-12 md:gap-16">
-              <div className="md:col-span-2 space-y-8">
-                <div className="space-y-6">
-                  {[
-                    { icon: Compass, value: '1950s', label: 'Founded', color: 'text-amber-400' },
-                    { icon: MapPin, value: '25+', label: 'Destinations', color: 'text-emerald-400' },
-                    { icon: Star, value: '4.9', label: 'Traveler Rating', color: 'text-sky-400' },
-                  ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/50">
-                      <div className={`w-10 h-10 rounded-lg ${stat.color.replace('text-', 'bg-')}/10 flex items-center justify-center shrink-0`}>
-                        <stat.icon className={`w-5 h-5 ${stat.color}`} />
-                      </div>
-                      <div>
-                        <div className="text-xl font-medium text-fg tracking-tight">{stat.value}</div>
-                        <div className="text-[11px] text-muted tracking-wide">{stat.label}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="hidden md:block">
-                  <div className="p-5 rounded-xl bg-accent/5 border border-accent/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-accent/15 flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-accent" />
-                      </div>
-                      <span className="text-xs font-medium text-accent tracking-wide">Premium Destination</span>
-                    </div>
-                    <p className="text-[12px] text-muted leading-relaxed">
-                      Recognized as one of Ghana's most captivating regions, blending engineering marvels with natural beauty.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="md:col-span-3 space-y-8">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-px bg-accent/40" />
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent/70">Our Story</span>
-                  </div>
-
-                  <p className="text-base md:text-lg text-muted leading-relaxed">
-                    Nestled in Ghana's Eastern Region, Asuogyaman is a district defined by the majestic Volta River. 
-                    From the engineering marvel of the Akosombo Dam to the iconic Adomi Bridge, this land offers a 
-                    rare blend of natural beauty, cultural richness, and modern adventure.
-                  </p>
-                </div>
-
-                <div className="pl-4 md:pl-8 border-l-2 border-accent/20">
-                  <p className="text-sm md:text-base text-muted/80 italic leading-relaxed">
-                    "Whether you're cruising Lake Volta aboard the Dodi Princess, hiking the Akwamu Gorge, 
-                    or unwinding at a luxury lakeside resort, every moment here tells a story of heritage, 
-                    innovation, and warm Ghanaian hospitality."
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap gap-3">
-                    {[
-                      { icon: Droplets, label: 'Lake Volta', detail: 'World\'s largest man-made lake' },
-                      { icon: Landmark, label: 'Adomi Bridge', detail: 'Iconic suspension bridge' },
-                      { icon: TreePine, label: 'Akwamu Gorge', detail: 'Lush hiking trails' },
-                      { icon: Tent, label: 'Luxury Resorts', detail: 'World-class lakeside stays' },
-                    ].map((f) => (
-                      <div key={f.label} className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg bg-surface border border-border/50">
-                        <div className="w-7 h-7 rounded-md bg-accent/10 flex items-center justify-center shrink-0">
-                          <f.icon className="w-3.5 h-3.5 text-accent" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-fg">{f.label}</div>
-                          <div className="text-[10px] text-muted">{f.detail}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <Link
-                    to="/attractions"
-                    className="inline-flex items-center gap-2.5 text-sm font-medium text-accent hover:text-accent/80"
-                  >
-                    Explore Asuogyaman
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </section>
 
       {/* Dining Preview — Editorial Scroll */}
