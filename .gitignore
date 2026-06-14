@@ -13,6 +13,10 @@ donations.db-wal
 
 .vercel
 
+# Convex auto-generated types
+convex/_generated/
+convex/README.md
+
 # Large media files
 *.mp4
 *.mp3
