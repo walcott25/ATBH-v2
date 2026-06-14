@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
 import { BUSINESS } from '../data'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import AnimatedSection from '../components/animations/animated-section'
@@ -40,6 +40,7 @@ function DotGrid() {
 export default function Business() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
+  const navigate = useNavigate()
 
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
@@ -161,6 +162,7 @@ export default function Business() {
                   return (
                     <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.4, delay: i * 0.03 }}>
+                      <Link to={`/business/${item.id}`} className="block h-full">
                       <GlassCard hover="shine" className="h-full">
                         <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '56%' }}>
                           <img src={item.image} alt={item.name}
@@ -193,17 +195,17 @@ export default function Business() {
                               </div>
                             )}
                             {item.email && (
-                              <a href={`mailto:${item.email}`} className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
+                              <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
                                 <Mail className="w-3 h-3 shrink-0" /><span>Email</span>
                               </a>
                             )}
                             {item.website && (
-                              <a href={item.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
+                              <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
                                 <ExternalLink className="w-3 h-3 shrink-0" /><span>Website</span>
                               </a>
                             )}
                             {item.bookingUrl && (
-                              <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[10px] text-accent hover:text-accent/80 transition-colors font-medium">
+                              <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-accent hover:text-accent/80 transition-colors font-medium">
                                 <ExternalLink className="w-3 h-3 shrink-0" /><span>Book</span>
                               </a>
                             )}
@@ -215,6 +217,7 @@ export default function Business() {
                           </div>
                         </div>
                       </GlassCard>
+                      </Link>
                     </motion.div>
                   )
                 })}

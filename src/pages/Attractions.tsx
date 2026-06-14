@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { ATTRACTIONS } from '../data'
 import type { Attraction } from '../data'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import SectionDivider from '../components/ui/section-divider'
@@ -125,8 +125,9 @@ export default function Attractions() {
   // Featured attraction (top-rated)
   const featuredAttraction = [...ATTRACTIONS].sort((a, b) => (b.rating || 0) - (a.rating || 0))[0]
 
+  const navigate = useNavigate()
   const handleCardClick = (attraction: Attraction) => {
-    setSelectedAttraction(attraction)
+    navigate(`/attractions/${attraction.id}`)
   }
 
   const closeDetail = () => {

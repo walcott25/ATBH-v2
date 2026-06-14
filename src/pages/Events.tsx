@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { EVENTS } from '../data'
 import type { Event } from '../data'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import SectionDivider from '../components/ui/section-divider'
@@ -75,6 +75,7 @@ export default function Events() {
   const [sortBy, setSortBy] = useState<string>('featured')
   const [showSort, setShowSort] = useState(false)
   const [selectedItem, setSelectedItem] = useState<Event | null>(null)
+  const navigate = useNavigate()
   const [reviewIndex, setReviewIndex] = useState(0)
 
 
@@ -179,7 +180,7 @@ export default function Events() {
               </div>
             </RevealSection>
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, ease: easeOut }}
-              className="group cursor-pointer" onClick={() => setSelectedItem(featured)}>
+              className="group cursor-pointer" onClick={() => navigate(`/events/${featured.id}`)}>
               <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group-hover:border-accent/20 transition-all duration-500 aspect-[21/9] md:aspect-[3/1]">
                 <img src={featured.image} alt={featured.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 block max-w-none" style={{ height: '100%' }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-fg/90 via-fg/20 to-transparent" />
@@ -221,7 +222,7 @@ export default function Events() {
             ) : (
               <motion.div key={`${activeCategory}-${searchQuery}-${sortBy}`} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.3 }}
                 className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {filtered.map((item, i) => <EventCard key={item.id} item={item} index={i} onClick={() => setSelectedItem(item)} />)}
+                {filtered.map((item, i) => <EventCard key={item.id} item={item} index={i} onClick={() => navigate(`/events/${item.id}`)} />)}
               </motion.div>
             )}
           </AnimatePresence>
@@ -255,7 +256,7 @@ export default function Events() {
                   <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-5 px-5 snap-x snap-mandatory">
                     {items.map((item, i) => (
                       <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.05 }} className="snap-start shrink-0 w-[300px] sm:w-[340px]">
-                        <div className="group cursor-pointer h-full" onClick={() => setSelectedItem(item)}>
+                        <div className="group cursor-pointer h-full" onClick={() => navigate(`/events/${item.id}`)}>
                           <GlassCard hover="glow" className="h-full">
                             <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '66%' }}>
                               <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 block max-w-none" style={{ height: '100%' }} loading="lazy" />

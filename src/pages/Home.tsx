@@ -123,7 +123,7 @@ function ListingCard({ item, linkTo, featured = false }: { item: any; linkTo: st
 function ExperienceRow({ item, index }: { item: any; index: number }) {
   const isReversed = index % 2 === 1
   return (
-    <Link to="/experience" className="block group">
+    <Link to={`/experience/${item.id}`} className="block group">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

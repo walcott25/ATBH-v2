@@ -150,7 +150,7 @@ export default function Experience() {
                   return (
                     <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.4, delay: i * 0.03 }}>
-                      <div className="group block h-full">
+                      <Link to={`/experience/${item.id}`} className="group block h-full">
                         <GlassCard hover="glow" className="h-full">
                           <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '66%' }}>
                             <img src={item.image} alt={item.name}
@@ -183,9 +183,9 @@ export default function Experience() {
                               </span>
                             </div>
                           </div>
-                        </GlassCard>
-                      </div>
-                    </motion.div>
+                          </GlassCard>
+                        </Link>
+                      </motion.div>
                   )
                 })}
               </motion.div>
