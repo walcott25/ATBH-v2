@@ -58,8 +58,8 @@
     100% { background-position: 0% 50%; }
   }
   @keyframes pulse-soft {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.65; }
   }
 }
 
@@ -200,5 +200,47 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ── Low-GPU / Touch Device Optimizations ── */
+
+/* Tone down expensive blur animations on tablets & phones */
+@media (max-width: 1024px) {
+  .glass { backdrop-filter: blur(12px); }
+  .glass-dark { backdrop-filter: blur(12px); }
+
+  [class*="blur-["] {
+    filter: blur(60px) !important;
+  }
+}
+
+/* Suppress hover effects on touch devices — saves GPU compositing */
+@media (hover: none) and (pointer: coarse) {
+  .hover-lift:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 0 !important;
+  }
+  .group:hover .group-hover\:translate-y-0 {
+    transform: none !important;
+  }
+  .group:hover .group-hover\:scale-105 {
+    transform: none !important;
+  }
+  .group:hover .group-hover\:left-full {
+    left: -100% !important;
+  }
+}
+
+/* Reduce backdrop-blur for low-end GPUs (half the blur radius) */
+@media (prefers-reduced-transparency: reduce) {
+  *,
+  *::before,
+  *::after {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
   }
 }
