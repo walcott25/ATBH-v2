@@ -381,24 +381,18 @@ export default function Home() {
       </AnimatedSection>
 
       {/* About Asuogyaman — Split Layout */}
-      <section className="py-20 md:py-28 px-5 relative overflow-hidden">
+      <AnimatedSection className="py-20 md:py-28 px-5 relative overflow-hidden">
         <DotGrid />
         <div className="max-w-6xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: easeOut }}
-            className="text-center mb-12 md:mb-16"
-          >
+          <div className="text-center mb-12 md:mb-16">
             <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent mb-3 block">About</span>
             <SectionHeading>Discover Asuogyaman</SectionHeading>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
             {/* Image side */}
             <div className="h-full">
-              <div className="relative overflow-hidden rounded-2xl h-full min-h-[280px] md:min-h-[320px]">
+              <div className="relative overflow-hidden rounded-2xl h-full min-h-[280px] md:min-h-[320px] bg-border/15">
                 <img
                   src="/Images/volta-river-landscape.jpg"
                   alt="Serene Volta River landscape"
@@ -477,7 +471,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Dining Preview — Editorial Scroll */}
       <AnimatedSection className="py-20 md:py-28 px-5 relative overflow-hidden">
