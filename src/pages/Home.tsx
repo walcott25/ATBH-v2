@@ -351,40 +351,58 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-stretch">
-            {/* Image side */}
-            <div className="h-full">
-              <div className="relative overflow-hidden rounded-2xl h-full min-h-[280px] md:min-h-[320px]">
-                <img
-                  src="/Images/volta-river-landscape.jpg"
-                  alt="Serene Volta River landscape"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
-                />
-                {!isMobile && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent pointer-events-none" />
-                )}
-                {!isMobile && (
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-                )}
-                {/* Floating stat card */}
-                <div
-                  className="absolute bottom-3 right-3 md:bottom-6 md:right-6 rounded-xl p-3 md:p-5 cursor-default"
-                  style={isMobile ? {
-                    background: 'linear-gradient(135deg, rgba(20,20,20,0.92), rgba(30,30,30,0.85))',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                  } : {
-                    background: 'linear-gradient(135deg, rgba(20,20,20,0.92), rgba(30,30,30,0.85))',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3), 0 10px 24px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
-                  }}
-                >
-                  {/* Gold accent bar */}
-                  <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
-                  <div className="text-xl md:text-2xl font-medium text-white/90 tracking-tight">Est. 2024</div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="w-2 h-2 rounded-full bg-accent shadow-sm shadow-accent/50" />
-                    <div className="text-[10px] text-white/40 tracking-wide">Tourism Initiative</div>
+            {/* Phone mockup side */}
+            <div className="flex items-center justify-center h-full py-4 md:py-0">
+              <div className="relative w-[260px] md:w-[300px]">
+                {/* Phone frame */}
+                <div className="relative rounded-[3rem] border-[3px] border-fg/10 bg-fg/5 p-2.5 md:p-3 shadow-xl shadow-fg/5">
+                  {/* Notch */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] md:w-[120px] h-5 md:h-6 bg-fg/10 rounded-b-2xl z-10" />
+                  {/* Screen */}
+                  <div className="relative rounded-[2.2rem] md:rounded-[2.5rem] overflow-hidden aspect-[9/19] bg-bg">
+                    <img
+                      src="/Images/volta-river-landscape.jpg"
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-fg/85 via-fg/30 to-fg/10" />
+                    {/* Screen content */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-end p-4 md:p-5 pb-6 md:pb-7">
+                      {/* App icon */}
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-accent/90 flex items-center justify-center shadow-lg shadow-accent/20 mb-2">
+                        <Compass className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      </div>
+                      <p className="text-[10px] md:text-xs font-medium text-white/70 tracking-wide">Explore Asuogyaman</p>
+                      <p className="text-base md:text-lg font-bold text-white mt-0.5">Download the App</p>
+                      {/* Stars */}
+                      <div className="flex items-center gap-0.5 my-1.5 md:my-2">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star key={i} className="w-3 h-3 md:w-3.5 md:h-3.5 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                      {/* Play Store button */}
+                      <a
+                        href="#"
+                        className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3.5 md:px-4 py-2 md:py-2.5 hover:bg-white/20 transition-colors active:scale-95"
+                      >
+                        <svg viewBox="0 0 466 512" className="w-4 h-4 md:w-5 md:h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g fillRule="nonzero">
+                            <path fill="#EA4335" d="M199.9 237.8 1.4 470.17c7.22 24.57 30.16 41.81 55.8 41.81 11.16 0 20.93-2.79 29.3-8.37l244.16-139.46L199.9 237.8z"/>
+                            <path fill="#FBBC04" d="m433.91 205.1-104.65-60-111.61 110.22 113.01 108.83 104.64-58.6c18.14-9.77 30.7-29.3 30.7-50.23-1.4-20.93-13.95-40.46-32.09-50.22z"/>
+                            <path fill="#34A853" d="M199.42 273.45 329.27 145.1 87.9 8.37C79.53 2.79 68.36 0 57.2 0 30.7 0 6.98 18.14 1.4 41.86l198.02 231.59z"/>
+                            <path fill="#4285F4" d="M1.39 41.86C0 46.04 0 51.63 0 57.2v397.64c0 5.57 0 9.76 1.4 15.34l216.27-214.86L1.39 41.86z"/>
+                          </g>
+                        </svg>
+                        <div className="text-left">
+                          <div className="text-[7px] md:text-[8px] text-white/60 leading-tight">GET IT ON</div>
+                          <div className="text-[10px] md:text-xs font-semibold text-white leading-tight">Google Play</div>
+                        </div>
+                      </a>
+                    </div>
                   </div>
+                  {/* Home indicator */}
+                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-7 h-7 md:w-8 md:h-8 rounded-full border-[2px] border-fg/10" />
                 </div>
               </div>
             </div>
