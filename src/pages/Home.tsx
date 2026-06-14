@@ -355,22 +355,24 @@ export default function Home() {
             <div className="flex items-center justify-center h-full py-4 md:py-0">
               <div className="relative w-[260px] md:w-[300px]">
                 {/* Phone frame */}
-                <div className="relative rounded-[3rem] border-[3px] border-fg/10 bg-fg/5 p-2.5 md:p-3 shadow-xl shadow-fg/5">
+                <div className="relative rounded-[3.5rem] border-[3px] border-fg/10 bg-fg/5 p-2.5 md:p-3 shadow-2xl shadow-fg/10">
                   {/* Notch */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100px] md:w-[120px] h-5 md:h-6 bg-fg/10 rounded-b-2xl z-10" />
                   {/* Screen */}
-                  <div className="relative rounded-[2.2rem] md:rounded-[2.5rem] overflow-hidden aspect-[9/19] bg-bg">
+                  <div className="relative rounded-[2.5rem] md:rounded-[2.8rem] overflow-hidden aspect-[9/19] bg-bg">
                     <img
-                      src="/Images/volta-river-landscape.jpg"
+                      src="/Images/adomi-bridge-aerial.jpg"
                       alt=""
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-fg/85 via-fg/30 to-fg/10" />
+                    {/* Glass reflection overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-fg/90 via-fg/40 to-fg/5" />
                     {/* Screen content */}
                     <div className="absolute inset-0 flex flex-col items-center justify-end p-4 md:p-5 pb-6 md:pb-7">
                       {/* App icon */}
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-accent/90 flex items-center justify-center shadow-lg shadow-accent/20 mb-2">
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-accent/90 flex items-center justify-center shadow-lg shadow-accent/20 mb-2 ring-1 ring-white/20">
                         <Compass className="w-6 h-6 md:w-7 md:h-7 text-white" />
                       </div>
                       <p className="text-[10px] md:text-xs font-medium text-white/70 tracking-wide">Explore Asuogyaman</p>
@@ -384,7 +386,7 @@ export default function Home() {
                       {/* Play Store button */}
                       <a
                         href="#"
-                        className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3.5 md:px-4 py-2 md:py-2.5 hover:bg-white/20 transition-colors active:scale-95"
+                        className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3.5 md:px-4 py-2 md:py-2.5 hover:bg-white/20 transition-all active:scale-95 ring-1 ring-white/10"
                       >
                         <svg viewBox="0 0 466 512" className="w-4 h-4 md:w-5 md:h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g fillRule="nonzero">
