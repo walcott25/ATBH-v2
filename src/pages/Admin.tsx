@@ -9,7 +9,7 @@ import {
 import {
   DollarSign, Users, Eye, TrendingUp, TrendingDown, RefreshCw,
   Loader2, UserPlus, Building2, Activity, Clock, ArrowRight,
-  Calendar, Target, Wallet, Shield,
+  Calendar, Target, Wallet, Shield, LayoutDashboard, ChevronRight,
 } from 'lucide-react';
 
 const CURRENCY = 'GH₵';
@@ -246,6 +246,14 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-bg">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-1.5 text-[10px] text-muted font-medium tracking-wider uppercase mb-4">
+          <LayoutDashboard className="w-3 h-3" />
+          <span>Admin</span>
+          <ChevronRight className="w-2.5 h-2.5" />
+          <span className="text-fg">Dashboard</span>
+        </div>
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -265,9 +273,9 @@ export default function Admin() {
           </div>
           <button
             onClick={fetchAnalytics}
-            className="inline-flex items-center gap-1.5 text-[10px] font-medium text-muted hover:text-fg transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-medium text-muted border border-border rounded-sm hover:border-accent/30 hover:text-fg transition-all duration-300"
           >
-            <RefreshCw className="w-3.5 h-3.5" /> Refresh
+            <RefreshCw className="w-3 h-3" /> Refresh
           </button>
         </div>
 
@@ -280,10 +288,10 @@ export default function Admin() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.04 }}
-              className="bg-surface border border-border rounded-md p-4 md:p-5 hover:border-accent/20 transition-colors duration-300"
+              className="group bg-surface border border-border rounded-sm p-4 md:p-5 hover:border-accent/25 hover:shadow-[0_0_20px_-8px_rgba(197,149,74,0.15)] transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-1.5">
-                <card.icon className="w-4 h-4 text-muted" />
+                <card.icon className="w-4 h-4 text-muted group-hover:text-accent transition-colors duration-300" />
                 {card.trend}
               </div>
               <div className="text-xl md:text-2xl font-semibold text-fg tracking-tight">{card.value}</div>
@@ -298,7 +306,7 @@ export default function Admin() {
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-surface border border-border rounded-md p-5 mb-8"
+            className="bg-surface border border-border rounded-sm p-5 mb-8 hover:border-accent/15 transition-colors duration-300"
           >
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2.5">
@@ -326,7 +334,7 @@ export default function Admin() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-bg/60 border border-border/60 rounded-md p-3.5"
+                  className="bg-bg/60 border border-border/60 rounded-sm p-3.5 hover:border-accent/20 transition-all duration-300"
                 >
                   <div className="flex items-center gap-1.5 mb-1">
                     <s.icon className="w-3 h-3 text-muted" />
@@ -345,7 +353,7 @@ export default function Admin() {
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-surface border border-border rounded-md p-5 mb-8"
+            className="bg-surface border border-border rounded-sm p-5 mb-8 hover:border-accent/15 transition-colors duration-300"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -362,7 +370,7 @@ export default function Admin() {
                 whileInView={{ width: `${monthlyPct}%` }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                className="h-full bg-accent rounded-full"
+                className="h-full bg-gradient-to-r from-accent/80 to-accent rounded-full"
               />
             </div>
             <div className="flex justify-between mt-1.5">
@@ -382,7 +390,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Donation Trend (30 Days)</h2>
               <ResponsiveContainer width="100%" height={260}>
@@ -412,7 +420,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Daily Donations (14 Days)</h2>
               <ResponsiveContainer width="100%" height={260}>
@@ -436,7 +444,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Donations by Purpose</h2>
               <ResponsiveContainer width="100%" height={260}>
@@ -473,7 +481,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Daily Donation Count</h2>
               <ResponsiveContainer width="100%" height={260}>
@@ -500,7 +508,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Recent Donations</h2>
               <div className="space-y-0">
@@ -528,7 +536,7 @@ export default function Admin() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-surface border border-border rounded-md p-5"
+              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
             >
               <h2 className="text-sm font-semibold text-fg mb-4">Recent Sign-Ups</h2>
               <div className="space-y-0">
