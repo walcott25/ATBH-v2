@@ -43,19 +43,21 @@ function StatCard({ value, label }: { value: string; label: string }) {
   )
 }
 
-function HighlightCard({ icon: Icon, title, description }: { icon: any; title: string; description: string }) {
+function HighlightCard({ icon: Icon, title, description, to }: { icon: any; title: string; description: string; to: string }) {
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3, ease: easeOut }}
-      className="text-center group"
-    >
-      <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4 ring-1 ring-accent/20 group-hover:ring-accent/40 group-hover:bg-accent/15 transition-all duration-300">
-        <Icon className="w-5 h-5 text-accent" />
-      </div>
-      <h3 className="text-sm font-medium text-fg mb-2">{title}</h3>
-      <p className="text-xs text-muted leading-relaxed max-w-xs mx-auto">{description}</p>
-    </motion.div>
+    <Link to={to} className="block group">
+      <motion.div
+        whileHover={{ y: -4 }}
+        transition={{ duration: 0.3, ease: easeOut }}
+        className="text-center"
+      >
+        <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4 ring-1 ring-accent/20 group-hover:ring-accent/40 group-hover:bg-accent/15 transition-all duration-300">
+          <Icon className="w-5 h-5 text-accent" />
+        </div>
+        <h3 className="text-sm font-medium text-fg mb-2 group-hover:text-accent transition-colors">{title}</h3>
+        <p className="text-xs text-muted leading-relaxed max-w-xs mx-auto">{description}</p>
+      </motion.div>
+    </Link>
   )
 }
 
@@ -308,26 +310,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto relative">
           <SectionHeading className="text-center mb-12">Why Visit Asuogyaman</SectionHeading>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <HighlightCard
-              icon={Compass}
-              title="Sunset Cruises"
-              description="Glide across Lake Volta aboard the Dodi Princess as golden light paints the water."
-            />
-            <HighlightCard
-              icon={Sparkles}
-              title="Engineering Marvels"
-              description="Stand before the Akosombo Dam and walk the iconic Adomi Bridge across the Volta."
-            />
-            <HighlightCard
-              icon={Star}
-              title="Luxury Lakeside Stays"
-              description="Unwind at world-class resorts perched on the banks of one of Africa's largest lakes."
-            />
-            <HighlightCard
-              icon={Sun}
-              title="Rich Cultural Heritage"
-              description="Experience Akwama festivals, traditional drumming, and centuries-old customs."
-            />
+            <HighlightCard icon={Compass} title="Sunset Cruises" description="Glide across Lake Volta aboard the Dodi Princess as golden light paints the water." to="/experience" />
+            <HighlightCard icon={Sparkles} title="Engineering Marvels" description="Stand before the Akosombo Dam and walk the iconic Adomi Bridge across the Volta." to="/attractions" />
+            <HighlightCard icon={Star} title="Luxury Lakeside Stays" description="Unwind at world-class resorts perched on the banks of one of Africa's largest lakes." to="/stay" />
+            <HighlightCard icon={Sun} title="Rich Cultural Heritage" description="Experience Akwama festivals, traditional drumming, and centuries-old customs." to="/experience" />
           </div>
         </div>
       </AnimatedSection>
@@ -408,7 +394,7 @@ export default function Home() {
 
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-8">
                 {[
-                  { value: '1950s', label: 'Founded' },
+                  { value: 1950, suffix: 's', label: 'Founded' },
                   { value: 25, suffix: '+', label: 'Destinations' },
                   { value: 4.9, decimals: 1, label: 'Traveler Rating' },
                 ].map((s) => (
@@ -430,17 +416,17 @@ export default function Home() {
 
               <div className="flex flex-wrap gap-2.5 mb-10">
                 {[
-                  { icon: Droplets, label: 'Lake Volta', detail: 'World\'s largest man-made lake' },
-                  { icon: Landmark, label: 'Adomi Bridge', detail: 'Iconic suspension bridge' },
-                  { icon: TreePine, label: 'Akwamu Gorge', detail: 'Lush hiking trails' },
-                  { icon: Tent, label: 'Luxury Resorts', detail: 'World-class lakeside stays' },
+                  { icon: Droplets, label: 'Lake Volta', detail: 'World\'s largest man-made lake', to: '/attractions' },
+                  { icon: Landmark, label: 'Adomi Bridge', detail: 'Iconic suspension bridge', to: '/attractions' },
+                  { icon: TreePine, label: 'Akwamu Gorge', detail: 'Lush hiking trails', to: '/attractions' },
+                  { icon: Tent, label: 'Luxury Resorts', detail: 'World-class lakeside stays', to: '/stay' },
                 ].map((f) => (
-                  <div key={f.label} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/8">
-                    <div className="w-6 h-6 rounded-md bg-accent/15 flex items-center justify-center shrink-0">
+                  <Link key={f.label} to={f.to} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/8 hover:bg-white/10 hover:border-accent/30 transition-all group">
+                    <div className="w-6 h-6 rounded-md bg-accent/15 flex items-center justify-center shrink-0 group-hover:bg-accent/25 transition-colors">
                       <f.icon className="w-3 h-3 text-accent" />
                     </div>
-                    <span className="text-[11px] text-white/70 font-medium">{f.label}</span>
-                  </div>
+                    <span className="text-[11px] text-white/70 font-medium group-hover:text-white transition-colors">{f.label}</span>
+                  </Link>
                 ))}
               </div>
 
@@ -696,17 +682,19 @@ export default function Home() {
           <SectionHeading className="text-center mb-12">Plan Your Trip</SectionHeading>
           <div className="grid sm:grid-cols-3 gap-10">
             {[
-              { icon: Sun, title: 'Best Time to Visit', body: 'November to March offers the most pleasant weather — clear skies, cool breezes, and calm lake waters perfect for cruising.' },
-              { icon: Car, title: 'Getting There', body: 'A 90-minute drive from Accra via the Akosombo road. Regular buses and tro-tros run from major terminals throughout the day.' },
-              { icon: Compass, title: 'Travel Tips', body: 'Pack light clothing, sunscreen, and a camera. Most attractions are cash-based. Local guides are available at major sites.' },
+              { icon: Sun, title: 'Best Time to Visit', body: 'November to March offers the most pleasant weather — clear skies, cool breezes, and calm lake waters perfect for cruising.', to: '/map' },
+              { icon: Car, title: 'Getting There', body: 'A 90-minute drive from Accra via the Akosombo road. Regular buses and tro-tros run from major terminals throughout the day.', to: '/map' },
+              { icon: Compass, title: 'Travel Tips', body: 'Pack light clothing, sunscreen, and a camera. Most attractions are cash-based. Local guides are available at major sites.', to: '/experience' },
             ].map((item) => (
-              <div key={item.title} className="glass rounded-xl p-6 hover-lift">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center mb-4 ring-1 ring-accent/20">
-                  <item.icon className="w-5 h-5 text-accent" />
+              <Link key={item.title} to={item.to} className="block group">
+                <div className="glass rounded-xl p-6 hover-lift group-hover:border-accent/20 transition-all duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center mb-4 ring-1 ring-accent/20 group-hover:ring-accent/40 group-hover:bg-accent/15 transition-all">
+                    <item.icon className="w-5 h-5 text-accent" />
+                  </div>
+                  <h3 className="text-sm font-medium text-fg mb-2 group-hover:text-accent transition-colors">{item.title}</h3>
+                  <p className="text-xs text-muted leading-relaxed">{item.body}</p>
                 </div>
-                <h3 className="text-sm font-medium text-fg mb-2">{item.title}</h3>
-                <p className="text-xs text-muted leading-relaxed">{item.body}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
