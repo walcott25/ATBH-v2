@@ -67,51 +67,107 @@ export default function AppSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.02] to-transparent" />
 
       <div className="max-w-6xl mx-auto relative grid md:grid-cols-2 gap-16 items-center">
-        {/* Phone mockup */}
-        <motion.div
-          className="relative mx-auto w-56 md:w-64"
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <div className="relative aspect-[9/19] bg-surface rounded-[2.5rem] border-4 border-border shadow-2xl shadow-accent/5 overflow-hidden">
-            {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-black rounded-b-xl z-10" />
-            {/* Screen content */}
-            <div className="absolute inset-0 top-5 bg-gradient-to-b from-fg/5 to-bg">
-              <div className="p-4 pt-6 space-y-2">
-                <div className="w-3/4 h-3 bg-accent/30 rounded-full animate-pulse" />
-                <div className="w-1/2 h-2 bg-fg/10 rounded-full" />
-                <div className="grid grid-cols-2 gap-2 mt-4">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="aspect-[3/2] bg-fg/5 rounded-lg overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent" />
-                      <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                        <div className="w-full h-1.5 bg-fg/10 rounded-full" />
+        {/* Phone mockup — realistic */}
+        <div className="relative mx-auto w-60 md:w-72">
+          {/* Glow behind */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-radial from-accent/[0.06] to-transparent pointer-events-none" />
+          {/* Phone body */}
+          <div className="relative aspect-[9/19.5] bg-[#1a1a1a] rounded-[3rem] shadow-[0_0_0_2px_#333,0_20px_60px_-8px_rgba(0,0,0,0.4)] overflow-hidden">
+            {/* Side buttons */}
+            <div className="absolute right-[-2px] top-24 w-[3px] h-8 bg-[#333] rounded-r-sm" />
+            <div className="absolute right-[-2px] top-36 w-[3px] h-12 bg-[#333] rounded-r-sm" />
+            <div className="absolute left-[-2px] top-32 w-[3px] h-10 bg-[#333] rounded-l-sm" />
+            {/* Screen bezel */}
+            <div className="absolute inset-1 bg-black rounded-[2.6rem] overflow-hidden">
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[30px] bg-black rounded-b-2xl z-20 flex items-center justify-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-[#1a1a1a] border border-[#333]" />
+                <div className="w-5 h-5 rounded-full bg-[#1a1a1a]" />
+              </div>
+              {/* Screen */}
+              <div className="absolute inset-0 top-0 bg-[#f5f5f0]">
+                {/* Status bar */}
+                <div className="flex items-center justify-between px-6 pt-[38px] pb-1 text-[10px] text-fg/70 font-medium">
+                  <span>9:41</span>
+                  <div className="flex items-center gap-1">
+                    <div className="w-3.5 h-2 border border-fg/40 rounded-[2px] flex items-center px-[1.5px]">
+                      <div className="w-2 h-[5px] bg-fg/60 rounded-[1px]" />
+                    </div>
+                    <svg className="w-3 h-3 text-fg/60" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                    </svg>
+                  </div>
+                </div>
+                {/* App header */}
+                <div className="flex items-center justify-between px-4 py-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center">
+                      <Compass className="w-3.5 h-3.5 text-white" />
+                    </div>
+                    <span className="text-[11px] font-semibold text-fg tracking-tight">Asuogyaman</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-fg/5 flex items-center justify-center">
+                      <svg className="w-3 h-3 text-fg/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m11-11h-2M3 12H1m18.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414"/></svg>
+                    </div>
+                    <div className="w-6 h-6 rounded-full bg-fg/5 flex items-center justify-center">
+                      <svg className="w-3 h-3 text-fg/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                    </div>
+                  </div>
+                </div>
+                {/* Hero card — Adomi Bridge */}
+                <div className="mx-4 rounded-xl overflow-hidden relative h-28 mb-2" style={{ background: 'linear-gradient(135deg, #1a3a2a 0%, #2d5a3f 30%, #4a7a5f 60%, #6b9a7f 100%)' }}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute top-2 left-2 bg-accent/90 text-white text-[8px] font-semibold px-1.5 py-0.5 rounded">FEATURED</div>
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <div className="text-white text-[11px] font-semibold">Adomi Bridge</div>
+                    <div className="text-white/60 text-[8px] flex items-center gap-1">
+                      <MapPin className="w-2.5 h-2.5" />
+                      Volta Region
+                    </div>
+                  </div>
+                </div>
+                {/* Section title */}
+                <div className="flex items-center justify-between px-4 mb-2">
+                  <span className="text-[10px] font-semibold text-fg/80 tracking-wide">Popular Destinations</span>
+                  <span className="text-[8px] text-accent font-medium">See all</span>
+                </div>
+                {/* Horizontal scroll cards */}
+                <div className="flex gap-2 px-4 mb-3 overflow-hidden">
+                  {[
+                    { bg: 'linear-gradient(135deg, #1a2a4a, #2a4a7a, #4a7aaa)', label: 'Akosombo Dam', sub: 'Engineering marvel' },
+                    { bg: 'linear-gradient(135deg, #3a1a1a, #5a2a2a, #7a4a4a)', label: 'Dodi Princess', sub: 'Lake cruise' },
+                    { bg: 'linear-gradient(135deg, #1a3a3a, #2a5a5a, #4a7a7a)', label: 'Akwamu Gorge', sub: 'Hiking trail' },
+                  ].map((item, i) => (
+                    <div key={i} className="shrink-0 w-28 rounded-lg overflow-hidden relative h-20" style={{ background: item.bg }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                      <div className="absolute bottom-1.5 left-2 right-2">
+                        <div className="text-[9px] text-white font-semibold">{item.label}</div>
+                        <div className="text-[7px] text-white/50">{item.sub}</div>
+                      </div>
+                      <div className="absolute top-1 right-1 w-3 h-3 rounded-full border border-white/30 flex items-center justify-center">
+                        <svg className="w-2 h-2 text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center gap-1.5 pt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-1.5 h-1.5 rounded-full bg-accent/40" />
+                {/* Bottom tab bar */}
+                <div className="absolute bottom-0 left-0 right-0 bg-white/90 border-t border-fg/5 px-4 py-1.5 flex items-center justify-around">
+                  {[
+                    { icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', active: true },
+                    { icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', active: false },
+                    { icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', active: false },
+                    { icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', active: false },
+                  ].map((tab, i) => (
+                    <svg key={i} className={`w-4 h-4 ${tab.active ? 'text-accent' : 'text-fg/30'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={tab.icon} />
+                    </svg>
                   ))}
-                  <div className="w-2 h-1.5 bg-fg/10 rounded-full ml-1" />
-                </div>
-                <div className="w-full h-6 bg-accent/10 rounded-lg mt-2 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full border border-accent/40" />
                 </div>
               </div>
             </div>
-            {/* Screen reflection */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
-            {/* Home indicator */}
-            <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-20 h-1 bg-fg/20 rounded-full" />
           </div>
-          {/* Glow behind phone */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] bg-gradient-radial from-accent/[0.07] to-transparent pointer-events-none" />
-        </motion.div>
+        </div>
 
         {/* Text content */}
         <motion.div
