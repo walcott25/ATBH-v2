@@ -228,7 +228,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium tracking-widest uppercase text-white/70 border border-white/10 bg-white/5 backdrop-blur-sm mb-6">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-medium tracking-[0.25em] uppercase text-accent border border-accent/20 bg-accent/5 backdrop-blur-sm mb-6">
               <Sparkles className="w-3 h-3" />
               Eastern Region, Ghana
             </span>
@@ -238,16 +238,32 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: easeOut }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-sans text-white font-medium tracking-tight leading-none mb-6"
+            className="font-['Playfair_Display_SC'],serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-semibold tracking-wide leading-none mb-4"
           >
             Asuogyaman
           </motion.h1>
 
           <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45, ease: easeOut }}
+            className="text-xs md:text-sm text-white/40 font-medium tracking-[0.25em] uppercase mb-6"
+          >
+            Eastern Region, Ghana
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.55, ease: easeOut }}
+            className="w-16 h-0.5 bg-accent/60 mx-auto mb-8"
+          />
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
-            className="text-sm md:text-base text-white/60 max-w-lg mx-auto mb-10 leading-relaxed font-light"
+            className="text-sm md:text-base text-white/60 max-w-lg mx-auto mb-12 leading-relaxed font-light"
           >
             Where the Volta River shapes a landscape of engineering marvels, natural beauty, and quiet luxury.
           </motion.p>
