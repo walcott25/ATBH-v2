@@ -38,6 +38,7 @@
     "@capacitor/android": "^8.3.0",
     "@capacitor/cli": "^8.3.0",
     "@capacitor/core": "^8.3.0",
+    "@clerk/backend": "^3.7.0",
     "@clerk/react": "^6.7.3",
     "@fontsource-variable/geist": "^5.2.9",
     "@google/genai": "^1.29.0",

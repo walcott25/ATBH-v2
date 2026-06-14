@@ -1,13 +1,14 @@
-import { useState, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { EXPERIENCES } from '../data'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
 import AnimatedSection from '../components/animations/animated-section'
 import RevealSection from '../components/animations/reveal-section'
+import MirrorHero from '../components/ui/mirror-hero'
 import {
-  ArrowRight, Sparkles, Ship, Compass, Mountain, Landmark,
+  ArrowRight, Ship, Compass, Mountain, Landmark,
   Utensils, Heart, Star, Quote, Clock, Search, X
 } from 'lucide-react'
 
@@ -59,11 +60,7 @@ export default function Experience() {
   const [searchQuery, setSearchQuery] = useState('')
   const [reviewIndex, setReviewIndex] = useState(0)
 
-  const heroRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const heroImgY = useTransform(heroScroll, [0, 1], ['0%', '25%'])
-  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0])
-  const heroScale = useTransform(heroScroll, [0, 0.8], [1, 0.95])
+
 
   const filtered = EXPERIENCES
     .filter((e) => {
@@ -84,51 +81,13 @@ export default function Experience() {
 
   return (
     <div className="min-h-screen bg-bg">
-      {/* HERO */}
-      <section ref={heroRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
-        <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
-          <img
-            src="/Images/hero-experience.jpg"
-            alt="Asuogyaman experiences"
-            className="absolute inset-0 w-full h-full object-cover block max-w-none"
-            style={{ height: '100%' }}
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-fg/60 via-fg/40 to-fg/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" style={{ mixBlendMode: 'soft-light' }} />
-        </motion.div>
-        <FloatingOrbs />
-        <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 text-center px-5 max-w-4xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium tracking-widest uppercase text-white/70 border border-white/10 bg-white/5 backdrop-blur-sm mb-6">
-              <Sparkles className="w-3 h-3" /> Curated Journey
-            </span>
-          </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3, ease: easeOut }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-sans text-white font-medium tracking-tight leading-none mb-6">
-            The Asuogyaman Experience
-          </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: easeOut }}
-            className="text-sm md:text-base text-white/60 max-w-xl mx-auto mb-10 leading-relaxed font-light">
-            From cruising Lake Volta to hiking the Akwamu Gorge — discover curated adventures that showcase the very best of the Volta Region.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7, ease: easeOut }}
-            className="flex items-center justify-center gap-4 flex-wrap">
-            <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-6 py-3 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
-              Start Exploring <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </a>
-            <a href="#explore" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm">
-              <Compass className="w-4 h-4" /> All Activities
-            </a>
-          </motion.div>
-        </motion.div>
-        <motion.div style={{ opacity: heroOpacity }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity, ease: easeOut }}
-            className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1.5">
-            <div className="w-1 h-2 rounded-full bg-white/40" />
-          </motion.div>
-        </motion.div>
-      </section>
+      <MirrorHero
+        image="/Images/hero-experience.jpg"
+        badge="Curated Journey"
+        title="The Asuogyaman Experience"
+        description="From cruising Lake Volta to hiking the Akwamu Gorge — discover curated adventures that showcase the very best of the Volta Region."
+        cta={{ label: 'Start Exploring', href: '#explore' }}
+      />
 
       {/* STATS */}
       <AnimatedSection className="py-16 px-5 relative border-b border-border/40">
