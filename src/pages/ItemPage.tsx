@@ -37,9 +37,9 @@ export default function ItemPage() {
   const nextItem = idx < items.length - 1 ? items[idx + 1] : null
 
   return (
-    <div className={`min-h-screen ${type === 'schools' ? 'bg-gradient-to-b from-black/90 via-black/70 to-black/90' : 'bg-bg'}`}>
+    <div className="min-h-screen bg-bg">
       {/* Back nav */}
-      <div className={`sticky top-0 z-50 backdrop-blur-xl border-b border-border/40 ${type === 'schools' ? 'bg-black/60' : 'bg-bg/80'}`}>
+      <div className="sticky top-0 z-50 bg-bg/80 backdrop-blur-xl border-b border-border/40">
         <div className="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
           <Link to={`/${type}`} className="flex items-center gap-2 text-xs text-muted hover:text-fg transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to {label.back}

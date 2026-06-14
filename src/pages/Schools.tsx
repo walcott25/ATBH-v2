@@ -1,12 +1,9 @@
 import { useState, useRef, useMemo } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { SCHOOLS } from '../data'
 import type { School } from '../data'
 import GlassCard from '../components/ui/glass-card'
 import AnimatedCounter from '../components/ui/animated-counter'
-import AnimatedSection from '../components/animations/animated-section'
-import RevealSection from '../components/animations/reveal-section'
 import SectionDivider from '../components/ui/section-divider'
 import MirrorHero from '../components/ui/mirror-hero'
 import { FloatingOrbs } from '../components/ui/floating-orbs'
@@ -18,8 +15,6 @@ import {
   Map as MapIcon, Grid3X3, BarChart3, Compass, Award,
   School as SchoolIcon
 } from 'lucide-react'
-
-const easeOut = [0.25, 0.1, 0.25, 1] as const
 
 const DefaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -75,13 +70,11 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
   const handleMouseLeave = () => { setRotateX(0); setRotateY(0); setGlowX(50); setGlowY(50) }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.4, delay: index * 0.03 }}>
-      <motion.div ref={cardRef} onClick={onClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
+    <div>
+      <div ref={cardRef} onClick={onClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
         className="group cursor-pointer" style={{ perspective: '1000px' }}>
-        <motion.div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group-hover:border-accent/20 transition-all duration-500"
-          style={{ transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`, transformStyle: 'preserve-3d' }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}>
+        <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group-hover:border-accent/20 transition-all duration-500"
+          style={{ transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`, transformStyle: 'preserve-3d' }}>
           <div className="relative overflow-hidden" style={{ paddingBottom: '66%' }}>
             <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
               loading={index < 4 ? 'eager' : 'lazy'} />
@@ -125,9 +118,9 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
               </span>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
-    </motion.div>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -184,17 +177,13 @@ export default function Schools() {
       />
 
       {/* WORLD-CLASS STATS SECTION */}
-      <AnimatedSection className="py-16 px-5 relative border-b border-border/40">
+      <section className="py-16 px-5 relative border-b border-border/40">
         <DotGrid />
         <div className="max-w-5xl mx-auto relative">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {districtStats.map((stat, i) => (
-              <motion.div
+              <div
                 key={stat.label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: easeOut }}
                 className="text-center group"
               >
                 <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-accent/5 border border-accent/10 flex items-center justify-center group-hover:bg-accent/10 group-hover:scale-105 transition-all duration-300">
@@ -204,18 +193,18 @@ export default function Schools() {
                   {typeof stat.value === 'number' ? <AnimatedCounter value={stat.value} suffix={stat.suffix} /> : stat.value}
                 </div>
                 <div className="text-xs text-muted tracking-wide">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
-      </AnimatedSection>
+      </section>
 
       {/* FEATURED SCHOOL */}
       {featuredSchool && activeType === 'All' && !searchQuery && (
-        <AnimatedSection className="py-16 md:py-20 px-5 relative overflow-hidden">
+        <section className="py-16 md:py-20 px-5 relative overflow-hidden">
           <SectionDivider label="Featured School" className="mb-8" />
           <div className="max-w-7xl mx-auto relative">
-            <RevealSection>
+            <div>
               <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group cursor-pointer"
                 onClick={() => navigate(`/schools/${featuredSchool.id}`)}>
                 <div className="grid md:grid-cols-2">
@@ -249,9 +238,9 @@ export default function Schools() {
                   </div>
                 </div>
               </div>
-            </RevealSection>
+            </div>
           </div>
-        </AnimatedSection>
+        </section>
       )}
 
       {/* FILTER BAR */}
@@ -277,12 +266,12 @@ export default function Schools() {
           </div>
           <div className="flex items-center gap-2 flex-wrap mt-4">
             {types.map((type) => (
-              <motion.button key={type} layout onClick={() => setActiveType(type)}
+              <button key={type} onClick={() => setActiveType(type)}
                 className={`inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-lg border transition-all duration-200 ${
                   activeType === type ? 'bg-accent text-accent-fg border-accent shadow-sm shadow-accent/20' : 'bg-surface text-muted border-border hover:text-fg hover:border-fg/30'
                 }`}>
                 {type === 'All' ? <GraduationCap className="w-3.5 h-3.5" /> : typeIcon(type)}{type}
-              </motion.button>
+              </button>
             ))}
           </div>
         </div>
@@ -296,21 +285,18 @@ export default function Schools() {
               <p className="text-xs text-muted">{filtered.length} {filtered.length === 1 ? 'school' : 'schools'} found</p>
               {activeType !== 'All' && <button onClick={() => setActiveType('All')} className="text-xs text-accent hover:text-accent/80 transition-colors flex items-center gap-1"><X className="w-3 h-3" /> Clear filter</button>}
             </div>
-            <AnimatePresence mode="wait">
-              {filtered.length === 0 ? (
-                <motion.div key="empty" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="text-center py-20">
+            {filtered.length === 0 ? (
+                <div className="text-center py-20">
                   <SchoolIcon className="w-12 h-12 text-muted/30 mx-auto mb-4" /><p className="text-sm text-muted">No schools match your search.</p>
                   <button onClick={() => { setSearchQuery(''); setActiveType('All') }} className="text-xs text-accent hover:text-accent/80 transition-colors mt-2">Reset filters</button>
-                </motion.div>
+                </div>
               ) : (
-                <motion.div key={`${activeType}-${searchQuery}`} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
-                  className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {filtered.map((item, i) => (
                     <SchoolCard key={item.id} item={item} index={i} onClick={() => navigate(`/schools/${item.id}`)} />
                   ))}
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
           </div>
         </section>
       ) : (
@@ -344,10 +330,10 @@ export default function Schools() {
 
       {/* WORLD-CLASS: PROGRAM POPULARITY SHOWCASE */}
       {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
-        <AnimatedSection className="py-16 md:py-20 px-5 relative overflow-hidden border-t border-border/40">
+        <section className="py-16 md:py-20 px-5 relative overflow-hidden border-t border-border/40">
           <SectionDivider label="Programme Popularity" className="mb-8" />
           <div className="max-w-7xl mx-auto">
-            <RevealSection>
+            <div>
               <div className="grid md:grid-cols-2 gap-8 items-start">
                 <div>
                   <h2 className="text-xl md:text-2xl font-medium text-fg mb-3 tracking-tight">Most Offered Programmes</h2>
@@ -368,12 +354,9 @@ export default function Schools() {
                             <span className="text-[10px] text-muted font-mono">{count} {count === 1 ? 'school' : 'schools'}</span>
                           </div>
                           <div className="w-full h-2 bg-border/40 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${pct}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 0.8, delay: i * 0.05, ease: easeOut }}
-                              className="h-full rounded-full bg-gradient-to-r from-accent/60 to-accent"
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-accent/60 to-accent transition-all duration-1000"
+                              style={{ width: `${pct}%` }}
                             />
                           </div>
                         </div>
@@ -415,17 +398,17 @@ export default function Schools() {
                   </div>
                 </div>
               </div>
-            </RevealSection>
+            </div>
           </div>
-        </AnimatedSection>
+        </section>
       )}
 
       {/* WORLD-CLASS: ALL SCHOOLS HORIZONTAL SHOWCASE (replaces Type Showcases) */}
       {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
-        <AnimatedSection className="py-16 md:py-20 px-5 relative overflow-hidden bg-surface/30">
+        <section className="py-16 md:py-20 px-5 relative overflow-hidden bg-surface/30">
           <SectionDivider label="All Schools at a Glance" className="mb-8" />
           <div className="max-w-7xl mx-auto relative">
-            <RevealSection>
+            <div>
               <div className="flex items-end justify-between mb-8">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center border bg-accent/10 border-accent/20">
@@ -437,12 +420,10 @@ export default function Schools() {
                   </div>
                 </div>
               </div>
-            </RevealSection>
+            </div>
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-5 px-5 snap-x snap-mandatory">
               {SCHOOLS.map((item, i) => (
-                <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="snap-start shrink-0 w-[300px] sm:w-[340px]">
+                <div key={item.id} className="snap-start shrink-0 w-[300px] sm:w-[340px]">
                   <Link to={`/schools/${item.id}`} className="group block h-full">
                     <GlassCard hover="glow" className="h-full">
                       <div className="relative overflow-hidden bg-surface" style={{ paddingBottom: '66%' }}>
@@ -465,18 +446,18 @@ export default function Schools() {
                       </div>
                     </GlassCard>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
-        </AnimatedSection>
+        </section>
       )}
 
       {/* CTA */}
-      <AnimatedSection className="py-24 md:py-28 px-5 text-center relative overflow-hidden">
+      <section className="py-24 md:py-28 px-5 text-center relative overflow-hidden">
         <FloatingOrbs /><div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent" />
         <div className="max-w-lg mx-auto relative">
-          <RevealSection>
+          <div>
             <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Shape the future with education</h2>
             <p className="text-sm text-muted mb-8 leading-relaxed">Asuogyaman's schools are nurturing the next generation of leaders, innovators, and changemakers. Discover the learning opportunities available.</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -484,9 +465,9 @@ export default function Schools() {
                 Find a School <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </div>
-          </RevealSection>
+          </div>
         </div>
-      </AnimatedSection>
+      </section>
 
     </div>
   )

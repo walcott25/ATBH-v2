@@ -115,49 +115,29 @@ const Gallery = () => {
                 className="text-xs text-accent hover:text-accent/80 transition-colors">Show all</button>
             )}
           </div>
-          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3, delay: index * 0.02 }}
-                  className="group relative overflow-hidden rounded-xl bg-surface border border-border cursor-pointer"
-                  onClick={() => setSelectedIndex(index)}
-                >
-                  {/* Spacer creates the 1:1 aspect ratio — bulletproof padding-bottom technique */}
-                  <div className="w-full" style={{ paddingBottom: '100%' }} />
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      // Show a placeholder icon when image fails
-                      const parent = target.parentElement;
-                      if (parent) {
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'absolute inset-0 flex items-center justify-center text-muted/40';
-                        placeholder.innerHTML = '<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"32\\" height=\\"32\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><rect x=\\"3\\" y=\\"3\\" width=\\"18\\" height=\\"18\\" rx=\\"2\\" ry=\\"2\\"/><circle cx=\\"8.5\\" cy=\\"8.5\\" r=\\"1.5\\"/><polyline points=\\"21 15 16 10 5 21\\"/></svg>';
-                        parent.appendChild(placeholder);
-                      }
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-fg/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                    <div>
-                      <h3 className="text-white text-xs font-medium">{item.alt}</h3>
-                      <span className="text-white/50 text-[9px] uppercase tracking-wider">{item.category}</span>
-                    </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            {filtered.map((item, index) => (
+              <div
+                key={item.id}
+                className="group relative overflow-hidden rounded-xl bg-surface border border-border cursor-pointer"
+                style={{ aspectRatio: '1 / 1', minHeight: '100px' }}
+                onClick={() => setSelectedIndex(index)}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-fg/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                  <div>
+                    <h3 className="text-white text-xs font-medium">{item.alt}</h3>
+                    <span className="text-white/50 text-[9px] uppercase tracking-wider">{item.category}</span>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+              </div>
+            ))}
+          </div>
           {filtered.length === 0 && (
             <div className="text-center py-20">
               <ImageIcon className="w-12 h-12 text-muted/30 mx-auto mb-4" />
