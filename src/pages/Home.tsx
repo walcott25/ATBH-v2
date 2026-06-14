@@ -349,6 +349,54 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
+      {/* Featured Attractions — Editorial Hero + Grid */}
+      <AnimatedSection className="py-20 md:py-28 px-5 relative overflow-hidden">
+        <FloatingOrbs />
+        <div className="max-w-6xl mx-auto relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: easeOut }}
+            className="flex items-end justify-between mb-8 md:mb-12"
+          >
+            <div>
+              <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent mb-2 block">Explore</span>
+              <SectionHeading>Discover</SectionHeading>
+            </div>
+            <Link to="/attractions" className="group text-[10px] font-medium text-muted hover:text-accent transition-colors flex items-center gap-1.5">
+              View all <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </motion.div>
+
+          {/* Hero feature card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOut }}
+            className="mb-5"
+          >
+            <ListingCard item={ATTRACTIONS[0]} linkTo="/attractions" featured />
+          </motion.div>
+
+          {/* Two smaller cards */}
+          <div className="grid sm:grid-cols-2 gap-5">
+            {ATTRACTIONS.slice(1, 3).map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.1, ease: easeOut }}
+              >
+                <ListingCard item={item} linkTo="/attractions" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* About Asuogyaman — Split Layout */}
       <section className="py-20 md:py-28 px-5 relative overflow-hidden">
         {!isMobile && <DotGrid />}
@@ -456,54 +504,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Featured Attractions — Editorial Hero + Grid */}
-      <AnimatedSection className="py-20 md:py-28 px-5 relative overflow-hidden">
-        <FloatingOrbs />
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: easeOut }}
-            className="flex items-end justify-between mb-8 md:mb-12"
-          >
-            <div>
-              <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent mb-2 block">Explore</span>
-              <SectionHeading>Discover</SectionHeading>
-            </div>
-            <Link to="/attractions" className="group text-[10px] font-medium text-muted hover:text-accent transition-colors flex items-center gap-1.5">
-              View all <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          </motion.div>
-
-          {/* Hero feature card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: easeOut }}
-            className="mb-5"
-          >
-            <ListingCard item={ATTRACTIONS[0]} linkTo="/attractions" featured />
-          </motion.div>
-
-          {/* Two smaller cards */}
-          <div className="grid sm:grid-cols-2 gap-5">
-            {ATTRACTIONS.slice(1, 3).map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.1, ease: easeOut }}
-              >
-                <ListingCard item={item} linkTo="/attractions" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
 
       {/* Dining Preview — Editorial Scroll */}
       <AnimatedSection className="py-20 md:py-28 px-5 relative overflow-hidden">
