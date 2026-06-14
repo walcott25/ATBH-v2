@@ -4,7 +4,7 @@ import AnimatedSection from '../animations/animated-section'
 
 function DotGrid() {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.012]">
       <div className="w-full h-full" style={{
         backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
         backgroundSize: '32px 32px'
