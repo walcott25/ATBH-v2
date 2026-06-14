@@ -848,9 +848,9 @@ function AttractionCard({ item, index, onClick }: { item: Attraction; index: num
               <span className={`text-[9px] font-semibold uppercase tracking-widest ${catColor}`}>
                 {item.category}
               </span>
-              <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent/60 transition-colors">
-                <ArrowRight className="w-3 h-3" />
+              <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent transition-colors cursor-pointer">
                 Explore
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </div>
           </div>

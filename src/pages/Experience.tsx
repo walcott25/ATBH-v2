@@ -178,8 +178,8 @@ export default function Experience() {
                             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
                             <div className="flex items-center justify-between pt-1">
                               <span className="text-[9px] font-mono font-semibold text-accent">{item.price}</span>
-                              <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent/60 transition-colors">
-                                Discover <ArrowRight className="w-3 h-3" />
+                              <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent transition-colors cursor-pointer">
+                                Explore<ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                               </span>
                             </div>
                           </div>
