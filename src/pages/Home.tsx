@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ATTRACTIONS, DINING, STAY, REVIEWS, EXPERIENCES, EVENTS } from '../data';
@@ -178,14 +178,6 @@ function EventCard({ item }: { item: any }) {
 
 export default function Home() {
   const [reviewIndex, setReviewIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroImgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
@@ -390,15 +382,13 @@ export default function Home() {
 
       {/* About Asuogyaman — Split Layout */}
       <section className="py-20 md:py-28 px-5 relative overflow-hidden">
-        {!isMobile && <DotGrid />}
+        <DotGrid />
         <div className="max-w-6xl mx-auto relative">
           <motion.div
-            {...(!isMobile && {
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              viewport: { once: true },
-              transition: { duration: 0.5, ease: easeOut }
-            })}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: easeOut }}
             className="text-center mb-12 md:mb-16"
           >
             <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent mb-3 block">About</span>
@@ -415,19 +405,12 @@ export default function Home() {
                   className="absolute inset-0 w-full h-full object-cover"
                   loading="lazy"
                 />
-                {!isMobile && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent pointer-events-none" />
-                )}
-                {!isMobile && (
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
                 {/* World Class badge */}
                 <div
                   className="absolute bottom-3 right-3 md:bottom-6 md:right-6 rounded-xl p-3 md:p-5 cursor-default"
-                  style={isMobile ? {
-                    background: 'linear-gradient(135deg, rgba(20,20,20,0.92), rgba(30,30,30,0.85))',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                  } : {
+                  style={{
                     background: 'linear-gradient(135deg, rgba(20,20,20,0.92), rgba(30,30,30,0.85))',
                     border: '1px solid rgba(255,255,255,0.08)',
                     boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3), 0 10px 24px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
