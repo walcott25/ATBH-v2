@@ -84,40 +84,40 @@ export default function App() {
           <Route path="/privacy" element={
             <Suspense fallback={<PageSkeleton />}><PageTransition><Privacy /></PageTransition></Suspense>
           } />
-          <Route path="/admin" element={
-            <Suspense fallback={<PageSkeleton />}><PageTransition><Admin /></PageTransition></Suspense>
-          } />
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/attractions" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Attractions /></PageTransition></Suspense>
+            } />
+            <Route path="/dining" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Dining /></PageTransition></Suspense>
+            } />
+            <Route path="/stay" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Stay /></PageTransition></Suspense>
+            } />
+            <Route path="/schools" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Schools /></PageTransition></Suspense>
+            } />
+            <Route path="/events" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Events /></PageTransition></Suspense>
+            } />
+            <Route path="/map" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><MapPage /></PageTransition></Suspense>
+            } />
+            <Route path="/gallery" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Gallery /></PageTransition></Suspense>
+            } />
+            <Route path="/business" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Business /></PageTransition></Suspense>
+            } />
+            <Route path="/experience" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Experience /></PageTransition></Suspense>
+            } />
+          </Route>
           <Route element={<ProtectedRoute />}>
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-              <Route path="/attractions" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Attractions /></PageTransition></Suspense>
-              } />
-              <Route path="/dining" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Dining /></PageTransition></Suspense>
-              } />
-              <Route path="/stay" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Stay /></PageTransition></Suspense>
-              } />
-              <Route path="/schools" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Schools /></PageTransition></Suspense>
-              } />
-              <Route path="/events" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Events /></PageTransition></Suspense>
-              } />
-              <Route path="/map" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><MapPage /></PageTransition></Suspense>
-              } />
-              <Route path="/gallery" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Gallery /></PageTransition></Suspense>
-              } />
-              <Route path="/business" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Business /></PageTransition></Suspense>
-              } />
-              <Route path="/experience" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Experience /></PageTransition></Suspense>
-              } />
-            </Route>
+            <Route path="/admin" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Admin /></PageTransition></Suspense>
+            } />
           </Route>
         </Routes>
       </AnimatePresence>
