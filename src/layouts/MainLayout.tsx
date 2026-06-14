@@ -150,7 +150,7 @@ export default function MainLayout() {
                   </button>
                 </SignInButton>
               )}
-              {isLoaded && isSignedIn && <div className="ml-2 [&_.cl-userButtonBox]:scale-75"><UserButton /></div>}
+              {isLoaded && isSignedIn && <div className="ml-2"><UserButton /></div>}
             </nav>
 
             <button
