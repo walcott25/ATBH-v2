@@ -382,7 +382,6 @@ export default function Home() {
 
       {/* About Asuogyaman — Cinematic Editorial */}
       <section className="relative">
-        {/* Hero Image Panel */}
         <div className="relative h-[50vh] md:h-[65vh] overflow-hidden">
           <div className="absolute inset-0 bg-fg/10" />
           <img
@@ -396,46 +395,31 @@ export default function Home() {
 
           <div className="absolute inset-0 flex items-center justify-center px-5">
             <div className="text-center max-w-3xl">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: easeOut }}
-              >
-                <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-accent/90 block mb-4">
-                  About Asuogyaman
-                </span>
-                <h2 className="font-['Playfair_Display_SC'],serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-semibold tracking-wide leading-tight mb-5">
-                  Where the Volta River
-                  <br />
-                  <span className="text-accent">shapes a landscape</span> of wonder
-                </h2>
-                <div className="w-12 h-0.5 bg-accent/50 mx-auto" />
-              </motion.div>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-accent/90 block mb-4">
+                About Asuogyaman
+              </span>
+              <h2 className="font-['Playfair_Display_SC'],serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-semibold tracking-wide leading-tight mb-5">
+                Where the Volta River
+                <br />
+                <span className="text-accent">shapes a landscape</span> of wonder
+              </h2>
+              <div className="w-12 h-0.5 bg-accent/50 mx-auto" />
             </div>
           </div>
         </div>
 
-        {/* Editorial Content */}
-        <AnimatedSection className="py-16 md:py-24 px-5 relative overflow-hidden">
+        <section className="py-16 md:py-24 px-5 relative overflow-hidden">
           <DotGrid />
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-5 gap-12 md:gap-16">
-              {/* Left — Cinematic Stats */}
               <div className="md:col-span-2 space-y-8">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, ease: easeOut }}
-                  className="space-y-6"
-                >
+                <div className="space-y-6">
                   {[
                     { icon: Compass, value: '1950s', label: 'Founded', color: 'text-amber-400' },
                     { icon: MapPin, value: '25+', label: 'Destinations', color: 'text-emerald-400' },
                     { icon: Star, value: '4.9', label: 'Traveler Rating', color: 'text-sky-400' },
                   ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/50 hover:border-accent/20 transition-colors duration-300">
+                    <div key={stat.label} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/50">
                       <div className={`w-10 h-10 rounded-lg ${stat.color.replace('text-', 'bg-')}/10 flex items-center justify-center shrink-0`}>
                         <stat.icon className={`w-5 h-5 ${stat.color}`} />
                       </div>
@@ -445,15 +429,9 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}
-                  className="hidden md:block"
-                >
+                <div className="hidden md:block">
                   <div className="p-5 rounded-xl bg-accent/5 border border-accent/10">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-8 h-8 rounded-lg bg-accent/15 flex items-center justify-center">
@@ -465,10 +443,9 @@ export default function Home() {
                       Recognized as one of Ghana's most captivating regions, blending engineering marvels with natural beauty.
                     </p>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
-              {/* Right — Narrative */}
               <div className="md:col-span-3 space-y-8">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
@@ -476,41 +453,22 @@ export default function Home() {
                     <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-accent/70">Our Story</span>
                   </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: easeOut }}
-                  >
-                    <p className="text-base md:text-lg text-muted leading-relaxed">
-                      Nestled in Ghana's Eastern Region, Asuogyaman is a district defined by the majestic Volta River. 
-                      From the engineering marvel of the Akosombo Dam to the iconic Adomi Bridge, this land offers a 
-                      rare blend of natural beauty, cultural richness, and modern adventure.
-                    </p>
-                  </motion.div>
+                  <p className="text-base md:text-lg text-muted leading-relaxed">
+                    Nestled in Ghana's Eastern Region, Asuogyaman is a district defined by the majestic Volta River. 
+                    From the engineering marvel of the Akosombo Dam to the iconic Adomi Bridge, this land offers a 
+                    rare blend of natural beauty, cultural richness, and modern adventure.
+                  </p>
                 </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
-                  className="pl-4 md:pl-8 border-l-2 border-accent/20"
-                >
+                <div className="pl-4 md:pl-8 border-l-2 border-accent/20">
                   <p className="text-sm md:text-base text-muted/80 italic leading-relaxed">
                     "Whether you're cruising Lake Volta aboard the Dodi Princess, hiking the Akwamu Gorge, 
                     or unwinding at a luxury lakeside resort, every moment here tells a story of heritage, 
                     innovation, and warm Ghanaian hospitality."
                   </p>
-                </motion.div>
+                </div>
 
-                {/* Highlights Grid */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}
-                >
+                <div>
                   <div className="flex flex-wrap gap-3">
                     {[
                       { icon: Droplets, label: 'Lake Volta', detail: 'World\'s largest man-made lake' },
@@ -529,29 +487,21 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3, ease: easeOut }}
-                >
+                <div>
                   <Link
                     to="/attractions"
-                    className="group inline-flex items-center gap-2.5 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+                    className="inline-flex items-center gap-2.5 text-sm font-medium text-accent hover:text-accent/80"
                   >
-                    <span className="relative">
-                      Explore Asuogyaman
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent/50 group-hover:w-full transition-all duration-300" />
-                    </span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    Explore Asuogyaman
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
-        </AnimatedSection>
+        </section>
       </section>
 
       {/* Dining Preview — Editorial Scroll */}
