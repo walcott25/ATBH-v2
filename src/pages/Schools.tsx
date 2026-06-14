@@ -219,7 +219,7 @@ export default function Schools() {
               <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group cursor-pointer"
                 onClick={() => navigate(`/schools/${featuredSchool.id}`)}>
                 <div className="grid md:grid-cols-2">
-                  <div className="relative overflow-hidden min-h-[280px] md:min-h-[300px]">
+                  <div className="relative overflow-hidden w-full aspect-[4/3] md:aspect-auto md:min-h-[300px]">
                     <img src={featuredSchool.image} alt={featuredSchool.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-r md:bg-gradient-to-t from-fg/20 to-transparent" />
                     <span className={`absolute top-4 left-4 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[9px] font-semibold uppercase tracking-[0.2em] ${typeColor(featuredSchool.type)}`}>
