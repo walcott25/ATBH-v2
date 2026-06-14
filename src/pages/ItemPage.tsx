@@ -37,9 +37,9 @@ export default function ItemPage() {
   const nextItem = idx < items.length - 1 ? items[idx + 1] : null
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className={`min-h-screen ${type === 'schools' ? 'bg-gradient-to-b from-black/90 via-black/70 to-black/90' : 'bg-bg'}`}>
       {/* Back nav */}
-      <div className="sticky top-0 z-50 bg-bg/80 backdrop-blur-xl border-b border-border/40">
+      <div className={`sticky top-0 z-50 backdrop-blur-xl border-b border-border/40 ${type === 'schools' ? 'bg-black/60' : 'bg-bg/80'}`}>
         <div className="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
           <Link to={`/${type}`} className="flex items-center gap-2 text-xs text-muted hover:text-fg transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to {label.back}
@@ -54,7 +54,7 @@ export default function ItemPage() {
       {/* Hero */}
       <div className="relative h-[45vh] min-h-[320px] overflow-hidden bg-surface">
         <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/30 to-transparent" />
+        <div className={`absolute inset-0 ${type === 'schools' ? 'bg-gradient-to-t from-black/80 via-black/40 to-transparent' : 'bg-gradient-to-t from-bg via-bg/30 to-transparent'}`} />
         <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-center gap-3 mb-3">
             {'category' in item && item.category && (
