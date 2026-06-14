@@ -409,13 +409,19 @@ export default function Home() {
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-8">
                 {[
                   { value: '1950s', label: 'Founded' },
-                  { value: '25+', label: 'Destinations' },
-                  { value: '4.9', label: 'Traveler Rating' },
+                  { value: 25, suffix: '+', label: 'Destinations' },
+                  { value: 4.9, decimals: 1, label: 'Traveler Rating' },
                 ].map((s) => (
                   <div key={s.label} className="flex items-center gap-3">
                     <div className="w-1 h-1 rounded-full bg-accent/60" />
                     <div>
-                      <span className="text-lg md:text-xl font-medium text-white tracking-tight">{s.value}</span>
+                      <span className="text-lg md:text-xl font-medium text-white tracking-tight">
+                        {typeof s.value === 'number' ? (
+                          <AnimatedCounter value={s.value} suffix={s.suffix || ''} decimals={s.decimals || 0} />
+                        ) : (
+                          s.value
+                        )}
+                      </span>
                       <span className="text-[11px] text-white/40 ml-2 tracking-wide">{s.label}</span>
                     </div>
                   </div>

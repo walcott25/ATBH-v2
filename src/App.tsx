@@ -16,6 +16,7 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const Business = lazy(() => import('./pages/Business'));
 const Experience = lazy(() => import('./pages/Experience'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+const ScrollToTopButton = lazy(() => import('./components/ui/scroll-to-top'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Donate = lazy(() => import('./pages/Donate'));
@@ -120,6 +121,7 @@ export default function App() {
           </Route>
         </Routes>
       </AnimatePresence>
+      <Suspense fallback={null}><ScrollToTopButton /></Suspense>
     </AppProvider>
   );
 }
