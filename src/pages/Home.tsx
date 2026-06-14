@@ -366,41 +366,99 @@ export default function Home() {
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
-                    {/* Glass reflection overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-fg/90 via-fg/40 to-fg/5" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-fg/95 via-fg/60 to-fg/20" />
                     {/* Screen content */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-end p-4 md:p-5 pb-6 md:pb-7">
-                      {/* App icon */}
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-accent/90 flex items-center justify-center shadow-lg shadow-accent/20 mb-2 ring-1 ring-white/20">
-                        <Compass className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                    <div className="absolute inset-0 flex flex-col">
+                      {/* Status bar */}
+                      <div className="flex items-center justify-between px-5 md:px-6 pt-3 md:pt-4">
+                        <span className="text-[11px] md:text-xs font-semibold text-white/90 tracking-tight">9:41</span>
+                        <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-[2px]">
+                            <div className="w-[3px] h-[6px] md:w-[3.5px] md:h-[7px] rounded-[1px] bg-white/60" />
+                            <div className="w-[3px] h-[8px] md:w-[3.5px] md:h-[9px] rounded-[1px] bg-white/60" />
+                            <div className="w-[3px] h-[9px] md:w-[3.5px] md:h-[10px] rounded-[1px] bg-white/70" />
+                            <div className="w-[3px] h-[10px] md:w-[3.5px] md:h-[11px] rounded-[1px] bg-white/80" />
+                            <div className="w-[3px] h-[11px] md:w-[3.5px] md:h-[12px] rounded-[1px] bg-white/90" />
+                          </div>
+                          <svg viewBox="0 0 24 12" className="w-[18px] h-[9px] md:w-5 md:h-[10px] ml-1" fill="none">
+                            <rect x="1" y="1" width="20" height="10" rx="2" stroke="white" strokeOpacity="0.8" strokeWidth="1.2" />
+                            <rect x="21" y="4" width="2" height="4" rx="0.5" fill="white" fillOpacity="0.8" />
+                          </svg>
+                        </div>
                       </div>
-                      <p className="text-[10px] md:text-xs font-medium text-white/70 tracking-wide">Explore Asuogyaman</p>
-                      <p className="text-base md:text-lg font-bold text-white mt-0.5">Download the App</p>
-                      {/* Stars */}
-                      <div className="flex items-center gap-0.5 my-1.5 md:my-2">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star key={i} className="w-3 h-3 md:w-3.5 md:h-3.5 fill-yellow-400 text-yellow-400" />
+                      {/* App header */}
+                      <div className="flex items-center gap-2 px-5 md:px-6 pt-2 md:pt-2.5">
+                        <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-accent flex items-center justify-center shadow-sm shadow-accent/30">
+                          <Compass className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
+                        </div>
+                        <span className="text-[10px] md:text-[11px] font-semibold text-white/90 tracking-tight">Asuogyaman Guide</span>
+                      </div>
+                      {/* Hero card */}
+                      <div className="mx-4 md:mx-5 mt-3 md:mt-4 rounded-xl bg-white/10 backdrop-blur-md overflow-hidden ring-1 ring-white/15">
+                        <div className="relative h-[60px] md:h-[72px]">
+                          <img
+                            src="/Images/adomi-bridge-aerial.jpg"
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-fg/70 to-transparent" />
+                        </div>
+                        <div className="p-2 md:p-2.5">
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <p className="text-[9px] md:text-[10px] font-bold text-white leading-tight">Adomi Bridge</p>
+                              <p className="text-[7px] md:text-[8px] text-white/60 mt-0.5">Iconic landmark • 12 km away</p>
+                            </div>
+                            <div className="flex items-center gap-0.5">
+                              <Star className="w-2.5 h-2.5 md:w-3 md:h-3 fill-yellow-400 text-yellow-400" />
+                              <span className="text-[8px] md:text-[9px] font-semibold text-white">4.8</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Feature mini-cards */}
+                      <div className="flex gap-1.5 md:gap-2 px-4 md:px-5 mt-1.5 md:mt-2">
+                        {[
+                          { label: 'Attractions', count: '24' },
+                          { label: 'Dining', count: '18' },
+                          { label: 'Stays', count: '12' },
+                        ].map((f) => (
+                          <div key={f.label} className="flex-1 rounded-lg bg-white/8 backdrop-blur-md px-1.5 md:px-2 py-1.5 md:py-2 text-center ring-1 ring-white/5">
+                            <p className="text-[8px] md:text-[9px] font-semibold text-white/90">{f.label}</p>
+                            <p className="text-[6px] md:text-[7px] text-white/50">{f.count} places</p>
+                          </div>
                         ))}
                       </div>
-                      {/* Play Store button */}
-                      <a
-                        href="#"
-                        className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3.5 md:px-4 py-2 md:py-2.5 hover:bg-white/20 transition-all active:scale-95 ring-1 ring-white/10"
-                      >
-                        <svg viewBox="0 0 466 512" className="w-4 h-4 md:w-5 md:h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g fillRule="nonzero">
-                            <path fill="#EA4335" d="M199.9 237.8 1.4 470.17c7.22 24.57 30.16 41.81 55.8 41.81 11.16 0 20.93-2.79 29.3-8.37l244.16-139.46L199.9 237.8z"/>
-                            <path fill="#FBBC04" d="m433.91 205.1-104.65-60-111.61 110.22 113.01 108.83 104.64-58.6c18.14-9.77 30.7-29.3 30.7-50.23-1.4-20.93-13.95-40.46-32.09-50.22z"/>
-                            <path fill="#34A853" d="M199.42 273.45 329.27 145.1 87.9 8.37C79.53 2.79 68.36 0 57.2 0 30.7 0 6.98 18.14 1.4 41.86l198.02 231.59z"/>
-                            <path fill="#4285F4" d="M1.39 41.86C0 46.04 0 51.63 0 57.2v397.64c0 5.57 0 9.76 1.4 15.34l216.27-214.86L1.39 41.86z"/>
-                          </g>
-                        </svg>
-                        <div className="text-left">
-                          <div className="text-[7px] md:text-[8px] text-white/60 leading-tight">GET IT ON</div>
-                          <div className="text-[10px] md:text-xs font-semibold text-white leading-tight">Google Play</div>
+                      {/* CTA section */}
+                      <div className="mt-auto px-4 md:px-5 pb-4 md:pb-5">
+                        <div className="rounded-xl bg-white/10 backdrop-blur-md p-2.5 md:p-3 ring-1 ring-white/10">
+                          <p className="text-[8px] md:text-[9px] text-white/50 text-center tracking-wider uppercase">Discover More</p>
+                          <div className="flex items-center justify-center gap-0.5 my-0.5">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 fill-yellow-400 text-yellow-400" />
+                            ))}
+                            <span className="text-[7px] md:text-[8px] text-white/50 ml-1">2.1k</span>
+                          </div>
+                          <a
+                            href="#"
+                            className="mt-1.5 flex items-center justify-center gap-1.5 bg-white/15 hover:bg-white/25 transition-all active:scale-95 rounded-lg px-3 py-1.5 md:py-2 ring-1 ring-white/10"
+                          >
+                            <svg viewBox="0 0 466 512" className="w-3 h-3 md:w-3.5 md:h-3.5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g fillRule="nonzero">
+                                <path fill="#EA4335" d="M199.9 237.8 1.4 470.17c7.22 24.57 30.16 41.81 55.8 41.81 11.16 0 20.93-2.79 29.3-8.37l244.16-139.46L199.9 237.8z"/>
+                                <path fill="#FBBC04" d="m433.91 205.1-104.65-60-111.61 110.22 113.01 108.83 104.64-58.6c18.14-9.77 30.7-29.3 30.7-50.23-1.4-20.93-13.95-40.46-32.09-50.22z"/>
+                                <path fill="#34A853" d="M199.42 273.45 329.27 145.1 87.9 8.37C79.53 2.79 68.36 0 57.2 0 30.7 0 6.98 18.14 1.4 41.86l198.02 231.59z"/>
+                                <path fill="#4285F4" d="M1.39 41.86C0 46.04 0 51.63 0 57.2v397.64c0 5.57 0 9.76 1.4 15.34l216.27-214.86L1.39 41.86z"/>
+                              </g>
+                            </svg>
+                            <div className="text-left">
+                              <div className="text-[6px] md:text-[7px] text-white/60 leading-tight">GET IT ON</div>
+                              <div className="text-[8px] md:text-[9px] font-semibold text-white leading-tight">Google Play</div>
+                            </div>
+                          </a>
                         </div>
-                      </a>
+                      </div>
                     </div>
                   </div>
                   {/* Home indicator */}
