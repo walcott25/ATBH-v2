@@ -381,16 +381,11 @@ export default function Home() {
       </AnimatedSection>
 
       {/* About Asuogyaman — Dark Cinematic Full-Image Panel */}
-      <section className="relative h-dvh overflow-hidden">
-        <img
-          src="/Images/volta-river-landscape.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-fg/90 via-fg/50 to-fg/10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-fg/30 via-transparent to-fg/90" />
-        <div className="absolute inset-0 bg-fg/20" />
+      <section
+        className="relative min-h-screen bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: 'url(/Images/volta-river-landscape.jpg)' }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-fg/70 via-fg/50 to-fg/95" />
 
         <div className="absolute inset-0 flex items-center px-5 md:px-10">
           <div className="max-w-6xl mx-auto w-full">
