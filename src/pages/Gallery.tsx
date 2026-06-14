@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ATTRACTIONS, DINING, STAY, EVENTS, EXPERIENCES } from '../data';
-import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Image as ImageIcon, Grid3X3, LayoutGrid, Eye } from 'lucide-react';
 import PageHero from '../components/ui/page-hero';
 
 interface GalleryImage {
@@ -9,31 +8,27 @@ interface GalleryImage {
   src: string;
   alt: string;
   category: string;
+  featured?: boolean;
 }
 
 // Collect all images from across the data sources
 const GALLERY_IMAGES: GalleryImage[] = [
   // Attractions
-  ...ATTRACTIONS.map(a => ({ id: `attraction-${a.id}`, src: a.image, alt: a.name, category: 'Attractions' })),
+  ...ATTRACTIONS.map((a, i) => ({ id: `attraction-${a.id}`, src: a.image, alt: a.name, category: 'Attractions', featured: i < 2 })),
   // Dining — select a curated subset
   ...DINING.filter(d => d.rating && d.rating >= 4.5).map(d => ({ id: `dining-${d.id}`, src: d.image, alt: d.name, category: 'Dining' })),
   // Stay — resorts & hotels
   ...STAY.filter(s => s.category === 'Luxury' || (s.rating && s.rating >= 4.5)).map(s => ({ id: `stay-${s.id}`, src: s.image, alt: s.name, category: 'Stay' })),
-  // Events — festivals & celebrations
-  ...EVENTS.map(e => ({ id: `event-${e.id}`, src: e.image, alt: e.name, category: 'Events' })),
+  // Events — festivals & celebrations (exclude End Child Marriage)
+  ...EVENTS.filter(e => e.id !== 'end-child-marriage').map(e => ({ id: `event-${e.id}`, src: e.image, alt: e.name, category: 'Events' })),
   // Experiences
   ...EXPERIENCES.map(e => ({ id: `exp-${e.id}`, src: e.image, alt: e.name, category: 'Experiences' })),
   // Extra scenic images not yet referenced
-  { id: 'scenic-1', src: '/Images/volta-river-landscape.jpg', alt: 'Volta River Landscape', category: 'Scenic' },
+  { id: 'scenic-1', src: '/Images/volta-river-landscape.jpg', alt: 'Volta River Landscape', category: 'Scenic', featured: true },
   { id: 'scenic-2', src: '/Images/lake volta.jpg', alt: 'Lake Volta Panorama', category: 'Scenic' },
   { id: 'scenic-3', src: '/Images/bridge.jpg', alt: 'Adomi Bridge Detail', category: 'Scenic' },
   { id: 'scenic-4', src: '/Images/Bridge1.jpg', alt: 'Adomi Bridge Sunset', category: 'Scenic' },
   { id: 'scenic-5', src: '/Images/Bridge2.jpg', alt: 'Bridge Engineering', category: 'Scenic' },
-  { id: 'scenic-6', src: '/Images/smiling-community-1.jpg', alt: 'Community Life', category: 'Culture' },
-  { id: 'scenic-7', src: '/Images/smiling-community-2.jpg', alt: 'Local Community', category: 'Culture' },
-  { id: 'scenic-8', src: '/Images/smiling-community-3.jpg', alt: 'Community Spirit', category: 'Culture' },
-  { id: 'scenic-9', src: '/Images/smiling-community-4.jpg', alt: 'Community Together', category: 'Culture' },
-  { id: 'scenic-10', src: '/Images/senior high.jpg', alt: 'Students at School', category: 'Culture' },
   { id: 'scenic-11', src: '/Images/tourism.jpg', alt: 'Tourism in Asuogyaman', category: 'Culture' },
   { id: 'scenic-12', src: '/Images/night market.jpg', alt: 'Night Market', category: 'Culture' },
   { id: 'scenic-13', src: '/Images/aks mt.jpg', alt: 'Akosombo Market Scene', category: 'Culture' },
@@ -48,9 +43,22 @@ const GALLERY_IMAGES: GalleryImage[] = [
 
 const categories = ['All', ...Array.from(new Set(GALLERY_IMAGES.map(img => img.category)))];
 
-const Gallery = () => {
+const categoryIcons: Record<string, string> = {
+  All: '✦',
+  Attractions: '🏛️',
+  Dining: '🍽️',
+  Stay: '🏨',
+  Events: '🎉',
+  Experiences: '🌟',
+  Scenic: '🏔️',
+  Culture: '🎭',
+  Nature: '🌿',
+};
+
+export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [layout, setLayout] = useState<'bento' | 'grid'>('bento');
 
   const filtered = useMemo(() =>
     activeCategory === 'All'
@@ -59,20 +67,46 @@ const Gallery = () => {
     [activeCategory]
   );
 
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: GALLERY_IMAGES.length };
+    GALLERY_IMAGES.forEach(img => {
+      counts[img.category] = (counts[img.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  const goTo = useCallback((dir: 'next' | 'prev') => {
+    setSelectedIndex(prev => {
+      if (prev === null) return null;
+      const len = filtered.length;
+      if (len === 0) return null;
+      return dir === 'next' ? (prev + 1) % len : (prev - 1 + len) % len;
+    });
+  }, [filtered.length]);
+
   useEffect(() => {
     if (selectedIndex === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedIndex(null);
-      if (e.key === 'ArrowRight') {
-        setSelectedIndex(prev => prev !== null ? (prev + 1) % filtered.length : null);
-      }
-      if (e.key === 'ArrowLeft') {
-        setSelectedIndex(prev => prev !== null ? (prev - 1 + filtered.length) % filtered.length : null);
-      }
+      if (e.key === 'ArrowRight') goTo('next');
+      if (e.key === 'ArrowLeft') goTo('prev');
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, filtered.length]);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [selectedIndex, goTo]);
+
+  // Assign bento sizes based on position pattern
+  const getBentoSize = (index: number, featured: boolean) => {
+    if (featured) return 'col-span-2 row-span-2';
+    const pattern = index % 7;
+    if (pattern === 0) return 'col-span-2 row-span-1';
+    if (pattern === 3) return 'col-span-1 row-span-2';
+    return 'col-span-1 row-span-1';
+  };
 
   return (
     <div className="min-h-screen bg-bg relative overflow-hidden">
@@ -82,137 +116,255 @@ const Gallery = () => {
         badge="Photography"
       />
 
-      {/* Category Filter */}
-      <section className="pb-8 px-6 -mt-4 relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-2">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-lg border transition-all duration-200 ${
-                activeCategory === cat
-                  ? 'bg-accent text-accent-fg border-accent shadow-sm shadow-accent/20'
-                  : 'bg-surface text-muted border-border hover:text-fg hover:border-fg/30'
-              }`}
-            >
-              {cat === 'All' ? <ImageIcon className="w-3.5 h-3.5" /> : null}
-              {cat}
-              {cat !== 'All' && (
-                <span className="text-[10px] opacity-60">({GALLERY_IMAGES.filter(i => i.category === cat).length})</span>
-              )}
-            </button>
-          ))}
+      {/* ── Stats Bar ── */}
+      <section className="py-8 px-6 relative border-b border-border/40">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <Eye className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <p className="text-2xl font-semibold text-fg text-gradient">{filtered.length}</p>
+                <p className="text-[10px] text-muted uppercase tracking-wider">{filtered.length === 1 ? 'photo' : 'photos'}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setLayout('bento')}
+                className={`p-2.5 rounded-lg border transition-all ${layout === 'bento' ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}
+                aria-label="Bento layout"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setLayout('grid')}
+                className={`p-2.5 rounded-lg border transition-all ${layout === 'grid' ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}
+                aria-label="Grid layout"
+              >
+                <Grid3X3 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Gallery Grid */}
-      <section className="pb-32 px-6">
+      {/* ── Category Filter — Glassmorphism Bar ── */}
+      <section className="sticky top-0 z-40 py-4 px-6 bg-bg/80 backdrop-blur-xl border-b border-border/40">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-xs text-muted">{filtered.length} {filtered.length === 1 ? 'photo' : 'photos'}</p>
-            {activeCategory !== 'All' && (
-              <button onClick={() => setActiveCategory('All')}
-                className="text-xs text-accent hover:text-accent/80 transition-colors">Show all</button>
-            )}
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide -mx-2 px-2">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => { setActiveCategory(cat); setSelectedIndex(null); }}
+                  className={`relative shrink-0 inline-flex items-center gap-1.5 text-xs font-medium px-4 py-2 rounded-xl border transition-all duration-300 ${
+                    isActive
+                      ? 'bg-accent text-accent-fg border-accent shadow-lg shadow-accent/20'
+                      : 'bg-surface/80 text-muted border-border/60 hover:text-fg hover:border-accent/30 hover:bg-surface'
+                  }`}
+                >
+                  <span className="text-sm">{categoryIcons[cat] || '📸'}</span>
+                  <span>{cat}</span>
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${
+                    isActive ? 'bg-white/20 text-white/90' : 'bg-border/40 text-muted/70'
+                  }`}>
+                    {categoryCounts[cat] || 0}
+                  </span>
+                  {isActive && (
+                    <div className="absolute inset-0 rounded-xl bg-accent/10 animate-pulse-soft pointer-events-none" />
+                  )}
+                </button>
+              );
+            })}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {filtered.map((item, index) => (
-              <div
-                key={item.id}
-                className="group relative overflow-hidden rounded-xl bg-surface border border-border cursor-pointer"
-                style={{ aspectRatio: '1 / 1', minHeight: '100px' }}
-                onClick={() => setSelectedIndex(index)}
-              >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-fg/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <div>
-                    <h3 className="text-white text-xs font-medium">{item.alt}</h3>
-                    <span className="text-white/50 text-[9px] uppercase tracking-wider">{item.category}</span>
-                  </div>
-                </div>
+        </div>
+      </section>
+
+      {/* ── Gallery Grid ── */}
+      <section className="py-8 md:py-12 px-6 pb-32">
+        <div className="max-w-7xl mx-auto">
+          {filtered.length === 0 ? (
+            <div className="text-center py-24">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/5 border border-accent/10 flex items-center justify-center">
+                <ImageIcon className="w-7 h-7 text-accent/40" />
               </div>
-            ))}
-          </div>
-          {filtered.length === 0 && (
-            <div className="text-center py-20">
-              <ImageIcon className="w-12 h-12 text-muted/30 mx-auto mb-4" />
-              <p className="text-sm text-muted">No photos in this category.</p>
+              <p className="text-sm text-muted mb-2">No photos in this category.</p>
+              <button onClick={() => setActiveCategory('All')} className="text-xs text-accent hover:text-accent/80 transition-colors">
+                View all photos
+              </button>
+            </div>
+          ) : layout === 'bento' ? (
+            /* ── Bento Masonry Layout ── */
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3 md:gap-4">
+              {filtered.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`group relative overflow-hidden rounded-2xl bg-surface border border-border/60 hover:border-accent/30 cursor-pointer transition-all duration-500 ${getBentoSize(index, !!item.featured)}`}
+                  onClick={() => setSelectedIndex(index)}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading={index < 8 ? 'eager' : 'lazy'}
+                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                  />
+                  {/* Dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-fg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Scan line on hover */}
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-40 transition-opacity duration-300">
+                    <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent animate-[scanline_3s_linear_infinite]" />
+                  </div>
+                  {/* Corner brackets on hover */}
+                  <div className="absolute top-3 left-3 w-6 h-6 border-t-[1.5px] border-l-[1.5px] border-accent/40 rounded-tl-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute bottom-3 right-3 w-6 h-6 border-b-[1.5px] border-r-[1.5px] border-accent/40 rounded-br-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  {/* Gold glow on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: 'radial-gradient(ellipse at 50% 90%, rgba(197,149,74,0.15), transparent 60%)' }} />
+                  {/* Info overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
+                    <h3 className="text-white text-xs md:text-sm font-medium drop-shadow-lg">{item.alt}</h3>
+                    <span className="inline-flex items-center gap-1 text-white/50 text-[9px] uppercase tracking-wider mt-1">
+                      <span>{categoryIcons[item.category]}</span>
+                      {item.category}
+                    </span>
+                  </div>
+                  {/* Featured badge */}
+                  {item.featured && (
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest bg-accent/20 backdrop-blur-xl border border-accent/30 text-accent">
+                        ★ Featured
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* ── Uniform Grid Layout ── */
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {filtered.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="group relative overflow-hidden rounded-xl bg-surface border border-border/60 hover:border-accent/30 cursor-pointer transition-all duration-500 aspect-square"
+                  onClick={() => setSelectedIndex(index)}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading={index < 8 ? 'eager' : 'lazy'}
+                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-fg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-40 transition-opacity duration-300">
+                    <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent animate-[scanline_3s_linear_infinite]" />
+                  </div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: 'radial-gradient(ellipse at 50% 90%, rgba(197,149,74,0.15), transparent 60%)' }} />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
+                    <h3 className="text-white text-xs md:text-sm font-medium drop-shadow-lg">{item.alt}</h3>
+                    <span className="inline-flex items-center gap-1 text-white/50 text-[9px] uppercase tracking-wider mt-1">
+                      <span>{categoryIcons[item.category]}</span>
+                      {item.category}
+                    </span>
+                  </div>
+                  {item.featured && (
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[8px] font-bold uppercase tracking-widest bg-accent/20 backdrop-blur-xl border border-accent/30 text-accent">
+                        ★ Featured
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selectedIndex !== null && (
-          <motion.div
-            key="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 bg-fg/95 backdrop-blur-sm flex items-center justify-center"
-            onClick={() => setSelectedIndex(null)}
+      {/* ── Immersive Lightbox (CSS transitions, no Framer Motion) ── */}
+      {selectedIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in"
+          onClick={() => setSelectedIndex(null)}
+          style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}
+        >
+          {/* Close */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
+            className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
+            aria-label="Close lightbox"
           >
-            <button
-              onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all"
-              aria-label="Close lightbox"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <X className="w-5 h-5" />
+          </button>
 
-            <button
-              onClick={(e) => { e.stopPropagation(); setSelectedIndex(prev => prev !== null ? (prev - 1 + filtered.length) % filtered.length : null); }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+          {/* Prev */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goTo('prev'); }}
+            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
 
-            <button
-              onClick={(e) => { e.stopPropagation(); setSelectedIndex(prev => prev !== null ? (prev + 1) % filtered.length : null); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all"
-              aria-label="Next image"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          {/* Next */}
+          <button
+            onClick={(e) => { e.stopPropagation(); goTo('next'); }}
+            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
 
-            <div className="relative max-w-[90vw] max-h-[85vh]" onClick={(e) => e.stopPropagation()}>
-              <AnimatePresence mode="wait">
-                <motion.div
+          {/* Image container */}
+          <div
+            className="relative max-w-[90vw] max-h-[85vh] animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {selectedIndex !== null && filtered[selectedIndex] && (
+              <>
+                <img
                   key={selectedIndex}
-                  initial={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
-                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
-                  transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                >
-                  <img
-                    src={filtered[selectedIndex].src}
-                    alt={filtered[selectedIndex].alt}
-                    className="max-h-[75vh] w-auto mx-auto rounded-xl shadow-2xl"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-fg/80 to-transparent rounded-b-xl">
-                    <h3 className="text-white text-base font-medium">{filtered[selectedIndex].alt}</h3>
-                    <p className="text-white/50 text-[10px] uppercase tracking-wider mt-1">{filtered[selectedIndex].category}</p>
+                  src={filtered[selectedIndex].src}
+                  alt={filtered[selectedIndex].alt}
+                  className="max-h-[75vh] w-auto mx-auto rounded-2xl shadow-2xl animate-fade-in"
+                />
+                {/* Info bar */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-b-2xl">
+                  <h3 className="text-white text-base font-medium">{filtered[selectedIndex].alt}</h3>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-white/50 text-[10px] uppercase tracking-wider">
+                      {categoryIcons[filtered[selectedIndex].category]} {filtered[selectedIndex].category}
+                    </span>
+                    <span className="text-white/30 text-xs font-mono">
+                      {selectedIndex + 1} / {filtered.length}
+                    </span>
                   </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                </div>
+              </>
+            )}
+          </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs pointer-events-none">
-              {selectedIndex + 1} / {filtered.length}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* Bottom counter */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+            {filtered.slice(Math.max(0, selectedIndex - 4), Math.min(filtered.length, selectedIndex + 5)).map((img, i) => {
+              const actualIndex = Math.max(0, selectedIndex - 4) + i;
+              return (
+                <button
+                  key={img.id}
+                  onClick={(e) => { e.stopPropagation(); setSelectedIndex(actualIndex); }}
+                  className={`w-8 h-8 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    actualIndex === selectedIndex ? 'border-accent scale-110' : 'border-white/20 opacity-50 hover:opacity-80'
+                  }`}
+                >
+                  <img src={img.src} alt="" className="w-full h-full object-cover" />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default Gallery;
+}

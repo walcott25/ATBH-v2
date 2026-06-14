@@ -199,44 +199,150 @@ export default function Schools() {
         </div>
       </section>
 
-      {/* FEATURED SCHOOL */}
+      {/* FEATURED SCHOOL — FUTURISTIC */}
       {featuredSchool && activeType === 'All' && !searchQuery && (
-        <section className="py-16 md:py-20 px-5 relative overflow-hidden">
-          <SectionDivider label="Featured School" className="mb-8" />
-          <div className="max-w-7xl mx-auto relative">
-            <div>
-              <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group cursor-pointer"
-                onClick={() => navigate(`/schools/${featuredSchool.id}`)}>
+        <section className="py-16 md:py-24 px-5 relative overflow-hidden">
+          {/* ── Aurora Background ── */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-48 -left-32 w-[700px] h-[700px] rounded-full blur-[120px] animate-[float_14s_ease-in-out_infinite] bg-gradient-to-br from-accent/[0.07] to-transparent" />
+            <div className="absolute -bottom-32 -right-24 w-[600px] h-[600px] rounded-full blur-[100px] animate-[float_18s_ease-in-out_infinite] bg-gradient-to-tl from-accent/[0.05] to-transparent" style={{ animationDirection: 'reverse' }} />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full blur-[140px] animate-pulse-soft bg-accent/[0.03]" />
+          </div>
+
+          <SectionDivider label="Featured School" className="mb-10" />
+
+          <div className="max-w-6xl mx-auto relative">
+            {/* ── Holographic Border Wrapper ── */}
+            <div
+              className="relative rounded-3xl p-[1px] overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(197,149,74,0.4), rgba(197,149,74,0.05) 30%, rgba(197,149,74,0.2) 50%, rgba(197,149,74,0.05) 70%, rgba(197,149,74,0.4))',
+                backgroundSize: '200% 200%',
+                animation: 'border-flow 6s ease-in-out infinite',
+              }}
+            >
+              <div className="relative rounded-3xl bg-surface overflow-hidden">
+                {/* Top glow line */}
+                <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
+
+                {/* Floating particles */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute top-[8%] left-[5%] w-1 h-1 bg-accent/30 rounded-full animate-[float_5s_ease-in-out_infinite]" />
+                  <div className="absolute top-[15%] right-[8%] w-1.5 h-1.5 bg-accent/20 rounded-full animate-[float_7s_ease-in-out_infinite]" style={{ animationDelay: '1s' }} />
+                  <div className="absolute bottom-[12%] left-[12%] w-1 h-1 bg-accent/25 rounded-full animate-[float_6s_ease-in-out_infinite]" style={{ animationDelay: '2s' }} />
+                  <div className="absolute bottom-[20%] right-[15%] w-0.5 h-0.5 bg-accent/35 rounded-full animate-[float_8s_ease-in-out_infinite]" style={{ animationDelay: '0.5s' }} />
+                  <div className="absolute top-[45%] left-[42%] w-0.5 h-0.5 bg-accent/20 rounded-full animate-[float_9s_ease-in-out_infinite]" style={{ animationDelay: '3s' }} />
+                </div>
+
                 <div className="grid md:grid-cols-2">
-                  <div className="relative overflow-hidden w-full md:min-h-[300px] bg-surface">
-                    {/* Padding-bottom spacer creates 4:3 ratio on mobile — bulletproof */}
-                    <div className="w-full md:hidden" style={{ paddingBottom: '75%' }} />
-                    <img src={featuredSchool.image} alt={featuredSchool.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-r md:bg-gradient-to-t from-black/30 to-transparent" />
-                    <span className={`absolute top-4 left-4 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[9px] font-semibold uppercase tracking-[0.2em] ${typeColor(featuredSchool.type)}`}>
+                  {/* ── Image Side ── */}
+                  <div
+                    className="relative overflow-hidden group min-h-[280px] md:min-h-[420px] cursor-pointer"
+                    onClick={() => navigate(`/schools/${featuredSchool.id}`)}
+                  >
+                    <img
+                      src={featuredSchool.image}
+                      alt={featuredSchool.name}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                    />
+
+                    {/* Gradient overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface/95 hidden md:block pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent md:hidden pointer-events-none" />
+                    <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/[0.04] transition-colors duration-700 pointer-events-none" />
+
+                    {/* Scan line */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+                      <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-[scanline_5s_linear_infinite]" />
+                    </div>
+
+                    {/* Corner brackets — HUD feel */}
+                    <div className="absolute top-5 left-5 w-10 h-10 border-t-[1.5px] border-l-[1.5px] border-accent/20 rounded-tl-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-5 right-5 w-10 h-10 border-t-[1.5px] border-r-[1.5px] border-accent/20 rounded-tr-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-5 left-5 w-10 h-10 border-b-[1.5px] border-l-[1.5px] border-accent/20 rounded-bl-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-5 right-5 w-10 h-10 border-b-[1.5px] border-r-[1.5px] border-accent/20 rounded-br-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {/* Type badge */}
+                    <span className="absolute top-5 left-5 md:top-6 md:left-6 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[9px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-accent/25 bg-accent/10 text-accent z-10">
                       {typeIcon(featuredSchool.type)}{featuredSchool.type}
                     </span>
+
+                    {/* Bottom shimmer */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface/40 to-transparent pointer-events-none" />
                   </div>
-                  <div className="p-6 md:p-8 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Star className="w-4 h-4 fill-accent text-accent" />
-                      <span className="text-[10px] font-semibold uppercase tracking-widest text-accent">Featured</span>
+
+                  {/* ── Content Side ── */}
+                  <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
+                    {/* Featured label */}
+                    <div className="flex items-center gap-2.5 mb-4">
+                      <div className="relative">
+                        <Star className="w-4 h-4 fill-accent text-accent" />
+                        <div className="absolute inset-0 bg-accent/30 rounded-full blur-md" />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+                        Featured Institution
+                      </span>
                     </div>
-                    <h3 className="text-lg md:text-2xl font-medium text-fg mb-2">{featuredSchool.name}</h3>
-                    <div className="flex items-center gap-1.5 text-xs text-muted mb-3">
-                      <MapPin className="w-3.5 h-3.5" />{featuredSchool.location}
+
+                    {/* School name */}
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-fg mb-3 leading-tight text-gradient-shimmer">
+                      {featuredSchool.name}
+                    </h3>
+
+                    {/* Location */}
+                    <div className="flex items-center gap-2 text-xs text-muted mb-4">
+                      <div className="w-5 h-5 rounded-full bg-accent/10 border border-accent/15 flex items-center justify-center shrink-0">
+                        <MapPin className="w-3 h-3 text-accent" />
+                      </div>
+                      <span>{featuredSchool.location}</span>
                     </div>
-                    <p className="text-sm text-muted leading-relaxed mb-4 line-clamp-3">{featuredSchool.description}</p>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {featuredSchool.programs?.map((p) => (
-                        <span key={p} className="text-[10px] text-muted bg-border/50 px-2 py-0.5 rounded font-medium">{p}</span>
+
+                    {/* Description */}
+                    <p className="text-sm text-muted leading-relaxed mb-6 line-clamp-3">
+                      {featuredSchool.description}
+                    </p>
+
+                    {/* Quick stats */}
+                    <div className="grid grid-cols-3 gap-3 mb-6">
+                      {[
+                        { value: featuredSchool.programs?.length || 0, label: 'Programs' },
+                        { value: 'A+', label: 'Excellence' },
+                        { value: '100%', label: 'Commitment' },
+                      ].map((stat) => (
+                        <div key={stat.label} className="text-center p-3 rounded-xl bg-accent/[0.04] border border-accent/10 hover:border-accent/25 transition-colors duration-300">
+                          <div className="text-lg font-bold text-fg text-gradient">{stat.value}</div>
+                          <div className="text-[9px] text-muted uppercase tracking-wider mt-0.5">{stat.label}</div>
+                        </div>
                       ))}
                     </div>
-                    <span className="inline-flex items-center gap-1.5 text-xs text-accent group-hover:gap-2 transition-all">
-                      View full details <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
+
+                    {/* Program tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {featuredSchool.programs?.slice(0, 6).map((p) => (
+                        <span key={p} className="text-[10px] text-accent/80 bg-accent/[0.06] border border-accent/15 px-2.5 py-1 rounded-full font-medium hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 cursor-default">
+                          {p}
+                        </span>
+                      ))}
+                      {(featuredSchool.programs?.length || 0) > 6 && (
+                        <span className="text-[10px] text-muted/50 bg-border/30 px-2.5 py-1 rounded-full">
+                          +{(featuredSchool.programs?.length || 0) - 6} more
+                        </span>
+                      )}
+                    </div>
+
+                    {/* CTA */}
+                    <button
+                      onClick={() => navigate(`/schools/${featuredSchool.id}`)}
+                      className="group/cta inline-flex items-center gap-2.5 bg-gradient-to-r from-accent to-accent/80 text-accent-fg px-7 py-3 text-sm font-medium rounded-xl shadow-lg shadow-accent/15 hover:shadow-xl hover:shadow-accent/25 hover:translate-y-[-1px] transition-all duration-500 w-fit"
+                    >
+                      <span>Explore Institution</span>
+                      <ArrowRight className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform duration-300" />
+                    </button>
                   </div>
                 </div>
+
+                {/* Bottom glow line */}
+                <div className="absolute bottom-0 left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
               </div>
             </div>
           </div>

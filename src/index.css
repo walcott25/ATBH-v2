@@ -61,6 +61,15 @@
     0%, 100% { opacity: 0.5; }
     50% { opacity: 0.65; }
   }
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(600%); }
+  }
+  @keyframes border-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 }
 
 ::selection {
@@ -124,6 +133,16 @@ img {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   will-change: background-position;
+}
+
+.text-gradient-shimmer {
+  background: linear-gradient(135deg, #C5954A, #E8C478, #C5954A);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  will-change: background-position;
+  animation: shimmer 3s ease-in-out infinite;
 }
 
 .text-gradient-subtle {
