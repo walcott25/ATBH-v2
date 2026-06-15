@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
+import { motion } from 'motion/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { SCHOOLS } from '../data'
 import type { School } from '../data'
@@ -370,7 +371,7 @@ export default function Schools() {
                   {topPrograms.slice(0, 8).map(([program, count], i) => {
                     const maxCount = topPrograms[0][1]; const pct = (count / maxCount) * 100
                     return (<div key={program} className="group"><div className="flex items-center justify-between mb-1"><div className="flex items-center gap-2"><span className="text-[10px] font-semibold text-muted/40 w-4">{String(i + 1).padStart(2, '0')}</span><span className="text-xs text-fg font-medium">{program}</span></div><span className="text-[10px] text-muted font-mono">{count} {count === 1 ? 'school' : 'schools'}</span></div>
-                      <div className="w-full h-2 bg-border/40 rounded-full overflow-hidden"><div className="h-full rounded-full bg-gradient-to-r from-accent/60 to-accent transition-all duration-1000" style={{ width: `${pct}%` }} /></div></div>)
+                      <div className="w-full h-2 bg-border/40 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} whileInView={{ width: `${pct}%` }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.08, ease: 'easeOut' }} className="h-full rounded-full bg-gradient-to-r from-accent/60 to-accent" /></div></div>)
                   })}
                 </div>
               </div>
