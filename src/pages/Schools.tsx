@@ -451,9 +451,7 @@ export default function Schools() {
       {/* ═══ TESTIMONIALS ═══ */}
       {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
         <section className="py-16 md:py-20 px-6 relative overflow-hidden bg-surface/30 border-t border-border/40">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute -top-40 -right-32 w-[500px] h-[500px] rounded-full blur-[120px] bg-accent/[0.04]" />
-          </div>
+          <div className="absolute -top-40 right-0 md:-right-32 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-[60px] md:blur-[120px] bg-accent/[0.04] pointer-events-none" />
           <div className="max-w-5xl mx-auto relative">
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-4">
@@ -462,24 +460,24 @@ export default function Schools() {
               </div>
               <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">What Parents & Students Say</h2>
             </div>
-            <div className="grid md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
               {[
                 { user: 'Mrs. Akosua M.', role: 'Parent, Anum', text: "ANSEC gave my daughter the foundation she needed. She is now studying Engineering at KNUST. The boarding facilities and dedicated teachers made all the difference.", stars: 5 },
                 { user: 'Kofi D.', role: 'Alumni, Apeguso SHS', text: "The discipline and hard work culture at Apeguso prepared me for university life. I am proud to be an alumnus of this great institution.", stars: 5 },
                 { user: 'Rev. James O.', role: 'Parent, Anyinam', text: 'The technical programmes at Adjena SHS have improved dramatically. My son is learning practical skills alongside academics — a perfect balance.', stars: 4 },
               ].map((review, i) => (
-                <div key={i} className="rounded-2xl bg-surface border border-border/60 p-6 hover:border-accent/20 transition-all duration-500">
+                <div key={i} className="rounded-2xl bg-surface border border-border/60 p-5 md:p-6 hover:border-accent/20 transition-all duration-500">
                   <div className="flex items-center gap-1 mb-4">
                     {Array.from({ length: review.stars }).map((_, j) => <Star key={j} className="w-3 h-3 fill-accent text-accent" />)}
                   </div>
-                  <p className="text-xs text-muted leading-relaxed mb-4 italic">&ldquo;{review.text}&rdquo;</p>
+                  <p className="text-xs text-muted leading-relaxed mb-4 italic break-words">&ldquo;{review.text}&rdquo;</p>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/15 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/15 flex items-center justify-center shrink-0">
                       <Users className="w-3.5 h-3.5 text-accent" />
                     </div>
-                    <div>
-                      <p className="text-[11px] font-medium text-fg">{review.user}</p>
-                      <p className="text-[9px] text-muted/60">{review.role}</p>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-medium text-fg truncate">{review.user}</p>
+                      <p className="text-[9px] text-muted/60 truncate">{review.role}</p>
                     </div>
                   </div>
                 </div>
