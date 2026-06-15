@@ -1,9 +1,24 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { neon } from '@neondatabase/serverless';
+import crypto from 'crypto';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  /* Verify Paystack webhook signature */
+  const paystackSignature = req.headers['x-paystack-signature'] as string | undefined;
+  const webhookSecret = process.env.PAYSTACK_WEBHOOK_SECRET;
+  if (webhookSecret) {
+    if (!paystackSignature) {
+      return res.status(401).json({ error: 'Missing Paystack signature' });
+    }
+    const payload = JSON.stringify(req.body);
+    const expected = crypto.createHmac('sha512', webhookSecret).update(payload).digest('hex');
+    if (paystackSignature !== expected) {
+      return res.status(403).json({ error: 'Invalid signature' });
+    }
   }
 
   const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;

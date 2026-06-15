@@ -1,9 +1,37 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { neon } from '@neondatabase/serverless';
+import { createClerkClient } from '@clerk/backend';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  /* Require authenticated Clerk session */
+  const sessionId = req.headers['x-clerk-session-id'] as string | undefined;
+  if (!sessionId) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  const clerkSecretKey = process.env.CLERK_SECRET_KEY;
+  if (!clerkSecretKey) {
+    return res.status(500).json({ error: 'Auth not configured' });
+  }
+  const clerk = createClerkClient({ secretKey: clerkSecretKey });
+  let session;
+  try {
+    session = await clerk.sessions.getSession(sessionId);
+    if (!session || session.status !== 'active') {
+      return res.status(403).json({ error: 'Invalid or expired session' });
+    }
+  } catch {
+    return res.status(401).json({ error: 'Authentication failed' });
+  }
+
+  const userId = session.userId;
+  const user = await clerk.users.getUser(userId);
+  const userEmail = user.emailAddresses?.[0]?.emailAddress;
+  if (!userEmail) {
+    return res.status(400).json({ error: 'User has no email on file' });
   }
 
   const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
@@ -30,13 +58,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       )
     `;
 
-    const email = req.query.email as string;
-    if (!email) {
-      return res.status(400).json({ error: 'Email parameter is required' });
-    }
-
     const rows = await sql`
-      SELECT * FROM donations WHERE donor_email = ${email} ORDER BY created_at DESC
+      SELECT reference, amount, currency, purpose, message, status, paid_at, created_at
+      FROM donations WHERE donor_email = ${userEmail} ORDER BY created_at DESC
     `;
 
     return res.json({ donations: rows });
