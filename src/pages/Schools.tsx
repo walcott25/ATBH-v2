@@ -61,6 +61,7 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
         <div className="relative overflow-hidden" style={{ paddingBottom: '66%' }}>
           <img src={item.image} alt={item.name}
             className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+            style={{ objectFit: 'cover' }}
             loading={index < 4 ? 'eager' : 'lazy'} />
           <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           <div className="absolute inset-0 ring-1 ring-inset ring-white/0 group-hover:ring-accent/20 transition-all duration-500 pointer-events-none rounded-2xl" />
@@ -203,7 +204,7 @@ export default function Schools() {
                 </div>
                 <div className="grid md:grid-cols-2">
                   <div className="relative overflow-hidden group cursor-pointer min-h-[280px] md:min-h-[420px]" onClick={() => navigate(`/schools/${featuredSchool.id}`)}>
-                    <img src={featuredSchool.image} alt={featuredSchool.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" />
+                    <img src={featuredSchool.image} alt={featuredSchool.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" style={{ objectFit: 'cover' }} />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface/95 hidden md:block pointer-events-none" />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent md:hidden pointer-events-none" />
                     <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30"><div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-[scanline_5s_linear_infinite]" /></div>
@@ -356,7 +357,7 @@ export default function Schools() {
                   <Link to={`/schools/${item.id}`} className="group block h-full">
                     <div className="rounded-xl bg-surface border border-border/60 overflow-hidden hover:border-accent/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5">
                       <div className="relative overflow-hidden" style={{ paddingBottom: '66%' }}>
-                        <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105" loading="lazy" />
+                        <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105" style={{ objectFit: 'cover' }} loading="lazy" />
                         <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       </div>
                       <div className="p-5 space-y-2.5">

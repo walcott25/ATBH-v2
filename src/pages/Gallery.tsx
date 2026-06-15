@@ -209,6 +209,7 @@ export default function Gallery() {
                     alt={item.alt}
                     loading={index < 8 ? 'eager' : 'lazy'}
                     className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                    style={{ objectFit: 'cover' }}
                   />
                   {/* Dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-fg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -255,6 +256,7 @@ export default function Gallery() {
                     alt={item.alt}
                     loading={index < 8 ? 'eager' : 'lazy'}
                     className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                    style={{ objectFit: 'cover' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-fg/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-40 transition-opacity duration-300">
