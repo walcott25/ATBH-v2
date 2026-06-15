@@ -1,0 +1,13 @@
+src/pages/Schools.tsx(433,162): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,164): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,175): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,182): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,190): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,194): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,201): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,202): error TS1003: Identifier expected.
+src/pages/Schools.tsx(433,213): error TS1005: ':' expected.
+src/pages/Schools.tsx(433,229): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,231): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,246): error TS1005: ',' expected.
+src/pages/Schools.tsx(433,250): error TS1002: Unterminated string literal.

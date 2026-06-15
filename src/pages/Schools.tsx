@@ -10,7 +10,8 @@ import {
   Search, X, ArrowRight, MapPin,
   GraduationCap, BookOpen, Star, Trophy,
   Map as MapIcon, Grid3X3, BarChart3, Compass, Award,
-  School as SchoolIcon
+  School as SchoolIcon, Users, ChevronDown,
+  Lightbulb, Target, TrendingUp, Quote, CheckCircle2
 } from 'lucide-react'
 
 /* ── Leaflet default icon ── */
@@ -63,7 +64,7 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
             className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
             style={{ objectFit: 'cover' }}
             loading={index < 4 ? 'eager' : 'lazy'} />
-          <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
           <div className="absolute inset-0 ring-1 ring-inset ring-white/0 group-hover:ring-accent/20 transition-all duration-500 pointer-events-none rounded-2xl" />
           {/* Glow */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ background: glow }} />
@@ -97,6 +98,49 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
         </div>
       </div>
     </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════
+   FAQ ACCORDION
+   ═══════════════════════════════════════════════════ */
+const faqData = [
+  { q: 'How many schools are in the Asuogyaman District?', a: 'The Asuogyaman District is home to over a dozen senior high and technical schools, each offering unique academic and technical programmes to suit diverse student needs.' },
+  { q: 'What types of schools are available?', a: "Schools in the district include Public Mixed schools, High/Technical institutions, and Mixed Day/Boarding schools. Each type offers distinct advantages depending on the student's learning style and goals." },
+  { q: 'How do I choose the right school for my child?', a: "Consider your child's interests, preferred learning environment (day vs boarding), and the programmes offered. Compare pass rates, facilities, and extracurricular activities to make an informed decision." },
+  { q: 'What is the average pass rate for schools in the district?', a: 'Schools in the Asuogyaman District maintain an impressive average WASSCE pass rate of approximately 98%, reflecting the quality of education and dedication of both students and teachers.' },
+  { q: 'Are boarding facilities available?', a: 'Yes, several schools in the district offer boarding facilities. Schools like Anum Presbyterian Senior High (ANSEC) and Adjena SHS provide well-maintained dormitories for students from across the region.' },
+  { q: 'What technical programmes are offered?', a: 'Technical schools offer programmes in areas such as woodwork, metalwork, building construction, and applied sciences alongside standard academic subjects, providing practical skills for the job market.' },
+]
+
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  return (
+    <section className="py-16 md:py-20 px-6 relative overflow-hidden">
+      <SectionDivider label="Frequently Asked" className="mb-10" />
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-xl md:text-2xl font-medium text-fg mb-3 tracking-tight text-center">Common Questions</h2>
+        <p className="text-sm text-muted text-center mb-10 max-w-md mx-auto leading-relaxed">Everything you need to know about education in Asuogyaman.</p>
+        <div className="space-y-3">
+          {faqData.map((item, i) => (
+            <div key={i} className={`rounded-2xl border transition-all duration-300 ${openIndex === i ? 'bg-surface border-accent/20 shadow-lg shadow-accent/5' : 'bg-surface/50 border-border/60 hover:border-accent/10'}`}>
+              <button onClick={() => setOpenIndex(openIndex === i ? null : i)} className="w-full flex items-center justify-between p-5 md:p-6 text-left">
+                <span className="text-sm font-medium text-fg pr-4">{item.q}</span>
+                <ChevronDown className={`w-4 h-4 text-muted shrink-0 transition-transform duration-300 ${openIndex === i ? 'rotate-180 text-accent' : ''}`} />
+              </button>
+              <div className={`overflow-hidden transition-all duration-300 ${openIndex === i ? 'max-h-48 pb-5 md:pb-6' : 'max-h-0'}`}>
+                <div className="px-5 md:px-6">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    <p className="text-xs text-muted leading-relaxed">{item.a}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -358,7 +402,7 @@ export default function Schools() {
                     <div className="rounded-xl bg-surface border border-border/60 overflow-hidden hover:border-accent/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5">
                       <div className="relative overflow-hidden" style={{ paddingBottom: '66%' }}>
                         <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105" style={{ objectFit: 'cover' }} loading="lazy" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-fg/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
                       </div>
                       <div className="p-5 space-y-2.5">
                         <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300">{item.name}</h3>
@@ -375,13 +419,88 @@ export default function Schools() {
         </section>
       )}
 
+      {/* ═══ HOW TO CHOOSE ═══ */}
+      {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
+        <section className="py-16 md:py-20 px-6 relative overflow-hidden">
+          <SectionDivider label="How to Choose" className="mb-10" />
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-medium text-fg mb-3 tracking-tight text-center">Finding the Right School</h2>
+            <p className="text-sm text-muted text-center mb-10 max-w-lg mx-auto leading-relaxed">Every student deserves a school that fits their goals. Here is how to navigate your options.</p>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { step: '01', icon: Target, title: 'Define Your Goals', desc: 'Consider whether your child thrives in academic, technical, or mixed environments. Each school type offers a unique pathway.', color: 'from-accent/10 to-accent/[0.02]' },
+                { step: '02', icon: Lightbulb, title: 'Compare Programmes', desc: 'Review available programmes \u2014 from sciences to arts and technical tracks. More programmes mean more pathways to success.', color: 'from-emerald-500/10 to-emerald-500/[0.02]' },
+                { step: '03', icon: TrendingUp, title: 'Check Track Record', desc: "Look at pass rates, university admissions, and alumni achievements. A school's reputation speaks through its results.", color: 'from-sky-500/10 to-sky-500/[0.02]' },
+              ].map((item) => (
+                <div key={item.step} className={`group relative rounded-2xl bg-gradient-to-b ${item.color} border border-border/60 p-6 md:p-8 hover:border-accent/20 transition-all duration-500`}> 
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl font-bold text-accent/20 font-mono">{item.step}</span>
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <item.icon className="w-5 h-5 text-accent" />
+                    </div>
+                  </div>
+                  <h3 className="text-sm font-medium text-fg mb-2">{item.title}</h3>
+                  <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ TESTIMONIALS ═══ */}
+      {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
+        <section className="py-16 md:py-20 px-6 relative overflow-hidden bg-surface/30 border-t border-border/40">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-40 -right-32 w-[500px] h-[500px] rounded-full blur-[120px] bg-accent/[0.04]" />
+          </div>
+          <div className="max-w-5xl mx-auto relative">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-4">
+                <Quote className="w-3 h-3 text-accent" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">Voices from the District</span>
+              </div>
+              <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">What Parents & Students Say</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-5">
+              {[
+                { user: 'Mrs. Akosua M.', role: 'Parent, Anum', text: "ANSEC gave my daughter the foundation she needed. She is now studying Engineering at KNUST. The boarding facilities and dedicated teachers made all the difference.", stars: 5 },
+                { user: 'Kofi D.', role: 'Alumni, Apeguso SHS', text: "The discipline and hard work culture at Apeguso prepared me for university life. I am proud to be an alumnus of this great institution.", stars: 5 },
+                { user: 'Rev. James O.', role: 'Parent, Anyinam', text: 'The technical programmes at Adjena SHS have improved dramatically. My son is learning practical skills alongside academics — a perfect balance.', stars: 4 },
+              ].map((review, i) => (
+                <div key={i} className="rounded-2xl bg-surface border border-border/60 p-6 hover:border-accent/20 transition-all duration-500">
+                  <div className="flex items-center gap-1 mb-4">
+                    {Array.from({ length: review.stars }).map((_, j) => <Star key={j} className="w-3 h-3 fill-accent text-accent" />)}
+                  </div>
+                  <p className="text-xs text-muted leading-relaxed mb-4 italic">&ldquo;{review.text}&rdquo;</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/15 flex items-center justify-center">
+                      <Users className="w-3.5 h-3.5 text-accent" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium text-fg">{review.user}</p>
+                      <p className="text-[9px] text-muted/60">{review.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ FAQ ═══ */}
+      {activeType === 'All' && !searchQuery && viewMode === 'grid' && (
+        <FaqSection />
+      )}
+
       {/* ═══ CTA ═══ */}
       <section className="py-24 md:py-28 px-6 text-center relative overflow-hidden">
         <FloatingOrbs />
         <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent" />
         <div className="max-w-lg mx-auto relative">
           <h2 className="text-3xl md:text-4xl font-medium text-fg mb-3 tracking-tight">Shape the future with education</h2>
-          <p className="text-sm text-muted mb-8 leading-relaxed">Asuogyaman's schools are nurturing the next generation of leaders, innovators, and changemakers.</p>
+          <p className="text-sm text-muted mb-8 leading-relaxed">Asuogyaman&apos;s schools are nurturing the next generation of leaders, innovators, and changemakers.</p>
           <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
             Find a School <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>

@@ -10,7 +10,8 @@ import MirrorHero from '../components/ui/mirror-hero'
 import { FloatingOrbs } from '../components/ui/floating-orbs'
 import {
   ArrowRight, Ship, Compass, Mountain, Landmark,
-  Utensils, Heart, Star, Quote, Clock, Search, X
+  Utensils, Heart, Star, Quote, Clock, Search, X,
+  Calendar, MapPin, Sparkles, Zap, Shield
 } from 'lucide-react'
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const
@@ -191,6 +192,116 @@ export default function Experience() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </section>
+
+      {/* ═══ HOW IT WORKS ═══ */}
+      <section className="py-16 md:py-20 px-5 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-[10px] font-bold uppercase tracking-[0.25em] text-accent mb-4">Your Journey</span>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">How It Works</h2>
+            <p className="text-xs text-muted mt-2 max-w-md mx-auto">Three simple steps to your perfect Asuogyaman experience.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 relative">
+            {/* Connecting line */}
+            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[1px] bg-gradient-to-r from-accent/20 via-accent/40 to-accent/20" />
+            {[
+              { step: '01', icon: Compass, title: 'Choose Your Adventure', desc: 'Browse our curated experiences — from lake cruises and cultural tours to nature hikes and wellness retreats.', color: 'text-cyan-400', bg: 'from-cyan-500/10 to-cyan-500/[0.02]' },
+              { step: '02', icon: Calendar, title: 'Plan Your Trip', desc: 'Select dates, check availability, and get instant pricing. Our experiences cater to solo travellers, couples, and groups.', color: 'text-rose-400', bg: 'from-rose-500/10 to-rose-500/[0.02]' },
+              { step: '03', icon: Sparkles, title: 'Create Memories', desc: 'Arrive, explore, and be amazed. Our local guides ensure every moment is authentic, safe, and unforgettable.', color: 'text-amber-400', bg: 'from-amber-500/10 to-amber-500/[0.02]' },
+            ].map((item) => (
+              <div key={item.step} className={`relative group rounded-2xl bg-gradient-to-b ${item.bg} border border-border/60 p-6 md:p-8 text-center hover:border-accent/20 transition-all duration-500`}>
+                <div className="relative z-10">
+                  <span className="inline-block text-3xl font-bold text-accent/15 font-mono mb-4">{item.step}</span>
+                  <div className="w-12 h-12 mx-auto rounded-2xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <item.icon className={`w-5 h-5 ${item.color}`} />
+                  </div>
+                  <h3 className="text-sm font-medium text-fg mb-2">{item.title}</h3>
+                  <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FEATURED EXPERIENCE SPOTLIGHT ═══ */}
+      <section className="py-16 md:py-20 px-5 relative overflow-hidden bg-surface/30 border-t border-border/40">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-40 -right-32 w-[500px] h-[500px] rounded-full blur-[120px] bg-accent/[0.04]" />
+        </div>
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-[10px] font-bold uppercase tracking-[0.25em] text-accent mb-4">Editor's Pick</span>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">Featured Experience</h2>
+          </div>
+          {EXPERIENCES.filter(e => e.rating === 5).slice(0, 1).map(exp => (
+            <div key={exp.id} className="group relative rounded-3xl p-[1px] overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(197,149,74,0.4), rgba(197,149,74,0.05) 30%, rgba(197,149,74,0.2) 50%, rgba(197,149,74,0.05) 70%, rgba(197,149,74,0.4))', backgroundSize: '200% 200%', animation: 'border-flow 6s ease-in-out infinite' }}>
+              <div className="relative rounded-3xl bg-surface overflow-hidden">
+                <div className="grid md:grid-cols-2">
+                  <div className="relative overflow-hidden min-h-[280px] md:min-h-[400px]">
+                    <img src={exp.image} alt={exp.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" style={{ objectFit: 'cover' }} />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface/95 hidden md:block pointer-events-none" />
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30"><div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-[scanline_5s_linear_infinite]" /></div>
+                    <div className="absolute top-5 left-5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[9px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-accent/25 bg-accent/10 text-accent z-10">
+                      <Zap className="w-3 h-3" />Top Rated
+                    </div>
+                  </div>
+                  <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Star className="w-4 h-4 fill-accent text-accent" />
+                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">Featured Experience</span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-semibold text-fg mb-3 leading-tight">{exp.name}</h3>
+                    <p className="text-sm text-muted leading-relaxed mb-6 line-clamp-3">{exp.description}</p>
+                    <div className="grid grid-cols-3 gap-3 mb-6">
+                      {[{ value: exp.rating || '5.0', label: 'Rating' }, { value: exp.duration, label: 'Duration' }, { value: exp.price, label: 'From' }].map((s) => (
+                        <div key={s.label} className="text-center p-3 rounded-xl bg-accent/[0.04] border border-accent/10">
+                          <div className="text-sm font-bold text-fg text-gradient">{s.value}</div>
+                          <div className="text-[9px] text-muted uppercase tracking-wider mt-0.5">{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted mb-6">
+                      <MapPin className="w-3.5 h-3.5 text-accent" />{exp.category}
+                    </div>
+                    <Link to={`/experience/${exp.id}`} className="group/cta inline-flex items-center gap-2.5 bg-gradient-to-r from-accent to-accent/80 text-accent-fg px-7 py-3 text-sm font-medium rounded-xl shadow-lg shadow-accent/15 hover:shadow-xl hover:shadow-accent/25 hover:translate-y-[-1px] transition-all duration-500 w-fit">
+                      <span>Book Now</span><ArrowRight className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform duration-300" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ SEASONAL HIGHLIGHTS ═══ */}
+      <section className="py-16 md:py-20 px-5 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-[10px] font-bold uppercase tracking-[0.25em] text-accent mb-4">Seasonal</span>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">When to Visit</h2>
+            <p className="text-xs text-muted mt-2 max-w-md mx-auto">Every season brings unique experiences in Asuogyaman.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { season: 'Dry Season', months: 'Nov – Mar', desc: 'Perfect for outdoor adventures, hiking, and lake cruises. Clear skies and calm waters.', icon: Zap, color: 'text-amber-400', bg: 'from-amber-500/10 to-amber-500/[0.02]' },
+              { season: 'Rainy Season', months: 'Apr – Oct', desc: 'Lush green landscapes, waterfall visits, and cultural festivals. The district comes alive.', icon: Heart, color: 'text-emerald-400', bg: 'from-emerald-500/10 to-emerald-500/[0.02]' },
+              { season: 'Festival Period', months: 'Sep – Oct', desc: 'Experience the Homowo and other traditional festivals with parades, music, and local cuisine.', icon: Sparkles, color: 'text-rose-400', bg: 'from-rose-500/10 to-rose-500/[0.02]' },
+              { season: 'Year-Round', months: 'Anytime', desc: 'Lake Volta cruises, historical tours, and nature reserves are available throughout the year.', icon: Shield, color: 'text-sky-400', bg: 'from-sky-500/10 to-sky-500/[0.02]' },
+            ].map((item) => (
+              <div key={item.season} className={`group rounded-2xl bg-gradient-to-b ${item.bg} border border-border/60 p-5 hover:border-accent/20 transition-all duration-500`}>
+                <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon className={`w-5 h-5 ${item.color}`} />
+                </div>
+                <h3 className="text-sm font-medium text-fg mb-0.5">{item.season}</h3>
+                <p className="text-[10px] text-accent font-mono mb-2">{item.months}</p>
+                <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

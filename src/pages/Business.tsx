@@ -9,7 +9,8 @@ import RevealSection from '../components/animations/reveal-section'
 import { FloatingOrbs } from '../components/ui/floating-orbs'
 import {
   Star, Search, X, Compass, ArrowRight, Sparkles, MapPin, Phone, Mail, ExternalLink,
-  Building2, Store, Truck, Wrench, Factory, Hotel
+  Building2, Store, Truck, Wrench, Factory, Hotel, TrendingUp, Shield, Globe, Users,
+  ChevronRight
 } from 'lucide-react'
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const
@@ -139,7 +140,67 @@ export default function Business() {
         </div>
       </div>
 
-      {/* DIRECTORY GRID */}
+      {/* ═══ SECTOR SPOTLIGHT ═══ */}
+      <section className="py-16 md:py-20 px-5 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-[10px] font-bold uppercase tracking-[0.25em] text-accent mb-4">Sector Spotlight</span>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">District Industries at a Glance</h2>
+            <p className="text-xs text-muted mt-2 max-w-md mx-auto">The economic pillars driving growth across Asuogyaman.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Object.entries(categoryConfig).map(([cat, config]) => {
+              const Icon = config.icon
+              const count = BUSINESS.filter(b => b.category === cat).length
+              return (
+                <button key={cat} onClick={() => { setActiveCategory(cat); document.getElementById('explore')?.scrollIntoView({ behavior: 'smooth' }) }}
+                  className="group relative rounded-2xl bg-surface border border-border/60 p-5 text-left hover:border-accent/20 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className={`w-5 h-5 ${config.color}`} />
+                  </div>
+                  <h3 className="text-sm font-medium text-fg mb-1">{cat}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted">{count} {count === 1 ? 'business' : 'businesses'}</span>
+                    <ChevronRight className="w-3 h-3 text-muted/40 group-hover:text-accent group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ WHY ASUOGYAMAN ═══ */}
+      <section className="py-16 md:py-20 px-5 relative overflow-hidden bg-surface/30 border-t border-border/40">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-40 -left-32 w-[500px] h-[500px] rounded-full blur-[120px] bg-accent/[0.04]" />
+        </div>
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-[10px] font-bold uppercase tracking-[0.25em] text-accent mb-4">Why Here</span>
+            <h2 className="text-xl md:text-2xl font-medium text-fg tracking-tight">Why Asuogyaman?</h2>
+            <p className="text-xs text-muted mt-2 max-w-md mx-auto">A strategic location for business growth in the Volta Region.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: Globe, title: 'Strategic Location', desc: 'Gateway between Greater Accra and the Volta Region, with direct access to Lake Volta and the Akosombo transport corridor.', color: 'text-sky-400' },
+              { icon: TrendingUp, title: 'Rapid Growth', desc: 'One of the fastest-growing districts in the Eastern Region, driven by tourism, hydroelectric power, and agriculture.', color: 'text-emerald-400' },
+              { icon: Users, title: 'Skilled Workforce', desc: 'Home to multiple senior high and technical schools producing graduates ready for industry and entrepreneurship.', color: 'text-amber-400' },
+              { icon: Shield, title: 'Stable Environment', desc: 'A peaceful community with strong traditional leadership, low crime, and supportive infrastructure for businesses.', color: 'text-rose-400' },
+            ].map((item) => (
+              <div key={item.title} className="group rounded-2xl bg-surface border border-border/60 p-6 hover:border-accent/20 transition-all duration-500">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon className={`w-5 h-5 ${item.color}`} />
+                </div>
+                <h3 className="text-sm font-medium text-fg mb-2">{item.title}</h3>
+                <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ DIRECTORY GRID ═══ */}
       <section className="py-8 md:py-12 px-5 pb-24 relative">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6">
