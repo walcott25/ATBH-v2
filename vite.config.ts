@@ -12,7 +12,16 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png'],
+        includeAssets: [
+          'Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png',
+          'Images/adomi-bridge-hero.jpg',
+          'Images/hero-schools.jpg',
+          'Images/ghana-attractions-bg.jpg',
+          'Images/ghana-stay-bg.jpg',
+          'Images/ghana-dining-bg.jpg',
+          'Images/ghana-business-bg.jpg',
+          'Images/ghana-events-bg.jpg',
+        ],
         manifest: {
           name: 'Asuogyaman Tourism & Business Hub',
           short_name: 'ATBH',

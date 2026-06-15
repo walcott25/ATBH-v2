@@ -25,6 +25,9 @@ const DefaultIcon = L.icon({
 })
 L.Marker.prototype.options.icon = DefaultIcon
 
+/* ── Easing ── */
+const easeOut = [0.25, 0.1, 0.25, 1]
+
 /* ── Helpers ── */
 function typeIcon(type: string) {
   switch (type) {
@@ -200,34 +203,45 @@ export default function Schools() {
       <section ref={heroRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
           <img src="/Images/hero-schools.jpg" alt="" className="absolute inset-0 w-full h-full object-cover block max-w-none" style={{ height: '100%' }} fetchPriority="high" />
-          <div className="absolute inset-0 bg-gradient-to-b from-fg/50 via-fg/40 to-fg/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" style={{ mixBlendMode: 'soft-light' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/70 via-fg/20 to-fg/90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-accent/[0.08] via-transparent to-transparent" />
+          <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-accent/[0.04] blur-[140px]" />
         </motion.div>
         <FloatingOrbs />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-accent/[0.06] blur-[100px] rounded-full" />
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 text-center px-5 max-w-3xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-[10px] font-medium tracking-[0.25em] uppercase text-accent border border-accent/20 bg-accent/5 backdrop-blur-sm mb-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: easeOut }}>
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-medium tracking-[0.25em] uppercase text-accent border border-accent/20 bg-white/[0.04] backdrop-blur-xl mb-8">
               <GraduationCap className="w-3 h-3" />
               Educational Excellence
             </span>
           </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }} className="font-['Playfair_Display_SC'],serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-semibold tracking-wide leading-none mb-4">
-            Schools &amp; <span className="text-gradient-shimmer">Education</span>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3, ease: easeOut }} className="font-['Playfair_Display_SC'] font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-semibold tracking-wide leading-none mb-5 [text-shadow:0_4px_60px_rgba(0,0,0,0.5)]">
+            Schools &amp; <span className="text-gradient-gold">Education</span>
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.45, ease: [0.25, 0.1, 0.25, 1] }} className="text-xs md:text-sm text-white/40 font-medium tracking-[0.25em] uppercase mb-6">
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.45, ease: easeOut }} className="text-xs md:text-sm text-white/50 font-medium tracking-[0.3em] uppercase mb-6">
             Asuogyaman District
           </motion.p>
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.6, delay: 0.55, ease: [0.25, 0.1, 0.25, 1] }} className="w-16 h-0.5 bg-accent/60 mx-auto mb-8" />
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }} className="text-sm md:text-base text-white/60 max-w-lg mx-auto mb-12 leading-relaxed font-light">
+          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.55, ease: easeOut }} className="w-20 h-px bg-gradient-to-r from-accent/20 via-accent/60 to-accent/20 mx-auto mb-8" />
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: easeOut }} className="text-sm md:text-base text-white/60 max-w-lg mx-auto mb-12 leading-relaxed font-light tracking-wide">
             Centres of academic excellence, technical mastery, and character formation.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7, ease: easeOut }} className="flex items-center justify-center gap-4 flex-wrap">
             <a href="#explore" className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-7 py-3.5 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30">
               Explore Schools <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
+            <Link to="/map" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/70 border border-white/15 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm">
+              <MapPin className="w-4 h-4" />
+              View Map
+            </Link>
           </motion.div>
         </motion.div>
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
+        <motion.div style={{ opacity: heroOpacity }} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity, ease: easeOut }} className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1.5">
+            <div className="w-1 h-2 rounded-full bg-white/40" />
+          </motion.div>
+        </motion.div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-bg to-transparent pointer-events-none z-10" />
       </section>
 
       {/* ═══ STATS ═══ */}

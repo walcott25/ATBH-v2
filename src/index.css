@@ -144,11 +144,18 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   will-change: background-position;
-  animation: shimmer 3s ease-in-out infinite;
+  animation: shimmer 4s ease-in-out infinite;
 }
 
 .text-gradient-subtle {
   background: linear-gradient(135deg, var(--color-fg), var(--color-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #C5954A, #E8C478, #F0D78C, #C5954A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
