@@ -192,6 +192,10 @@ export default function Schools() {
 
       {/* ═══ HERO ═══ */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/Images/hero-schools.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/60 via-fg/40 to-fg/70" />
+        </div>
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-48 -left-32 w-[700px] h-[700px] rounded-full blur-[120px] animate-[float_14s_ease-in-out_infinite] bg-gradient-to-br from-accent/[0.07] to-transparent" />
           <div className="absolute -bottom-32 -right-24 w-[600px] h-[600px] rounded-full blur-[100px] animate-[float_18s_ease-in-out_infinite] bg-gradient-to-tl from-accent/[0.05] to-transparent" style={{ animationDirection: 'reverse' }} />
