@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SCHOOLS } from '../data'
 import type { School } from '../data'
 import SectionDivider from '../components/ui/section-divider'
+import AnimatedCounter from '../components/ui/animated-counter'
 import { FloatingOrbs } from '../components/ui/floating-orbs'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
@@ -177,7 +178,7 @@ export default function Schools() {
     { value: SCHOOLS.length, label: 'Schools', suffix: '', icon: SchoolIcon },
     { value: totalPrograms, label: 'Academic Programmes', suffix: '+', icon: BookOpen },
     { value: types.length - 1, label: 'School Types', suffix: '', icon: BarChart3 },
-    { value: '98%', label: 'Pass Rate Average', suffix: '', icon: Trophy },
+    { value: 98, label: 'Pass Rate Average', suffix: '%', icon: Trophy },
   ], [totalPrograms])
 
   const topPrograms = useMemo(() => {
@@ -223,7 +224,7 @@ export default function Schools() {
                 <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-accent/5 border border-accent/10 flex items-center justify-center group-hover:bg-accent/10 group-hover:scale-105 transition-all duration-300">
                   <stat.icon className="w-5 h-5 text-accent" />
                 </div>
-                <div className="text-3xl md:text-4xl font-medium text-fg mb-1 text-gradient">{stat.value}{stat.suffix}</div>
+                <div className="text-3xl md:text-4xl font-medium text-fg mb-1 text-gradient">{typeof stat.value === 'number' ? <AnimatedCounter value={stat.value} suffix={stat.suffix} /> : <>{stat.value}{stat.suffix}</>}</div>
                 <div className="text-xs text-muted tracking-wide">{stat.label}</div>
               </div>
             ))}

@@ -192,8 +192,8 @@ export default function Home() {
       <section ref={heroRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
           <img
-            src="/Images/adomi-bridge-hero.jpg"
-            alt="Adomi Bridge"
+            src="/Images/ghana-schools-bg.jpg"
+            alt="School Campus"
             className="absolute inset-0 w-full h-full object-cover block max-w-none"
             style={{ height: '100%' }}
             fetchPriority="high"
