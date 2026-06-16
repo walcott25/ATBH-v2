@@ -8,6 +8,9 @@ import GlassCard from '../components/ui/glass-card';
 import AppSection from '../components/ui/app-section';
 import AnimatedCounter from '../components/ui/animated-counter';
 import { FloatingOrbs } from '../components/ui/floating-orbs';
+import StorytellingChapters from '../components/ui/storytelling-chapters';
+import HorizonTimeline from '../components/ui/horizon-timeline';
+import MagneticButton from '../components/ui/magnetic-button';
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const;
 
@@ -259,20 +262,24 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.7, ease: easeOut }}
             className="flex items-center justify-center gap-4 flex-wrap"
           >
-            <Link
-              to="/attractions"
-              className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-6 py-3 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30"
-            >
-              Explore Attractions
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-            <Link
-              to="/map"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm"
-            >
-              <MapPin className="w-4 h-4" />
-              View Map
-            </Link>
+            <MagneticButton>
+              <Link
+                to="/attractions"
+                className="group inline-flex items-center gap-2 bg-accent text-accent-fg px-6 py-3 text-sm font-medium rounded-xl hover:bg-accent/90 transition-all duration-300 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30"
+              >
+                Explore Attractions
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </MagneticButton>
+            <MagneticButton>
+              <Link
+                to="/map"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm"
+              >
+                <MapPin className="w-4 h-4" />
+                View Map
+              </Link>
+            </MagneticButton>
           </motion.div>
         </motion.div>
 
@@ -657,6 +664,12 @@ export default function Home() {
           </div>
         </div>
       </AnimatedSection>
+
+      {/* Immersive Storytelling */}
+      <StorytellingChapters />
+
+      {/* GSAP Timeline */}
+      <HorizonTimeline />
 
       {/* Upcoming Events */}
       <AnimatedSection className="py-20 px-5 relative">

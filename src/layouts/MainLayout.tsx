@@ -42,12 +42,17 @@ export default function MainLayout() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? 'bg-white/80 backdrop-blur-xl border-b border-border shadow-xs'
-            : 'bg-gradient-to-b from-black/20 to-transparent'
+            ? 'bg-white/70 backdrop-blur-2xl border-b border-white/20 shadow-lg shadow-black/5'
+            : 'bg-gradient-to-b from-black/30 to-transparent'
         }`}
       >
+        {/* Liquid glass gradient edge glow */}
+        {scrolled && (
+          <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent pointer-events-none" />
+        )}
+
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-2.5 group">
@@ -70,8 +75,8 @@ export default function MainLayout() {
                         onClick={() => setMoreOpen(!moreOpen)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                           hasActiveChild
-                            ? `${scrolled ? 'text-fg bg-black/5' : 'text-white bg-white/15'}`
-                            : `${scrolled ? 'text-muted hover:text-fg hover:bg-black/5' : 'text-white/70 hover:text-white hover:bg-white/15'}`
+                            ? `${scrolled ? 'text-fg bg-accent/10' : 'text-white bg-white/15'}`
+                            : `${scrolled ? 'text-muted hover:text-fg hover:bg-accent/5' : 'text-white/70 hover:text-white hover:bg-white/15'}`
                         }`}
                       >
                         {item.label}
@@ -84,7 +89,7 @@ export default function MainLayout() {
                             exit={{ opacity: 0, y: 8, scale: 0.96 }}
                             transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
                             onMouseEnter={() => setMoreOpen(true)}
-                            className="absolute top-full right-0 mt-2 w-44 bg-white/95 backdrop-blur-xl border border-border rounded-xl py-2 shadow-lg shadow-black/5"
+                            className="absolute top-full right-0 mt-2 w-44 bg-white/80 backdrop-blur-2xl border border-white/20 rounded-xl py-2 shadow-xl shadow-black/5"
                           >
                             {item.children.map((child) => (
                               <Link
@@ -92,7 +97,7 @@ export default function MainLayout() {
                                 to={child.path}
                                 className={`block px-4 py-2.5 text-xs font-medium transition-all duration-150 relative ${
                                   isActive(child.path)
-                                    ? 'text-accent bg-accent/5' : 'text-muted hover:text-fg hover:bg-black/5'
+                                    ? 'text-accent bg-accent/5' : 'text-muted hover:text-fg hover:bg-accent/5'
                                 }`}
                               >
                                 {isActive(child.path) && (
@@ -104,7 +109,7 @@ export default function MainLayout() {
                             {isLoaded && isSignedIn && isAdmin && (
                               <Link
                                 to="/admin"
-                                className="block px-4 py-2.5 text-xs font-medium text-muted hover:text-fg hover:bg-black/5 border-t border-border mt-1 pt-2.5"
+                                className="block px-4 py-2.5 text-xs font-medium text-muted hover:text-fg hover:bg-accent/5 border-t border-white/10 mt-1 pt-2.5"
                               >
                                 Admin
                               </Link>
@@ -121,8 +126,8 @@ export default function MainLayout() {
                     to={item.path!}
                     className={`relative px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                       isActive(item.path!)
-                        ? `${scrolled ? 'text-fg bg-black/5' : 'text-white bg-white/15'}`
-                        : `${scrolled ? 'text-muted hover:text-fg hover:bg-black/5' : 'text-white/70 hover:text-white hover:bg-white/15'}`
+                        ? `${scrolled ? 'text-fg bg-accent/10' : 'text-white bg-white/15'}`
+                        : `${scrolled ? 'text-muted hover:text-fg hover:bg-accent/5' : 'text-white/70 hover:text-white hover:bg-white/15'}`
                     }`}
                   >
                     {item.label}
@@ -143,7 +148,7 @@ export default function MainLayout() {
                 <SignInButton mode="modal">
                   <button className={`ml-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                     scrolled
-                      ? 'text-muted border border-border hover:border-fg/20 hover:text-fg'
+                      ? 'text-muted border border-border hover:border-accent/30 hover:text-fg'
                       : 'text-white/70 border border-white/20 hover:border-white/40 hover:text-white'
                   }`}>
                     Sign In
