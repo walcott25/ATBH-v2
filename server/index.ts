@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Database from 'better-sqlite3';
-import { Webhook } from 'svix';
+
 
 // Load .env from project root
 dotenv.config({ path: path.resolve(fileURLToPath(import.meta.url), '../../.env') });
@@ -122,91 +122,6 @@ app.post('/api/paystack/webhook', express.raw({ type: 'application/json' }), (re
     res.status(200).json({ status: 'error', message: 'Webhook processing error' });
   }
 });
-
-// ===== Clerk Webhook — MUST be before express.json() to capture raw body =====
-const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
-
-app.post('/api/webhooks/clerk', express.raw({ type: 'application/json' }), async (req, res) => {
-  try {
-    if (!CLERK_WEBHOOK_SECRET) {
-      console.warn('⚠️  CLERK_WEBHOOK_SIGNING_SECRET not configured — webhook signature skipped');
-      return res.status(500).json({ error: 'Webhook secret not configured' });
-    }
-
-    const svixId = req.headers['svix-id'] as string;
-    const svixTimestamp = req.headers['svix-timestamp'] as string;
-    const svixSignature = req.headers['svix-signature'] as string;
-
-    if (!svixId || !svixTimestamp || !svixSignature) {
-      console.error('❌ Missing Svix headers');
-      return res.status(401).json({ error: 'Missing Svix headers' });
-    }
-
-    const rawBody = req.body as Buffer;
-    if (!rawBody || rawBody.length === 0) {
-      return res.status(400).json({ error: 'Empty request body' });
-    }
-
-    const wh = new Webhook(CLERK_WEBHOOK_SECRET);
-    let evt: Record<string, any>;
-    try {
-      evt = wh.verify(rawBody.toString('utf8'), {
-        'svix-id': svixId,
-        'svix-timestamp': svixTimestamp,
-        'svix-signature': svixSignature,
-      }) as Record<string, any>;
-    } catch (err) {
-      console.error('❌ Invalid Clerk webhook signature:', err);
-      return res.status(401).json({ error: 'Invalid signature' });
-    }
-
-    const eventType = evt.type as string;
-    console.log(`📡 Clerk webhook received: ${eventType}`);
-
-    if (eventType === 'user.created') {
-      const { id, email_addresses, first_name, last_name } = evt.data || {};
-      const email = email_addresses?.[0]?.email_address;
-      const name = `${first_name ?? ''} ${last_name ?? ''}`.trim();
-      console.log(`👤 New user created: ${name} (${email}) — Clerk ID: ${id}`);
-    }
-
-    if (eventType === 'user.updated') {
-      const { id, email_addresses, first_name, last_name } = evt.data || {};
-      const email = email_addresses?.[0]?.email_address;
-      const name = `${first_name ?? ''} ${last_name ?? ''}`.trim();
-      console.log(`👤 User updated: ${name} (${email}) — Clerk ID: ${id}`);
-    }
-
-    if (eventType === 'user.deleted') {
-      const { id } = evt.data || {};
-      console.log(`👤 User deleted — Clerk ID: ${id}`);
-    }
-
-    if (eventType === 'session.created') {
-      console.log(`🔑 Session created for user: ${evt.data?.user_id}`);
-    }
-
-    if (eventType === 'session.ended' || eventType === 'session.revoked') {
-      console.log(`🔑 Session ${eventType.replace('session.', '')} for user: ${evt.data?.user_id}`);
-    }
-
-    if (eventType === 'organization.created') {
-      const { id, name } = evt.data || {};
-      console.log(`🏢 Organization created: ${name} (${id})`);
-    }
-
-    if (eventType === 'organizationMembership.created') {
-      const { organization, public_user_data, role } = evt.data || {};
-      console.log(`👥 ${public_user_data?.first_name} joined ${organization?.name} as ${role}`);
-    }
-
-    res.status(200).json({ received: true });
-  } catch (error) {
-    console.error('❌ Clerk webhook processing error:', error);
-    res.status(200).json({ received: true, error: 'Processing error' });
-  }
-});
-
 app.use(express.json());
 
 app.post('/api/paystack/verify', async (req, res) => {

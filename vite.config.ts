@@ -88,6 +88,42 @@ export default defineConfig(({mode}) => {
               handler: 'NetworkOnly',
             },
             {
+              // Google Fonts CSS — CacheFirst to avoid SW no-response errors offline
+              urlPattern: /^https?:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'google-fonts-css',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                },
+              },
+            },
+            {
+              // Google Fonts assets — CacheFirst for the actual font files
+              urlPattern: /^https?:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-files',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
+              },
+            },
+            {
+              // OpenStreetMap tiles — StaleWhileRevalidate for fast UX
+              urlPattern: /^https?:\/\/.*\.tile\.openstreetmap\.org\/.*/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'map-tile-cache',
+                expiration: {
+                  maxEntries: 1000,
+                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                },
+              },
+            },
+            {
               urlPattern: /^https?:\/\/.*/i,
               handler: 'NetworkFirst',
               options: {
@@ -121,7 +157,6 @@ export default defineConfig(({mode}) => {
             'vendor-motion': ['motion'],
             'vendor-icons': ['lucide-react'],
             'vendor-leaflet': ['leaflet', 'react-leaflet'],
-            'vendor-clerk': ['@clerk/react'],
             'vendor-panorama': ['@photo-sphere-viewer/core'],
             'vendor-charts': ['recharts'],
           },

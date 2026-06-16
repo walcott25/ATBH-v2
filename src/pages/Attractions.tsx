@@ -19,7 +19,7 @@ import {
   ChevronDown, ChevronLeft,
   Grid3X3, Map as MapIcon,
   Phone, Mail, ExternalLink,
-  Quote, Navigation, Info, Sun, Clock
+  Quote, Navigation, Info, Sun, Clock, Heart, Bookmark
 } from 'lucide-react'
 
 // ---------- Constants ----------
@@ -98,6 +98,17 @@ export default function Attractions() {
   const [selectedAttraction, setSelectedAttraction] = useState<Attraction | null>(null)
   const [reviewIndex, setReviewIndex] = useState(0)
   const [virtualTourAttraction, setVirtualTourAttraction] = useState<Attraction | null>(null)
+  const [wishlist, setWishlist] = useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem('atbh-wishlist') || '[]') } catch { return [] }
+  })
+
+  const toggleWishlist = (id: string) => {
+    setWishlist(prev => {
+      const next = prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+      localStorage.setItem('atbh-wishlist', JSON.stringify(next))
+      return next
+    })
+  }
 
   // Hero parallax
 
@@ -259,6 +270,14 @@ export default function Attractions() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Wishlist count */}
+            {wishlist.length > 0 && (
+              <div className="flex items-center gap-1.5 px-3 py-2.5 text-xs text-accent bg-accent/5 border border-accent/10 rounded-xl">
+                <Heart className="w-3.5 h-3.5" />
+                <span className="font-medium">{wishlist.length} saved</span>
+              </div>
+            )}
 
             {/* View toggle */}
             <div className="flex items-center gap-1 bg-surface border border-border rounded-xl p-1">
@@ -428,6 +447,8 @@ export default function Attractions() {
                       item={item}
                       index={i}
                       onClick={() => handleCardClick(item)}
+                      isSaved={wishlist.includes(item.id)}
+                      onToggleSave={() => toggleWishlist(item.id)}
                     />
                   ))}
                 </motion.div>
@@ -728,7 +749,7 @@ export default function Attractions() {
 
 // ---------- 3D Tilt Card ----------
 
-function AttractionCard({ item, index, onClick }: { item: Attraction; index: number; onClick: () => void }) {
+function AttractionCard({ item, index, onClick, isSaved, onToggleSave }: { item: Attraction; index: number; onClick: () => void; isSaved?: boolean; onToggleSave?: () => void }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [rotateX, setRotateX] = useState(0)
   const [rotateY, setRotateY] = useState(0)
@@ -816,10 +837,21 @@ function AttractionCard({ item, index, onClick }: { item: Attraction; index: num
 
             {/* Rating on image */}
             {item.rating && (
-              <div className="absolute top-3 right-3 md:top-4 md:right-4 flex items-center gap-1 bg-black/40 backdrop-blur-xl px-2 py-0.5 rounded-full">
+              <div className="absolute top-3 right-10 md:top-4 md:right-10 flex items-center gap-1 bg-black/40 backdrop-blur-xl px-2 py-0.5 rounded-full">
                 <Star className="w-2.5 h-2.5 fill-accent text-accent" />
                 <span className="text-[9px] font-semibold text-accent">{item.rating}</span>
               </div>
+            )}
+
+            {/* Bookmark / Save */}
+            {onToggleSave && (
+              <button
+                onClick={(e) => { e.stopPropagation(); onToggleSave(); }}
+                className="absolute top-3 right-3 md:top-4 md:right-4 z-20 w-7 h-7 rounded-full bg-black/40 backdrop-blur-xl flex items-center justify-center hover:bg-accent/30 transition-all"
+                aria-label={isSaved ? 'Remove from wishlist' : 'Save to wishlist'}
+              >
+                <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-accent text-accent' : 'text-white/80'}`} />
+              </button>
             )}
 
             {/* Quick view hint */}

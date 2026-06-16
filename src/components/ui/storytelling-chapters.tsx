@@ -14,7 +14,7 @@ const chapters: Chapter[] = [
     title: 'The Volta River',
     subtitle: 'Lifeblood of the East',
     body: 'The Volta River carved this landscape over millennia — one of Africa\'s great waterways, stretching from the Burkina Faso highlands to the Atlantic. Here, at Asuogyaman, it pools into the vast Lake Volta, the largest man-made lake on Earth.',
-    image: '/Images/volta-river-landscape.jpg',
+    image: '/Images/Aylos bay1.jpg',
     color: 'from-blue-900/80 via-blue-800/40 to-transparent',
   },
   {
@@ -28,14 +28,14 @@ const chapters: Chapter[] = [
     title: 'Culture & Tradition',
     subtitle: 'Centuries of heritage',
     body: 'The Akwamu people have stewarded these lands for generations. Traditional festivals, drumming ceremonies, and vibrant kente weaving tell stories of a culture that thrives alongside the river. Every village has a rhythm, every chief a history.',
-    image: '/Images/ghana-schools-bg.jpg',
+    image: '/Images/ghana-culture-festival.jpg',
     color: 'from-emerald-900/70 via-emerald-800/30 to-transparent',
   },
   {
     title: 'A Future of Discovery',
     subtitle: 'Your journey begins here',
     body: 'Today, Asuogyaman welcomes the world. From luxury lakeside resorts to eco-adventures, from world-class dining to cultural immersion — this is a destination that honours its past while embracing its future.',
-    image: '/Images/hero-schools.jpg',
+    image: '/Images/luxury-resort-infinity.jpg',
     color: 'from-stone-900/70 via-stone-800/30 to-transparent',
   },
 ]

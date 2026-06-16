@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useUser, SignInButton, UserButton } from '@clerk/react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const navItems = [
@@ -20,8 +19,6 @@ const navItems = [
 
 export default function MainLayout() {
   const location = useLocation();
-  const { isLoaded, isSignedIn, user } = useUser();
-  const isAdmin = user?.publicMetadata?.role === 'admin';
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -106,14 +103,6 @@ export default function MainLayout() {
                                 {child.label}
                               </Link>
                             ))}
-                            {isLoaded && isSignedIn && isAdmin && (
-                              <Link
-                                to="/admin"
-                                className="block px-4 py-2.5 text-xs font-medium text-muted hover:text-fg hover:bg-accent/5 border-t border-white/10 mt-1 pt-2.5"
-                              >
-                                Admin
-                              </Link>
-                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -144,18 +133,6 @@ export default function MainLayout() {
               >
                 Donate
               </Link>
-              {isLoaded && !isSignedIn && (
-                <SignInButton mode="modal">
-                  <button className={`ml-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
-                    scrolled
-                      ? 'text-muted border border-border hover:border-accent/30 hover:text-fg'
-                      : 'text-white/70 border border-white/20 hover:border-white/40 hover:text-white'
-                  }`}>
-                    Sign In
-                  </button>
-                </SignInButton>
-              )}
-              {isLoaded && isSignedIn && <div className="ml-2"><UserButton /></div>}
             </nav>
 
             <button
@@ -214,22 +191,8 @@ export default function MainLayout() {
                     </motion.div>
                   );
                 })}
-                {isLoaded && isSignedIn && isAdmin && (
-                  <Link to="/admin" className="block py-2.5 text-sm text-muted hover:text-fg">Admin</Link>
-                )}
                 <div className="pt-2 border-t border-border mt-2 space-y-1">
                   <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>
-                  {isLoaded && !isSignedIn && (
-                    <SignInButton mode="modal">
-                      <button className="block py-2.5 text-sm text-muted">Sign In</button>
-                    </SignInButton>
-                  )}
-                  {isLoaded && isSignedIn && (
-                    <div className="flex items-center gap-3 py-2.5">
-                      <UserButton />
-                      <span className="text-sm text-muted">{user?.fullName || user?.primaryEmailAddress?.emailAddress}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             </motion.div>

@@ -1,0 +1,14 @@
+HTTP/1.1 401 Unauthorized
+Date: Tue, 16 Jun 2026 08:33:53 GMT
+Content-Type: application/json
+Content-Length: 255
+Connection: keep-alive
+CF-Ray: a0c878e2cfe9932d-ACC
+CF-Cache-Status: DYNAMIC
+Server: cloudflare
+X-CFWorker: 1
+x-clerk-trace-id: 6c4c9ff44312e698fab4e0682e5a7ff0
+x-cloud-trace-context: 6c4c9ff44312e698fab4e0682e5a7ff0
+set-cookie: __cf_bm=JsE2qdM6rAqb1a.afwYVQAv.KkUt8DeiQ.fmi8hT1_U-1781598833.0826771-1.0.1.1-FtBYUnRAh7PPb4Em6JHS7UuwDCTnJzKgxSA547x536Y7LhUjbKIcA..vxAuRCfiGISu0PC.lWIFIlbaXoosSBpJXT8b7Fih_KHugFS9sPT7sMUTEgxB2VwuDdB5Mv8Nq; HttpOnly; SameSite=None; Secure; Path=/; Domain=api.clerk.com; Expires=Tue, 16 Jun 2026 09:03:53 GMT
+
+{"errors":[{"message":"Invalid Authorization header format","long_message":"Invalid Authorization header format. Must be 'Bearer \u003cYOUR_API_KEY\u003e'","code":"authorization_header_format_invalid"}],"clerk_trace_id":"6c4c9ff44312e698fab4e0682e5a7ff0"}

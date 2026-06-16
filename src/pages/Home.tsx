@@ -376,7 +376,7 @@ export default function Home() {
       {/* About Asuogyaman — Dark Cinematic Full-Image Panel */}
       <section
         className="relative min-h-screen bg-cover bg-center overflow-hidden"
-        style={{ backgroundImage: 'url(/Images/volta-river-landscape.jpg)' }}
+        style={{ backgroundImage: 'url(/Images/download.jfif)' }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-fg/70 via-fg/50 to-fg/95" />
 
@@ -618,9 +618,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Gradient fade edges */}
-          <div className="absolute top-0 left-0 bottom-0 w-16 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
-          <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
+          
         </div>
       </AnimatedSection>
 

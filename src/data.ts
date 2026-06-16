@@ -115,6 +115,42 @@ export const ATTRACTIONS: Attraction[] = [
     coordinates: [6.3500, 0.0500],
     rating: 4.8
   },
+  {
+    id: 'akosombo-market',
+    name: 'Akosombo Market',
+    description: 'A bustling traditional market where locals sell fresh produce, textiles, crafts, and household goods. A vibrant cultural experience offering a window into daily life in Asuogyaman.',
+    image: '/Images/aks mt.jpg',
+    category: 'Culture',
+    coordinates: [6.3000, 0.0600],
+    rating: 4.3
+  },
+  {
+    id: 'senchi-lagoon',
+    name: 'Senchi Lagoon Canoeing',
+    description: 'Paddle through the serene Senchi Lagoon system, where the Volta River meets a network of calm waterways. Watch for birdlife, water lilies, and traditional fishing activity along the banks.',
+    image: '/Images/Dodi4.jpg',
+    category: 'Nature',
+    coordinates: [6.1850, 0.0920],
+    rating: 4.6
+  },
+  {
+    id: 'atimpoku-craft-village',
+    name: 'Atimpoku Craft Village',
+    description: 'A community-run craft centre showcasing local artisans at work. Watch bead-making, kente weaving, and wood carving demonstrations, and purchase authentic souvenirs to take home.',
+    image: '/Images/night market.jpg',
+    category: 'Culture',
+    coordinates: [6.2400, 0.0900],
+    rating: 4.4
+  },
+  {
+    id: 'gyakiti-beach',
+    name: 'Gyakiti Lakeside Beach',
+    description: 'A quiet sandy stretch along Lake Volta perfect for swimming, sunbathing, and picnicking. The calm waters make it ideal for families and casual relaxation away from busier spots.',
+    image: '/Images/sajuna.jpg',
+    category: 'Nature',
+    coordinates: [6.3200, 0.1200],
+    rating: 4.5
+  },
 ];
 
 export const REVIEWS = [
@@ -453,7 +489,44 @@ export const DINING: Dining[] = [
     email: 'info@afrikikoriverfront.com',
     amenities: ['Riverside Dining', 'Grill Specialties', 'Live Music', 'Bar', 'Outdoor Terrace', 'Parking'],
     longDescription: 'An open-air terrace perched over the Volta, a working grill, and live music on good nights — Afrikiko knows its strengths and sticks to them. The kitchen sends out grilled meats and fish with the proper char, alongside local staples done well enough to satisfy. The setting is the differentiator: the terrace sits directly above the water, and sunset turns the river into the kind of view that makes photography redundant. The live music programming leans local and adds genuine atmosphere without overwhelming the room. The kind of restaurant that would work anywhere with this view.'
-  }
+  },
+  {
+    id: 'mamas-kitchen',
+    name: 'Mama\'s Kitchen',
+    description: 'A hidden gem serving home-style Ghanaian dishes from a small family-run kitchen in Atimpoku. Known for the best fufu and groundnut soup in the district.',
+    image: '/Images/fuufu1.jpg',
+    category: 'Local',
+    coordinates: [6.2450, 0.0920],
+    rating: 4.8,
+    phone: '+233 24 666 7777',
+    amenities: ['Home Cooking', 'Family Style', 'Takeaway', 'Daily Specials', 'Budget Friendly'],
+    longDescription: 'Mama\'s Kitchen operates from a converted family home in a quiet Atimpoku side street, and the lack of signage is deliberate — word of mouth has been more than sufficient for decades. The menu is dictated by the morning market and the family\'s recipes, which have been refined across generations. The fufu and groundnut soup is the signature dish: the fufu is pounded to the ideal elasticity, the soup carries the depth that only comes from slow simmering. Palm nut soup, light soup, and red-red appear on rotation. There is no printed menu; the cook tells you what is available, and the correct response is to trust her. A genuine local treasure.'
+  },
+  {
+    id: 'riverbank-cafe',
+    name: 'The Riverbank Cafe',
+    description: 'A tranquil cafe on the banks of the Volta River offering specialty coffee, fresh pastries, light lunches, and the best river views in town.',
+    image: '/Images/breakfast.jpg',
+    category: 'Cafe',
+    coordinates: [6.2380, 0.0940],
+    rating: 4.6,
+    phone: '+233 24 777 8888',
+    email: 'hello@riverbankcafe.com',
+    amenities: ['River Views', 'Specialty Coffee', 'Fresh Pastries', 'WiFi', 'Outdoor Seating', 'Breakfast All Day'],
+    longDescription: 'The Riverbank Cafe occupies the kind of location that other restaurateurs dream about: a shaded terrace at the water\'s edge, with the Adomi Bridge visible in the distance and a cooling breeze coming off the Volta. The coffee program is serious — single-origin beans, properly dialled-in espresso, pour-over options — and the pastries arrive fresh each morning from a bakery in Akosombo. The food menu covers breakfast through light lunch: avocado toast on good bread, shakshuka with local spices, salads built with market vegetables, and sandwiches that justify the trip. WiFi is fast and reliable, making it a popular remote-work spot.'
+  },
+  {
+    id: 'senchi-lakeside-grill',
+    name: 'Senchi Lakeside Grill',
+    description: 'An informal open-air grill on the Senchi lakefront serving freshly caught tilapia, kebabs, and grilled plantain with shito. Cold drinks and a relaxed sunset atmosphere.',
+    image: '/Images/grilled1.jpg',
+    category: 'Pub & Grill',
+    coordinates: [6.1850, 0.0920],
+    rating: 4.5,
+    phone: '+233 24 888 9999',
+    amenities: ['Lakefront Setting', 'Fresh Grills', 'Cold Drinks', 'Sunset Views', 'Music Evenings', 'Family Friendly'],
+    longDescription: 'Senchi Lakeside Grill keeps its operation refreshingly simple: a charcoal grill set up near the water, a cooler full of drinks, plastic chairs arranged to face the sunset. The tilapia comes straight from the lake, scored and grilled over hot coals until the skin crisps. It is served with shito, fresh pepper sauce, and your choice of banku, kenkey, or fried yam. The lamb and chicken kebabs get the same treatment. Evenings here are informal affairs — families, couples, groups of friends spread across the terrace, the conversation rising and falling with the breeze. The sunsets are the real draw, and the grill does its job without getting in the way of the view.'
+  },
 ];
 
 export const STAY: Stay[] = [
@@ -704,7 +777,44 @@ export const STAY: Stay[] = [
     phone: '+233 24 444 5555',
     amenities: ['Basic Rooms', 'WiFi', 'Parking', 'Garden'],
     longDescription: 'Zito Guest Inn provides budget accommodations in Akosombo with a convenient location near the historic Santa Barbara Catholic Church. The guest house offers clean, functional rooms that provide good value for money. Its proximity to the church makes it a popular choice for visitors attending religious services or visiting the historic site. The staff are friendly and accommodating, ensuring that guests have everything they need for a comfortable stay. The garden area provides a pleasant space for relaxation after a day of exploration.'
-  }
+  },
+  {
+    id: 'peace-lodge',
+    name: 'Peace Lodge',
+    description: 'A quiet, family-run lodge in Atimpoku with simple but spotless rooms, a lush garden, and genuine hospitality. Excellent value for budget-conscious travellers.',
+    image: '/Images/raffin.jpg',
+    category: 'Budget',
+    coordinates: [6.2450, 0.0900],
+    rating: 4.1,
+    phone: '+233 24 555 6666',
+    amenities: ['Clean Rooms', 'Garden', 'WiFi', 'Parking', 'Mosquito Nets', 'Ceiling Fans'],
+    longDescription: 'Peace Lodge lives up to its name: a calm, family-run property tucked away from the main road, where the most notable sounds are birds in the garden and the occasional distant call to prayer. Rooms are straightforward but maintained with evident pride — crisp linens, swept floors, mosquito nets over the beds, reliable ceiling fans. The garden is the heart of the property, shaded by mature trees with benches placed for morning coffee or evening reading. The family that runs the lodge lives on the premises and treats guests like extended relatives. It is not a destination for luxury seekers; it is a genuine, affordable home base for exploring the district.'
+  },
+  {
+    id: 'sunrise-guesthouse',
+    name: 'Sunrise Guesthouse',
+    description: 'A well-maintained mid-range guesthouse near the Akosombo dam with spacious rooms, reliable WiFi, and an excellent breakfast included.',
+    image: '/Images/odo.jpg',
+    category: 'Mid-Range',
+    coordinates: [6.3000, 0.0600],
+    rating: 4.3,
+    phone: '+233 24 444 5555',
+    email: 'sunriseguesthouse@gmail.com',
+    amenities: ['Spacious Rooms', 'Breakfast Included', 'WiFi', 'Air Conditioning', 'Parking', 'Hot Water', 'Room Service'],
+    longDescription: 'Sunrise Guesthouse occupies a quiet street within walking distance of the Akosombo Dam, and its positioning as a dependable mid-range option has earned a loyal return clientele. The rooms are notably spacious for the category, with high ceilings, tiled floors, and windows that let in morning light. Each room is equipped with air conditioning that actually works, a ceiling fan, a desk, and a private bathroom with reliable hot water. The included breakfast — eggs cooked to order, bread, butter, jam, fresh fruit, coffee or tea — is a genuine perk. The staff know the area well and can arrange tours, transport, and restaurant recommendations.'
+  },
+  {
+    id: 'akosombo-lodge',
+    name: 'Akosombo Lodge',
+    description: 'A modern budget lodge with private and shared rooms, a communal kitchen, and a sociable common area. Popular with backpackers and volunteer groups.',
+    image: '/Images/3a.jpg',
+    category: 'Budget',
+    coordinates: [6.3050, 0.0610],
+    rating: 4.0,
+    phone: '+233 24 333 4444',
+    amenities: ['Private & Shared Rooms', 'Communal Kitchen', 'Common Room', 'WiFi', 'Parking', 'Laundry'],
+    longDescription: 'Akosombo Lodge fills a specific and valuable niche: accommodation designed for travellers who want to meet other travellers. The lodge offers a mix of private rooms and dormitory-style shared rooms, all kept to a commendable standard of cleanliness. The communal kitchen is well-equipped for self-catering, and the common room — with its sofas, bookshelf, charging points, and noticeboard of local recommendations — naturally draws guests together in the evenings. The lodge can arrange group tours, boat rentals, and transport. It has become a base for volunteer groups working in the district and for independent travellers looking for a social atmosphere.'
+  },
 ];
 
 export const BUSINESS: Business[] = [
@@ -1135,6 +1245,42 @@ export const EXPERIENCES: Experience[] = [
     rating: 4.8,
     highlights: ['Pool & beach access', 'Spa treatments', 'Gourmet lunch', 'Wellness activities', 'Scenic grounds'],
     longDescription: 'You don\'t need to be an overnight guest to experience the luxury of Asuogyaman\'s finest resorts. The Day Pass program gives you full access to the facilities of premier properties like The Royal Senchi, Peninsula Resort, or BridgeView Resort. Spend your morning lounging by the infinity pool with the lake stretching out before you, indulge in a spa treatment using locally inspired products, enjoy a gourmet lunch at the resort\'s signature restaurant, and explore the beautifully landscaped grounds. Many resorts also offer complimentary wellness activities such as yoga sessions, nature walks, or boat tours. It is the perfect way to experience the high life, even on a tight schedule.'
+  },
+  {
+    id: 'kayaking-volta',
+    name: 'Kayaking on Lake Volta',
+    description: 'Paddle across the calm waters of Lake Volta in a single or tandem kayak. Explore hidden coves, glide past fishing villages, and experience the lake from a new perspective.',
+    image: '/Images/Dodi4.jpg',
+    category: 'Water Adventures',
+    duration: '2-3 hours',
+    price: 'From GH¢180',
+    rating: 4.7,
+    highlights: ['Single or tandem kayaks', 'Hidden cove exploration', 'Fishing village views', 'All skill levels welcome', 'Safety briefing and gear'],
+    longDescription: 'Kayaking on Lake Volta offers a quiet, intimate way to experience the scale and tranquility of one of Africa\'s largest man-made lakes. Unlike the powered boat tours, a kayak lets you move at your own pace — gliding silently through narrow channels between islands, paddling close enough to see the birds roosting in shoreline trees, and stopping whenever a view demands attention. Single and tandem kayaks are available, and beginners are welcome; the lake is generally calm, especially in the morning before the wind picks up. Tours include a safety briefing, life jackets, waterproof bags for valuables, and a guide who leads the route and shares knowledge of the lake\'s ecology and communities.'
+  },
+  {
+    id: 'ghanaian-cooking-class',
+    name: 'Ghanaian Cooking Class',
+    description: 'Learn to prepare traditional Ghanaian dishes with a local family. Visit the market for ingredients, cook side by side with your hosts, and share the meal you created together.',
+    image: '/Images/food.jpg',
+    category: 'Food & Dining',
+    duration: '4 hours',
+    price: 'From GH¢250',
+    rating: 4.8,
+    highlights: ['Market tour', 'Hands-on cooking', 'Family hosting', 'Recipe booklet', 'Shared meal'],
+    longDescription: 'This is not a demonstration — it is a genuine cooking experience in a Ghanaian home, where you become part of the kitchen rhythm. The session begins at the Atimpoku market, where your host guides you through the stalls, explaining which spices, vegetables, and fish are in season and how to select the best ingredients. Back in the family kitchen, you will prepare a multi-dish Ghanaian meal — typically jollof rice with fried plantain, a stewed meat or fish dish, and a soup with fufu. Your host demonstrates each technique and then hands you the wooden spoon. The class is hands-on throughout, and the meal that follows is shared with the family. No prior cooking experience required.'
+  },
+  {
+    id: 'sunrise-yoga',
+    name: 'Sunrise Yoga by the Lake',
+    description: 'Start your day with a guided yoga session on a private lakeside terrace. Breathe in the fresh Volta air as the sun rises over the water, followed by a light breakfast.',
+    image: '/Images/penninsula.jpg',
+    category: 'Wellness & Relaxation',
+    duration: '1.5 hours',
+    price: 'From GH¢120',
+    rating: 4.6,
+    highlights: ['Lakeside terrace', 'Certified instructor', 'All levels welcome', 'Mats provided', 'Post-session breakfast'],
+    longDescription: 'The Sunrise Yoga experience begins early — mats are laid out on a wooden terrace facing east over the lake, with the first light still soft on the horizon. The session is led by a certified instructor who adapts the flow to the group\'s level, combining breath work with gentle movement designed to wake the body gradually. The setting does much of the work: the sound of water, birds beginning their morning calls, and the gradual illumination of the landscape as the sun clears the hills on the far side of the lake. After the session, a light breakfast of fresh fruit, yogurt, and tea or coffee is served on the terrace. A calm, restorative beginning to any day.'
   }
 ];
 

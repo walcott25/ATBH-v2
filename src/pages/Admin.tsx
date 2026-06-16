@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { useUser } from '@clerk/react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
@@ -28,12 +27,17 @@ interface Analytics {
     byPurpose: { purpose: string; total: number; count: number }[];
     recentDonations: { donor_name: string; donor_email: string; amount: number; purpose: string; created_at: string }[];
   };
-  clerk: {
-    totalUsers: number;
-    newUsersThisMonth: number;
-    totalOrganizations: number;
-    activeSessions: number;
-    recentSignUps: { id: string; email: string; created_at: string }[];
+  traffic: {
+    visitsToday: number;
+    visitsThisWeek: number;
+    totalVisits: number;
+    topPages: { path: string; count: number }[];
+    visitsByDay: { day: string; count: number }[];
+  };
+  health: {
+    groqConfigured: boolean;
+    paystackConfigured: boolean;
+    webhookConfigured: boolean;
   };
 }
 
@@ -67,23 +71,7 @@ function TrendBadge({ current, previous }: { current: number; previous: number }
   );
 }
 
-function AccessDenied() {
-  return (
-    <div className="min-h-screen bg-bg flex items-center justify-center px-6">
-      <div className="text-center max-w-sm">
-        <h1 className="text-2xl font-semibold text-fg mb-2">Access Denied</h1>
-        <p className="text-muted text-sm mb-6">You do not have permission to view this page.</p>
-        <Link to="/" className="inline-flex items-center gap-1 text-sm text-accent hover:underline">
-          Go Home
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 export default function Admin() {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const isAdmin = user?.publicMetadata?.role === 'admin';
   const [data, setData] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -113,12 +101,9 @@ export default function Admin() {
     return () => clearInterval(interval);
   }, [fetchAnalytics]);
 
-  if (!isLoaded) return null;
-  if (!isSignedIn) return <Navigate to="/sign-in" replace />;
-  if (!isAdmin) return <AccessDenied />;
-
   const d = data?.donations;
-  const c = data?.clerk;
+  const t = data?.traffic;
+  const h = data?.health;
   const prevMonth = d?.prevMonthRaised || 0;
 
   const statCards = [
@@ -141,27 +126,15 @@ export default function Admin() {
       trend: <span className="text-[10px] text-muted">{fmt(num(d?.monthlyDonations))} this month</span>,
     },
     {
-      title: 'Users',
-      value: fmt(num(c?.totalUsers)),
-      icon: UserPlus,
-      trend: <TrendBadge current={num(c?.newUsersThisMonth)} previous={Math.max(1, num(c?.totalUsers) - num(c?.newUsersThisMonth))} />,
+      title: 'Visits Today',
+      value: fmt(num(t?.visitsToday)),
+      icon: Eye,
+      trend: <span className="text-[10px] text-muted">{fmt(num(t?.visitsThisWeek))} this week</span>,
     },
     {
-      title: 'New Users (Month)',
-      value: fmt(num(c?.newUsersThisMonth)),
-      icon: TrendingUp,
-      trend: null,
-    },
-    {
-      title: 'Active Sessions',
-      value: fmt(num(c?.activeSessions)),
+      title: 'Total Visits',
+      value: fmt(num(t?.totalVisits)),
       icon: Activity,
-      trend: null,
-    },
-    {
-      title: 'Organizations',
-      value: fmt(num(c?.totalOrganizations)),
-      icon: Building2,
       trend: null,
     },
     {
@@ -300,8 +273,8 @@ export default function Admin() {
           ))}
         </div>
 
-        {/* Live Clerk Analytics */}
-        {c && (
+        {/* Health Status */}
+        {h && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -311,22 +284,14 @@ export default function Admin() {
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2.5">
                 <Shield className="w-4 h-4 text-accent" />
-                <h2 className="text-sm font-semibold text-fg">Clerk Analytics</h2>
-                <span className="flex items-center gap-1 text-[9px] text-emerald-500 font-medium">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                  </span>
-                  Live
-                </span>
+                <h2 className="text-sm font-semibold text-fg">System Health</h2>
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
-                { label: 'Total Users', value: fmt(num(c.totalUsers)), icon: UserPlus },
-                { label: 'New This Month', value: fmt(num(c.newUsersThisMonth)), icon: TrendingUp },
-                { label: 'Active Sessions', value: fmt(num(c.activeSessions)), icon: Activity },
-                { label: 'Organizations', value: fmt(num(c.totalOrganizations)), icon: Building2 },
+                { label: 'Groq AI', ok: h.groqConfigured },
+                { label: 'Paystack', ok: h.paystackConfigured },
+                { label: 'Webhook', ok: h.webhookConfigured },
               ].map((s, i) => (
                 <motion.div
                   key={s.label}
@@ -337,10 +302,10 @@ export default function Admin() {
                   className="bg-bg/60 border border-border/60 rounded-sm p-3.5 hover:border-accent/20 transition-all duration-300"
                 >
                   <div className="flex items-center gap-1.5 mb-1">
-                    <s.icon className="w-3 h-3 text-muted" />
+                    <span className={`w-2 h-2 rounded-full ${s.ok ? 'bg-emerald-500' : 'bg-red-500'}`} />
                     <span className="text-[10px] text-muted">{s.label}</span>
                   </div>
-                  <div className="text-lg font-semibold text-fg">{s.value}</div>
+                  <div className="text-xs font-medium text-fg">{s.ok ? 'Connected' : 'Not Configured'}</div>
                 </motion.div>
               ))}
             </div>
@@ -500,61 +465,33 @@ export default function Admin() {
           )}
         </div>
 
-        {/* Recent Activity — two columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Donations */}
-          {d?.recentDonations && d.recentDonations.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
-            >
-              <h2 className="text-sm font-semibold text-fg mb-4">Recent Donations</h2>
-              <div className="space-y-0">
-                {d.recentDonations.slice(0, 8).map((item, i) => (
-                  <div key={i} className="flex items-start justify-between py-2.5 border-b border-border last:border-b-0">
-                    <div className="min-w-0">
-                      <p className="text-sm text-fg truncate">{item.donor_name || 'Anonymous'}</p>
-                      <p className="text-[10px] text-muted truncate">{item.purpose}</p>
-                    </div>
-                    <div className="text-right shrink-0 ml-4">
-                      <p className="text-sm font-medium text-fg">{CURRENCY}{item.amount}</p>
-                      <p className="text-[10px] text-muted">
-                        {item.created_at ? new Date(item.created_at + 'Z').toLocaleDateString() : ''}
-                      </p>
-                    </div>
+        {/* Recent Donations */}
+        {d?.recentDonations && d.recentDonations.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
+          >
+            <h2 className="text-sm font-semibold text-fg mb-4">Recent Donations</h2>
+            <div className="space-y-0">
+              {d.recentDonations.slice(0, 8).map((item, i) => (
+                <div key={i} className="flex items-start justify-between py-2.5 border-b border-border last:border-b-0">
+                  <div className="min-w-0">
+                    <p className="text-sm text-fg truncate">{item.donor_name || 'Anonymous'}</p>
+                    <p className="text-[10px] text-muted truncate">{item.purpose}</p>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* Recent Sign-Ups */}
-          {c?.recentSignUps && c.recentSignUps.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-surface border border-border rounded-sm p-5 hover:border-accent/15 transition-colors duration-300"
-            >
-              <h2 className="text-sm font-semibold text-fg mb-4">Recent Sign-Ups</h2>
-              <div className="space-y-0">
-                {c.recentSignUps.slice(0, 8).map((item, i) => (
-                  <div key={item.id} className="flex items-start justify-between py-2.5 border-b border-border last:border-b-0">
-                    <div className="min-w-0">
-                      <p className="text-sm text-fg truncate">{item.email}</p>
-                      <p className="text-[10px] text-muted">{item.id.slice(0, 12)}...</p>
-                    </div>
-                    <span className="text-[10px] text-muted shrink-0 ml-4">
-                      {item.created_at ? new Date(item.created_at).toLocaleDateString() : ''}
-                    </span>
+                  <div className="text-right shrink-0 ml-4">
+                    <p className="text-sm font-medium text-fg">{CURRENCY}{item.amount}</p>
+                    <p className="text-[10px] text-muted">
+                      {item.created_at ? new Date(item.created_at + 'Z').toLocaleDateString() : ''}
+                    </p>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

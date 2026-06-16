@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ATTRACTIONS, DINING, STAY, EVENTS, EXPERIENCES } from '../data';
-import { X, ChevronLeft, ChevronRight, Image as ImageIcon, Grid3X3, LayoutGrid, Eye } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Image as ImageIcon, Grid3X3, LayoutGrid, Eye, Shuffle, Maximize2, Minimize2, Download } from 'lucide-react';
 import PageHero from '../components/ui/page-hero';
 
 interface GalleryImage {
@@ -24,7 +24,7 @@ const GALLERY_IMAGES: GalleryImage[] = [
   // Experiences
   ...EXPERIENCES.map(e => ({ id: `exp-${e.id}`, src: e.image, alt: e.name, category: 'Experiences' })),
   // Extra scenic images not yet referenced
-  { id: 'scenic-1', src: '/Images/volta-river-landscape.jpg', alt: 'Volta River Landscape', category: 'Scenic', featured: true },
+  { id: 'scenic-1', src: '/Images/download.jfif', alt: 'Volta River Landscape', category: 'Scenic', featured: true },
   { id: 'scenic-2', src: '/Images/lake volta.jpg', alt: 'Lake Volta Panorama', category: 'Scenic' },
   { id: 'scenic-3', src: '/Images/bridge.jpg', alt: 'Adomi Bridge Detail', category: 'Scenic' },
   { id: 'scenic-4', src: '/Images/Bridge1.jpg', alt: 'Adomi Bridge Sunset', category: 'Scenic' },
@@ -59,13 +59,21 @@ export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [layout, setLayout] = useState<'bento' | 'grid'>('bento');
+  const [shuffled, setShuffled] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const filtered = useMemo(() =>
-    activeCategory === 'All'
-      ? GALLERY_IMAGES
-      : GALLERY_IMAGES.filter(img => img.category === activeCategory),
-    [activeCategory]
-  );
+  const filtered = useMemo(() => {
+    let imgs = activeCategory === 'All'
+      ? [...GALLERY_IMAGES]
+      : GALLERY_IMAGES.filter(img => img.category === activeCategory);
+    if (shuffled) {
+      for (let i = imgs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+      }
+    }
+    return imgs;
+  }, [activeCategory, shuffled]);
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: GALLERY_IMAGES.length };
@@ -130,6 +138,14 @@ export default function Gallery() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => { setShuffled(!shuffled); setSelectedIndex(null); }}
+                className={`p-2.5 rounded-lg border transition-all ${shuffled ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}
+                aria-label="Shuffle"
+                title={shuffled ? 'Show in order' : 'Shuffle'}
+              >
+                <Shuffle className="w-4 h-4" />
+              </button>
               <button
                 onClick={() => setLayout('bento')}
                 className={`p-2.5 rounded-lg border transition-all ${layout === 'bento' ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}
@@ -288,18 +304,27 @@ export default function Gallery() {
       {/* ── Immersive Lightbox (CSS transitions, no Framer Motion) ── */}
       {selectedIndex !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in"
+          className={`fixed inset-0 z-50 flex items-center justify-center animate-fade-in ${isFullscreen ? 'bg-black' : ''}`}
           onClick={() => setSelectedIndex(null)}
-          style={{ background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}
+          style={{ background: isFullscreen ? 'black' : 'rgba(10,10,10,0.95)', backdropFilter: isFullscreen ? 'none' : 'blur(12px)' }}
         >
-          {/* Close */}
-          <button
-            onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-            className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
-            aria-label="Close lightbox"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Top bar */}
+          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gradient-to-b from-black/50 to-transparent">
+            <button
+              onClick={(e) => { e.stopPropagation(); setIsFullscreen(!isFullscreen); }}
+              className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
+              aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            >
+              {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
+              className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 border border-white/10"
+              aria-label="Close lightbox"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
           {/* Prev */}
           <button
@@ -339,9 +364,20 @@ export default function Gallery() {
                     <span className="text-white/50 text-[10px] uppercase tracking-wider">
                       {categoryIcons[filtered[selectedIndex].category]} {filtered[selectedIndex].category}
                     </span>
-                    <span className="text-white/30 text-xs font-mono">
-                      {selectedIndex + 1} / {filtered.length}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <a
+                        href={filtered[selectedIndex].src}
+                        download
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-white/50 hover:text-white transition-colors"
+                        aria-label="Download image"
+                      >
+                        <Download className="w-4 h-4" />
+                      </a>
+                      <span className="text-white/30 text-xs font-mono">
+                        {selectedIndex + 1} / {filtered.length}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>

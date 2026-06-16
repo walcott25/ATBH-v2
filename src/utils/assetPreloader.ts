@@ -11,7 +11,7 @@ const HERO_BACKGROUND_IMAGES: string[] = [
   '/Images/ghana-stay-bg.jpg',
   '/Images/ghana-schools-bg.jpg',
   '/Images/dodi-princess.jpg',
-  '/Images/volta-river-landscape.jpg',
+  '/Images/download.jfif',
   '/Images/penninsula.jpg',
   '/Images/adomi gh.jpg',
   '/Images/photo.jpg',

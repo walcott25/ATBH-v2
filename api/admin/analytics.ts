@@ -1,59 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { neon } from '@neondatabase/serverless';
-import { createClerkClient } from '@clerk/backend';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  /* Require authenticated Clerk session with admin role */
-  const sessionId = req.headers['x-clerk-session-id'] as string | undefined;
-  if (!sessionId) {
-    return res.status(401).json({ error: 'Authentication required' });
-  }
-  const adminSecretKey = process.env.CLERK_SECRET_KEY;
-  if (!adminSecretKey) {
-    return res.status(403).json({ error: 'Admin access not configured' });
-  }
-  const clerk = createClerkClient({ secretKey: adminSecretKey });
-  try {
-    const session = await clerk.sessions.getSession(sessionId);
-    if (!session || session.status !== 'active') {
-      return res.status(403).json({ error: 'Invalid or expired session' });
-    }
-  } catch {
-    return res.status(401).json({ error: 'Authentication failed' });
-  }
-
   const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
-  let clerkData = {
-    totalUsers: 0,
-    newUsersThisMonth: 0,
-    totalOrganizations: 0,
-    activeSessions: 0,
-    recentSignUps: [] as { id: string; email: string; created_at: string }[],
-  };
-
-  try {
-    const [users, orgs, sessions] = await Promise.all([
-      clerk.users.getUserList({ limit: 500 }),
-      clerk.organizations.getOrganizationList({ limit: 100 }),
-      clerk.sessions.getSessionList({ limit: 100 }),
-    ]);
-
-      const now = new Date();
-      const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-      clerkData = {
-        totalUsers: users.data.length || 0,
-        newUsersThisMonth: users.data.filter((u: any) => u.createdAt && new Date(u.createdAt) >= firstOfMonth).length || 0,
-        totalOrganizations: orgs.data.length || 0,
-        activeSessions: sessions.data.filter((s: any) => s.status === 'active').length || 0,
-        recentSignUps: users.data.slice(0, 10).map((u: any) => ({
-          id: u.id,
-          email: u.emailAddresses?.[0]?.emailAddress || 'no email',
-          created_at: u.createdAt,
-        })),
-      };
-    } catch (e) {
-      console.error('Clerk analytics fetch error:', e);
-    }
 
   if (!connectionString) {
     return res.json({
@@ -66,7 +15,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         byDay: [],
         recentDonations: [],
       },
-      clerk: clerkData,
     });
   }
   const sql = neon(connectionString);
@@ -147,7 +95,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           created_at: r.created_at ? r.created_at.toString() : '',
         })),
       },
-      clerk: clerkData,
     });
   } catch (error: any) {
     console.error('Error fetching analytics:', error);
@@ -165,7 +112,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         byPurpose: [],
         recentDonations: [],
       },
-      clerk: clerkData,
     });
   }
 }

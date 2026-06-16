@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { SignInButton, UserButton, useUser } from '@clerk/react';
 import { trackEvent } from '../../services/analytics';
 
 const navItems = [
@@ -26,7 +25,6 @@ const mobileItemVariants = {
 
 export default function MobileMenu() {
   const { isMenuOpen, setIsMenuOpen } = useApp();
-  const { isLoaded, isSignedIn } = useUser();
 
   return (
     <AnimatePresence>
@@ -57,18 +55,6 @@ export default function MobileMenu() {
               </Link>
             </motion.div>
           ))}
-          {isLoaded && !isSignedIn && (              <SignInButton mode="modal">
-              <button onClick={() => trackEvent('cta_click', { cta: 'Sign In Mobile' })} className="text-brand-gold hover:text-white text-2xl font-serif tracking-tight transition-all mt-4 border border-brand-gold/30 px-8 py-3 rounded-full">
-                Sign In
-              </button>
-            </SignInButton>
-          )}
-          {isLoaded && isSignedIn && (
-            <div className="mt-4 flex items-center gap-3">
-              <UserButton />
-              <span className="text-white/40 text-sm font-bold uppercase tracking-[0.2em]">My Account</span>
-            </div>
-          )}
         </motion.div>
       )}
     </AnimatePresence>

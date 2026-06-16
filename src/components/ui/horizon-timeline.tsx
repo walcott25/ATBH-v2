@@ -60,7 +60,7 @@ export default function HorizonTimeline() {
 
   return (
     <section ref={sectionRef} className="relative h-screen overflow-hidden bg-brand-dark">
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent/5 pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/10 via-transparent to-accent/10 pointer-events-none z-10" />
 
       <div className="absolute top-8 left-0 right-0 text-center z-20">
         <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent">Timeline</span>
@@ -88,15 +88,15 @@ export default function HorizonTimeline() {
               key={m.year}
               className="timeline-card flex-shrink-0 w-[320px] md:w-[420px]"
             >
-              <div className="relative p-6 md:p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/30 transition-all duration-500">
+              <div className="relative p-6 md:p-8 rounded-2xl bg-white/15 backdrop-blur-xl border border-white/30 hover:border-accent/50 transition-all duration-500 shadow-xl shadow-black/30">
                 {/* Year */}
                 <span className="text-accent text-sm font-bold tracking-wider">{m.year}</span>
 
                 {/* Title */}
-                <h3 className="text-white text-lg md:text-xl font-medium mt-2 mb-3">{m.title}</h3>
+                <h3 className="text-white text-xl md:text-2xl font-bold mt-2 mb-3">{m.title}</h3>
 
                 {/* Description */}
-                <p className="text-white/50 text-sm leading-relaxed">{m.description}</p>
+                <p className="text-white/85 text-sm leading-relaxed">{m.description}</p>
 
                 {/* Icon/Number */}
                 <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center">

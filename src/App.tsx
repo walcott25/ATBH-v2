@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useAuth } from '@clerk/react';
 import { AppProvider } from './context/AppContext';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
@@ -16,7 +15,6 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const Business = lazy(() => import('./pages/Business'));
 const Experience = lazy(() => import('./pages/Experience'));
 const ItemPage = lazy(() => import('./pages/ItemPage'));
-const AuthPage = lazy(() => import('./pages/AuthPage'));
 import ChatConcierge from './components/chat/chat-concierge';
 const ScrollToTopButton = lazy(() => import('./components/ui/scroll-to-top'));
 const Terms = lazy(() => import('./pages/Terms'));
@@ -56,88 +54,51 @@ function PageSkeleton() {
   );
 }
 
-function ProtectedRoute() {
-  const { isLoaded, isSignedIn } = useAuth();
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-bg">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-accent/30 border-t-accent animate-spin" />
-          <p className="text-xs text-muted animate-pulse">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-  if (!isSignedIn) return <Navigate to="/sign-in" replace />;
-  return <Outlet />;
-}
-
-function PublicOnlyRoute() {
-  const { isLoaded, isSignedIn } = useAuth();
-  if (!isLoaded) return null;
-  if (isSignedIn) return <Navigate to="/" replace />;
-  return <Outlet />;
-}
-
 export default function App() {
   const location = useLocation();
+  const isMapPage = location.pathname === '/map';
 
   return (
     <AppProvider>
       <ScrollToTop />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          {/* Public-only routes (redirect to / if signed in) */}
-          <Route element={<PublicOnlyRoute />}>
-            <Route path="/sign-in" element={
-              <Suspense fallback={<PageSkeleton />}><PageTransition><AuthPage /></PageTransition></Suspense>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/attractions" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Attractions /></PageTransition></Suspense>
             } />
-            <Route path="/sign-up" element={
-              <Suspense fallback={<PageSkeleton />}><PageTransition><AuthPage /></PageTransition></Suspense>
+            <Route path="/dining" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Dining /></PageTransition></Suspense>
             } />
-          </Route>
-
-          {/* Strict: all main routes require auth */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-              <Route path="/attractions" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Attractions /></PageTransition></Suspense>
-              } />
-              <Route path="/dining" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Dining /></PageTransition></Suspense>
-              } />
-              <Route path="/stay" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Stay /></PageTransition></Suspense>
-              } />
-              <Route path="/schools" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Schools /></PageTransition></Suspense>
-              } />
-              <Route path="/events" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Events /></PageTransition></Suspense>
-              } />
-              <Route path="/map" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><MapPage /></PageTransition></Suspense>
-              } />
-              <Route path="/gallery" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Gallery /></PageTransition></Suspense>
-              } />
-              <Route path="/business" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Business /></PageTransition></Suspense>
-              } />
-              <Route path="/experience" element={
-                <Suspense fallback={<PageSkeleton />}><PageTransition><Experience /></PageTransition></Suspense>
-              } />
-              <Route path="/:type/:id" element={
-                <Suspense fallback={<PageSkeleton />}><ItemPage /></Suspense>
-              } />
-            </Route>
-            <Route path="/admin" element={
-              <Suspense fallback={<PageSkeleton />}><PageTransition><Admin /></PageTransition></Suspense>
+            <Route path="/stay" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Stay /></PageTransition></Suspense>
+            } />
+            <Route path="/schools" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Schools /></PageTransition></Suspense>
+            } />
+            <Route path="/events" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Events /></PageTransition></Suspense>
+            } />
+            <Route path="/map" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><MapPage /></PageTransition></Suspense>
+            } />
+            <Route path="/gallery" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Gallery /></PageTransition></Suspense>
+            } />
+            <Route path="/business" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Business /></PageTransition></Suspense>
+            } />
+            <Route path="/experience" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Experience /></PageTransition></Suspense>
+            } />
+            <Route path="/:type/:id" element={
+              <Suspense fallback={<PageSkeleton />}><ItemPage /></Suspense>
             } />
           </Route>
-
-          {/* Public utility pages */}
+          <Route path="/admin" element={
+            <Suspense fallback={<PageSkeleton />}><PageTransition><Admin /></PageTransition></Suspense>
+          } />
           <Route path="/donate" element={
             <Suspense fallback={<PageSkeleton />}><PageTransition><Donate /></PageTransition></Suspense>
           } />
@@ -150,7 +111,7 @@ export default function App() {
         </Routes>
       </AnimatePresence>
       <Suspense fallback={null}><ScrollToTopButton /></Suspense>
-      <ChatConcierge />
+      {!isMapPage && <ChatConcierge />}
     </AppProvider>
   );
 }

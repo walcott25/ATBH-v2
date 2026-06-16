@@ -13,7 +13,6 @@ export default defineSchema({
     message: v.optional(v.string()),
     status: v.string(),
     paidAt: v.optional(v.string()),
-    clerkUserId: v.optional(v.string()),
   }).index('by_reference', ['reference']),
 
   insights: defineTable({

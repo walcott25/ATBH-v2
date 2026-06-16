@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+
 import L from 'leaflet'
 import { ATTRACTIONS, DINING, STAY, EVENTS, SCHOOLS, BUSINESS } from '../data'
 import { useNavigate } from 'react-router-dom'
@@ -53,12 +54,61 @@ function createColoredIcon(color: string) {
   })
 }
 
-function MapController({ center, zoom }: { center: [number, number]; zoom?: number }) {
+const INITIAL_CENTER: [number, number] = [6.2667, 0.0667]
+const INITIAL_ZOOM = 11
+
+function MapController({ center, zoom, selectedId, onMapClick }: { center: [number, number]; zoom?: number; selectedId: string | null; onMapClick: () => void }) {
   const map = useMap()
   useEffect(() => {
     map.flyTo(center, zoom || map.getZoom(), { duration: 0.6 })
   }, [center, zoom, map])
+  useEffect(() => {
+    if (!selectedId) return
+    const handler = () => {
+      onMapClick()
+      map.flyTo(INITIAL_CENTER, INITIAL_ZOOM, { duration: 0.6 })
+    }
+    map.on('click', handler)
+    return () => { map.off('click', handler) }
+  }, [selectedId, map, onMapClick])
   return null
+}
+
+function MapMarker({ location, selectedId, onSelect, navigate }: { location: any; selectedId: string | null; onSelect: (id: string) => void; navigate: (path: string) => void }) {
+  const markerRef = useRef<L.Marker>(null)
+
+  useEffect(() => {
+    if (selectedId === location.id && markerRef.current) {
+      markerRef.current.openPopup()
+    }
+  }, [selectedId, location.id])
+
+  return (
+    <Marker
+      ref={markerRef}
+      position={location.coordinates as [number, number]}
+      icon={createColoredIcon(CATEGORY_COLORS[location.type] || '#C5954A')}
+      eventHandlers={{
+        click: () => onSelect(location.id),
+      }}
+    >
+      <Popup className="[&_.leaflet-popup-content-wrapper]:rounded-xl [&_.leaflet-popup-content-wrapper]:shadow-lg [&_.leaflet-popup-content-wrapper]:border [&_.leaflet-popup-content-wrapper]:border-border [&_.leaflet-popup-content]:m-3 [&_.leaflet-popup-content-wrapper]:overflow-hidden">
+        <div className="min-w-[200px]">
+          {location.image && (
+            <img src={location.image} alt={location.name} className="w-full h-24 object-cover rounded-lg mb-3" />
+          )}
+          <p className="text-sm font-medium text-fg mb-0.5">{location.name}</p>
+          <p className="text-xs text-muted leading-relaxed mb-2 line-clamp-2">{location.description}</p>
+          <button
+            onClick={() => navigate(ROUTES[location.type])}
+            className="text-[11px] font-medium text-accent hover:text-accent/80 transition-colors"
+          >
+            View details &rarr;
+          </button>
+        </div>
+      </Popup>
+    </Marker>
+  )
 }
 
 export default function MapPage() {
@@ -106,13 +156,10 @@ export default function MapPage() {
     }
   }, [])
 
-  const center: [number, number] =
-    allLocations.length > 0 && allLocations[0].coordinates
-      ? allLocations[0].coordinates
-      : [6.2667, 0.0667]
+  const center: [number, number] = INITIAL_CENTER
 
   return (
-    <div className="relative h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row">
+    <div className="relative h-screen pt-16 w-full flex flex-col md:flex-row">
       {/* Cards panel (left/bottom) */}
       <div className="relative md:w-[380px] lg:w-[420px] shrink-0 bg-bg border-r border-border overflow-hidden flex flex-col">
         {/* Search + Filters */}
@@ -219,40 +266,27 @@ export default function MapPage() {
         <MapContainer
           center={center}
           zoom={11}
-          scrollWheelZoom={true}
+          scrollWheelZoom={false}
+          dragging={false}
+          touchZoom={false}
+          doubleClickZoom={false}
+          keyboard={false}
           className="h-full w-full"
           zoomControl={false}
         >
-          <MapController center={mapCenter} zoom={selectedId ? 13 : undefined} />
+          <MapController center={mapCenter} zoom={selectedId ? 13 : undefined} selectedId={selectedId} onMapClick={() => { setSelectedId(null); setMapCenter(INITIAL_CENTER) }} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {filtered.map(location => (
-            <Marker
+            <MapMarker
               key={location.id}
-              position={location.coordinates as [number, number]}
-              icon={createColoredIcon(CATEGORY_COLORS[location.type] || '#C5954A')}
-              eventHandlers={{
-                click: () => setSelectedId(location.id),
-              }}
-            >
-              <Popup className="[&_.leaflet-popup-content-wrapper]:rounded-xl [&_.leaflet-popup-content-wrapper]:shadow-lg [&_.leaflet-popup-content-wrapper]:border [&_.leaflet-popup-content-wrapper]:border-border [&_.leaflet-popup-content]:m-3 [&_.leaflet-popup-content-wrapper]:overflow-hidden">
-                <div className="min-w-[200px]">
-                  {location.image && (
-                    <img src={location.image} alt={location.name} className="w-full h-24 object-cover rounded-lg mb-3" />
-                  )}
-                  <p className="text-sm font-medium text-fg mb-0.5">{location.name}</p>
-                  <p className="text-xs text-muted leading-relaxed mb-2 line-clamp-2">{location.description}</p>
-                  <button
-                    onClick={() => navigate(ROUTES[location.type])}
-                    className="text-[11px] font-medium text-accent hover:text-accent/80 transition-colors"
-                  >
-                    View details &rarr;
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
+              location={location}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              navigate={(path) => navigate(path)}
+            />
           ))}
         </MapContainer>
       </div>

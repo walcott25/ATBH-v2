@@ -11,7 +11,7 @@ import { FloatingOrbs } from '../components/ui/floating-orbs'
 import {
   ArrowRight, Ship, Compass, Mountain, Landmark,
   Utensils, Heart, Star, Quote, Clock, Search, X,
-  Calendar, MapPin, Sparkles, Zap, Shield
+  Calendar, MapPin, Sparkles, Zap, Shield, Wallet, Flame
 } from 'lucide-react'
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const
@@ -32,6 +32,23 @@ const categoryColors: Record<string, string> = {
   'Heritage & History': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
   'Food & Dining': 'text-orange-400 bg-orange-500/10 border-orange-500/20',
   'Wellness & Relaxation': 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+}
+
+function PriceIndicator({ price }: { price: string }) {
+  const tiers = [
+    { label: 'Budget', range: 'GH₵50-200', color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+    { label: 'Moderate', range: 'GH₵201-500', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20' },
+    { label: 'Premium', range: 'GH₵501-1000', color: 'text-orange-400', bg: 'bg-orange-500/10 border-orange-500/20' },
+    { label: 'Luxury', range: 'GH₵1000+', color: 'text-rose-400', bg: 'bg-rose-500/10 border-rose-500/20' },
+  ]
+  const num = parseInt(price.replace(/[^0-9]/g, ''))
+  const tier = num <= 200 ? tiers[0] : num <= 500 ? tiers[1] : num <= 1000 ? tiers[2] : tiers[3]
+  return (
+    <span className={`inline-flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 rounded-full ${tier.bg} ${tier.color}`}>
+      <Wallet className="w-2.5 h-2.5" />
+      {tier.label}
+    </span>
+  )
 }
 
 function DotGrid() {
@@ -163,6 +180,13 @@ export default function Experience() {
                             <div className="absolute top-3 left-3 md:top-4 md:left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-white/10 bg-white/10 text-white/90">
                               <Icon className="w-3 h-3" />{item.category}
                             </div>
+                            {item.rating === 5 && (
+                              <div className="absolute top-3 right-3 md:top-4 md:right-4">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[7px] font-bold uppercase tracking-widest bg-accent/20 backdrop-blur-xl border border-accent/30 text-accent">
+                                  <Flame className="w-2.5 h-2.5" /> Top Rated
+                                </span>
+                              </div>
+                            )}
                             <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 flex items-center gap-2">
                               <span className="inline-flex items-center gap-1 bg-black/40 backdrop-blur-xl px-2.5 py-1 rounded-full text-[9px] font-medium text-white/80">
                                 <Clock className="w-2.5 h-2.5" />{item.duration}
@@ -178,7 +202,10 @@ export default function Experience() {
                             <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
                             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
                             <div className="flex items-center justify-between pt-1">
-                              <span className="text-[9px] font-mono font-semibold text-accent">{item.price}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-[9px] font-mono font-semibold text-accent">{item.price}</span>
+                                <PriceIndicator price={item.price} />
+                              </div>
                               <span className="text-[10px] text-muted/60 flex items-center gap-1 group-hover:text-accent transition-colors cursor-pointer">
                                 Explore<ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                               </span>
