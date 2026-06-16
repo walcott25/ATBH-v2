@@ -17,6 +17,7 @@ const Business = lazy(() => import('./pages/Business'));
 const Experience = lazy(() => import('./pages/Experience'));
 const ItemPage = lazy(() => import('./pages/ItemPage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+import ChatConcierge from './components/chat/chat-concierge';
 const ScrollToTopButton = lazy(() => import('./components/ui/scroll-to-top'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
@@ -149,6 +150,7 @@ export default function App() {
         </Routes>
       </AnimatePresence>
       <Suspense fallback={null}><ScrollToTopButton /></Suspense>
+      <ChatConcierge />
     </AppProvider>
   );
 }
