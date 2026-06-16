@@ -370,11 +370,11 @@ function EventCard({ item, index, onClick }: { item: Event; index: number; onCli
           <div className="p-4 md:p-5 space-y-2" style={{ transform: 'translateZ(20px)' }}>
             <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
-            {(item.phone || item.email || item.bookingUrl) && (
+            {(item.phone || item.email || item.website) && (
               <div className="flex items-center gap-2 pt-0.5">
                 {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
                 {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
-                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+                {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
               </div>
             )}
             <div className="flex items-center gap-2 text-[10px] text-muted pt-1">
@@ -484,7 +484,7 @@ function EventDetailPanel({ item, onClose, onNavigate }: { item: Event; onClose:
             </motion.div>
 
             {/* Contact & Booking */}
-            {(item.phone || item.email || item.bookingUrl || item.website) && (
+            {(item.phone || item.email || item.website) && (
               <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.18 }} className="mb-8">
                 <div className="flex items-center gap-5 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center ring-1 ring-brand-gold/20">
@@ -495,8 +495,7 @@ function EventDetailPanel({ item, onClose, onNavigate }: { item: Event; onClose:
                 <div className="flex flex-wrap items-center gap-3">
                   {item.phone && <a href={`tel:${item.phone}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><Phone className="w-4 h-4" />{item.phone}</a>}
                   {item.email && <a href={`mailto:${item.email}`} className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><Mail className="w-4 h-4" />Send Email</a>}
-                  {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all"><ExternalLink className="w-4 h-4" />Website</a>}
-                  {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10"><ExternalLink className="w-4 h-4" />Book Now</a>}
+                  {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10"><ExternalLink className="w-4 h-4" />Book Now</a>}
                 </div>
               </motion.div>
             )}

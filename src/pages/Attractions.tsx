@@ -283,21 +283,31 @@ export default function Attractions() {
             <div className="flex items-center gap-1 bg-surface border border-border rounded-xl p-1">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition-all ${
+                className={`flex items-center gap-1.5 px-2 py-2 rounded-lg transition-all ${
                   viewMode === 'grid' ? 'bg-accent text-accent-fg shadow-sm' : 'text-muted hover:text-fg'
                 }`}
                 aria-label="Grid view"
               >
                 <Grid3X3 className="w-4 h-4" />
+                <span className={`text-[10px] font-medium overflow-hidden transition-all duration-200 ${
+                  viewMode === 'grid' ? 'max-w-[3rem] opacity-100' : 'max-w-0 opacity-0'
+                }`}>
+                  Grid
+                </span>
               </button>
               <button
                 onClick={() => setViewMode('map')}
-                className={`p-2 rounded-lg transition-all ${
+                className={`flex items-center gap-1.5 px-2 py-2 rounded-lg transition-all ${
                   viewMode === 'map' ? 'bg-accent text-accent-fg shadow-sm' : 'text-muted hover:text-fg'
                 }`}
                 aria-label="Map view"
               >
                 <MapIcon className="w-4 h-4" />
+                <span className={`text-[10px] font-medium overflow-hidden transition-all duration-200 ${
+                  viewMode === 'map' ? 'max-w-[3rem] opacity-100' : 'max-w-0 opacity-0'
+                }`}>
+                  Map
+                </span>
               </button>
             </div>
           </div>
@@ -870,11 +880,11 @@ function AttractionCard({ item, index, onClick, isSaved, onToggleSave }: { item:
             <p className="text-xs text-muted leading-relaxed line-clamp-2">
               {item.description}
             </p>
-            {(item.phone || item.email || item.bookingUrl) && (
+            {(item.phone || item.email || item.website) && (
               <div className="flex items-center gap-2 pt-0.5">
                 {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
                 {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
-                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+                {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
               </div>
             )}
             <div className="flex items-center justify-between pt-1">
@@ -978,16 +988,13 @@ function AttractionDetailPanel({
         </motion.button>
 
         {/* Hero */}
-        <div className="relative h-[70vh] min-h-[520px] overflow-hidden">
+        <div className="relative w-full min-h-[50vh] md:min-h-[60vh] flex items-center justify-center bg-fg/5">
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/10 to-fg/60" />
           <motion.img
             src={attraction.image}
             alt={attraction.name}
-            className="absolute inset-0 w-full h-full object-cover block max-w-none"
-            style={{ y: heroParallax, scale: 1.1, height: '100%' }}
-          />
-          <motion.div
-            style={{ opacity: heroOpacity }}
-            className="absolute inset-0 bg-brand-dark/70"
+            className="relative w-full h-full max-h-[85vh] object-contain px-4 py-8"
+            style={{ y: heroParallax }}
           />
 
           {/* Animated orbs */}
@@ -1262,12 +1269,7 @@ function AttractionDetailPanel({
                     </a>
                   )}
                   {attraction.website && (
-                    <a href={attraction.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-brand-gold/30 text-white/70 hover:text-brand-gold px-5 py-3 rounded-xl text-sm transition-all">
-                      <ExternalLink className="w-4 h-4" />Website
-                    </a>
-                  )}
-                  {attraction.bookingUrl && (
-                    <a href={attraction.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10">
+                    <a href={attraction.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-brand-gold/15 hover:bg-brand-gold/25 border border-brand-gold/30 text-brand-gold px-6 py-3 rounded-xl text-sm font-medium transition-all hover:shadow-lg hover:shadow-brand-gold/10">
                       <ExternalLink className="w-4 h-4" />Book Now
                     </a>
                   )}

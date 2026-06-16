@@ -11,9 +11,10 @@ import L from 'leaflet'
 import {
   Search, X, ArrowRight, MapPin,
   GraduationCap, BookOpen, Star, Trophy,
-  Map as MapIcon, Grid3X3, BarChart3, Compass, Award,
+  Map as MapIcon, Grid3X3, BarChart3, Award,
   School as SchoolIcon, Users, ChevronDown,
-  Lightbulb, Target, TrendingUp, CheckCircle2
+  Lightbulb, Target, TrendingUp, CheckCircle2, Sparkles,
+  Compass
 } from 'lucide-react'
 
 /* ── Leaflet default icon ── */
@@ -28,18 +29,8 @@ L.Marker.prototype.options.icon = DefaultIcon
 /* ── Easing ── */
 const easeOut = [0.25, 0.1, 0.25, 1]
 
-/* ── Helpers ── */
-function typeIcon(type: string) {
-  switch (type) {
-    case 'Public Mixed': return <GraduationCap className="w-3.5 h-3.5" />
-    case 'High/Technical': return <BookOpen className="w-3.5 h-3.5" />
-    case 'Mixed Day/Boarding': return <SchoolIcon className="w-3.5 h-3.5" />
-    default: return <GraduationCap className="w-3.5 h-3.5" />
-  }
-}
-
 /* ═══════════════════════════════════════════════════
-   SCHOOL CARD — 3D tilt, glow, scanline, no Framer
+   SCHOOL CARD — 3D tilt, glow, scanline
    ═══════════════════════════════════════════════════ */
 function SchoolCard({ item, index, onClick }: { item: School; index: number; onClick: () => void }) {
   const [transform, setTransform] = useState('')
@@ -63,23 +54,16 @@ function SchoolCard({ item, index, onClick }: { item: School; index: number; onC
       className="group cursor-pointer" style={{ perspective: '1000px' }}>
       <div className="relative overflow-hidden rounded-2xl bg-surface border border-border/60 group-hover:border-accent/20 transition-all duration-500"
         style={{ transform, transformStyle: 'preserve-3d' }}>
-        {/* Image — padding-bottom for stable aspect ratio */}
         <div className="relative overflow-hidden" style={{ paddingBottom: '66%' }}>
           <img src={item.image} alt={item.name}
             className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-            style={{ objectFit: 'cover' }}
             loading={index < 4 ? 'eager' : 'lazy'} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
           <div className="absolute inset-0 ring-1 ring-inset ring-white/0 group-hover:ring-accent/20 transition-all duration-500 pointer-events-none rounded-2xl" />
-          {/* Glow */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ background: glow }} />
-          {/* Scanline */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-40 transition-opacity duration-300">
             <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent animate-[scanline_3s_linear_infinite]" />
           </div>
-          <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[8px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-white/10 bg-white/10 text-white/90 z-10">
-            {typeIcon(item.type)}{item.type}
-          </span>
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
             <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white text-[10px] font-medium px-4 py-2 rounded-full translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
               View Details
@@ -152,23 +136,32 @@ function FaqSection() {
 /* ═══════════════════════════════════════════════════
    MAIN
    ═══════════════════════════════════════════════════ */
+const types = ['All', 'Public Mixed', 'High/Technical', 'Mixed Day/Boarding']
+
+function typeIcon(type: string) {
+  switch (type) {
+    case 'Public Mixed': return <Users className="w-3.5 h-3.5" />
+    case 'High/Technical': return <SchoolIcon className="w-3.5 h-3.5" />
+    case 'Mixed Day/Boarding': return <Users className="w-3.5 h-3.5" />
+    default: return <GraduationCap className="w-3.5 h-3.5" />
+  }
+}
+
 export default function Schools() {
-  const types = useMemo(() => ['All', ...Array.from(new Set(SCHOOLS.map((s) => s.type)))], [])
-  const [activeType, setActiveType] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid')
+  const [activeType, setActiveType] = useState('All')
 
   const filtered = useMemo(() =>
     SCHOOLS.filter((s) => {
-      if (activeType !== 'All' && s.type !== activeType) return false
       if (searchQuery) {
         const q = searchQuery.toLowerCase()
         return s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q) ||
           s.location.toLowerCase().includes(q) || s.programs?.some((p) => p.toLowerCase().includes(q))
       }
       return true
-    }), [activeType, searchQuery])
+    }), [searchQuery])
 
   const totalPrograms = useMemo(() => {
     const set = new Set<string>(); SCHOOLS.forEach(s => s.programs?.forEach(p => set.add(p))); return set.size
@@ -177,12 +170,14 @@ export default function Schools() {
   const featuredSchool = useMemo(() =>
     [...SCHOOLS].sort((a, b) => (b.programs?.length || 0) - (a.programs?.length || 0))[0], [])
 
-  const districtStats = useMemo(() => [
+  const districtStats = [
     { value: SCHOOLS.length, label: 'Schools', suffix: '', icon: SchoolIcon },
     { value: totalPrograms, label: 'Academic Programmes', suffix: '+', icon: BookOpen },
-    { value: types.length - 1, label: 'School Types', suffix: '', icon: BarChart3 },
-    { value: 98, label: 'Pass Rate Average', suffix: '%', icon: Trophy },
-  ], [totalPrograms])
+    { value: 98, label: 'WASSCE Pass Rate', suffix: '%', icon: Trophy },
+    { value: 85, label: 'University Admissions', suffix: '%', icon: BarChart3 },
+    { value: 25, label: 'Student-Teacher Ratio', suffix: ':1', icon: Users },
+    { value: 12, label: 'Distinguished Alumni', suffix: '+', icon: Award },
+  ]
 
   const topPrograms = useMemo(() => {
     const count = new Map<string, number>()
@@ -266,8 +261,7 @@ export default function Schools() {
         <section className="py-16 md:py-24 px-6 relative overflow-hidden">
           <SectionDivider label="Featured School" className="mb-10" />
           <div className="max-w-6xl mx-auto relative">
-            <div className="relative rounded-3xl p-[1px] overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, rgba(197,149,74,0.4), rgba(197,149,74,0.05) 30%, rgba(197,149,74,0.2) 50%, rgba(197,149,74,0.05) 70%, rgba(197,149,74,0.4))', backgroundSize: '200% 200%', animation: 'border-flow 6s ease-in-out infinite' }}>
+            <div className="relative rounded-3xl overflow-hidden">
               <div className="relative rounded-3xl bg-surface overflow-hidden">
                 <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -280,7 +274,6 @@ export default function Schools() {
                 <div className="grid md:grid-cols-2">
                   <div className="relative overflow-hidden group cursor-pointer min-h-[280px] md:min-h-[420px]" onClick={() => navigate(`/schools/${featuredSchool.id}`)}>
                     <img src={featuredSchool.image} alt={featuredSchool.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" style={{ objectFit: 'cover' }} />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface/95 hidden md:block pointer-events-none" />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent md:hidden pointer-events-none" />
                     <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30"><div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-[scanline_5s_linear_infinite]" /></div>
                     <div className="absolute top-5 left-5 md:top-6 md:left-6 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[9px] font-semibold uppercase tracking-[0.2em] backdrop-blur-xl border border-accent/25 bg-accent/10 text-accent z-10">
@@ -332,9 +325,15 @@ export default function Schools() {
                 className="w-full pl-10 pr-4 py-2.5 text-sm bg-surface border border-border rounded-xl text-fg placeholder:text-muted/60 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-all" />
               {searchQuery && <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-fg transition-colors"><X className="w-4 h-4" /></button>}
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => setViewMode('grid')} className={`p-2.5 rounded-lg border transition-all ${viewMode === 'grid' ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}><Grid3X3 className="w-4 h-4" /></button>
-              <button onClick={() => setViewMode('map')} className={`p-2.5 rounded-lg border transition-all ${viewMode === 'map' ? 'bg-accent text-accent-fg border-accent' : 'bg-surface text-muted border-border hover:text-fg'}`}><MapIcon className="w-4 h-4" /></button>
+            <div className="flex items-center gap-1 bg-surface border border-border rounded-xl p-1">
+              <button onClick={() => setViewMode('grid')} className={`flex items-center gap-1.5 px-2 py-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-accent text-accent-fg shadow-sm' : 'text-muted hover:text-fg'}`}>
+                <Grid3X3 className="w-4 h-4" />
+                <span className={`text-[10px] font-medium overflow-hidden transition-all duration-200 ${viewMode === 'grid' ? 'max-w-[3rem] opacity-100' : 'max-w-0 opacity-0'}`}>Grid</span>
+              </button>
+              <button onClick={() => setViewMode('map')} className={`flex items-center gap-1.5 px-2 py-2 rounded-lg transition-all ${viewMode === 'map' ? 'bg-accent text-accent-fg shadow-sm' : 'text-muted hover:text-fg'}`}>
+                <MapIcon className="w-4 h-4" />
+                <span className={`text-[10px] font-medium overflow-hidden transition-all duration-200 ${viewMode === 'map' ? 'max-w-[3rem] opacity-100' : 'max-w-0 opacity-0'}`}>Map</span>
+              </button>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap mt-4">
@@ -377,10 +376,12 @@ export default function Schools() {
               <MapContainer center={[6.2, 0.08]} zoom={11} className="w-full h-full" scrollWheelZoom={true}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://openstreetmap.org/copyright">OSM</a>' />
                 {SCHOOLS.map((s) => (
-                  <Marker key={s.id} position={s.coordinates as [number, number]}>
-                    <Popup><div className="text-center"><p className="text-xs font-medium mb-1">{s.name}</p><p className="text-[10px] text-muted mb-1">{s.location}</p>
-                      <button onClick={() => navigate(`/schools/${s.id}`)} className="text-[10px] text-accent font-medium hover:text-accent/80 transition-colors">View details</button></div></Popup>
-                  </Marker>
+                  s.coordinates && (
+                    <Marker key={s.id} position={s.coordinates}>
+                      <Popup><div className="text-center"><p className="text-xs font-medium mb-1">{s.name}</p><p className="text-[10px] text-muted mb-1">{s.location}</p>
+                        <button onClick={() => navigate(`/schools/${s.id}`)} className="text-[10px] text-accent font-medium hover:text-accent/80 transition-colors">View details</button></div></Popup>
+                    </Marker>
+                  )
                 ))}
               </MapContainer>
             </div>

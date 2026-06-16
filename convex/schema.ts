@@ -18,9 +18,41 @@ export default defineSchema({
   insights: defineTable({
     title: v.string(),
     content: v.string(),
+    excerpt: v.optional(v.string()),
+    image: v.optional(v.string()),
+    author: v.optional(v.string()),
+    readTime: v.optional(v.string()),
+    date: v.optional(v.string()),
     category: v.string(),
     tags: v.array(v.string()),
     published: v.boolean(),
     authorId: v.string(),
-  }).searchIndex('search_content', { searchField: 'content', filterFields: ['category', 'published'] }),
+  }).index('by_category', ['category'])
+    .searchIndex('search_content', { searchField: 'content', filterFields: ['category', 'published'] }),
+
+  itineraries: defineTable({
+    sessionId: v.string(),
+    days: v.array(v.object({
+      day: v.number(),
+      items: v.array(v.object({
+        id: v.string(),
+        name: v.string(),
+        type: v.string(),
+        time: v.optional(v.string()),
+      })),
+    })),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index('by_session', ['sessionId']),
+
+  notifications: defineTable({
+    title: v.string(),
+    message: v.string(),
+    type: v.union(v.literal('info'), v.literal('warning'), v.literal('success'), v.literal('emergency')),
+    link: v.optional(v.string()),
+    linkText: v.optional(v.string()),
+    active: v.boolean(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index('by_active', ['active']),
 })

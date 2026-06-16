@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://atbh.vercel.app/sitemap.xml

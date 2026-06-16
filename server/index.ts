@@ -59,10 +59,10 @@ app.post('/api/paystack/webhook', express.raw({ type: 'application/json' }), (re
       return res.status(400).json({ error: 'Empty request body' });
     }
 
-    // Verify HMAC-SHA256 signature
+    // Verify HMAC-SHA512 signature (Paystack uses SHA-512)
     if (PAYSTACK_WEBHOOK_SECRET) {
       const expectedSignature = crypto
-        .createHmac('sha256', PAYSTACK_WEBHOOK_SECRET)
+        .createHmac('sha512', PAYSTACK_WEBHOOK_SECRET)
         .update(rawBody)
         .digest('hex');
 

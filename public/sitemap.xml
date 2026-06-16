@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://atbh.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://atbh.vercel.app/attractions</loc><priority>0.9</priority></url>
+  <url><loc>https://atbh.vercel.app/dining</loc><priority>0.9</priority></url>
+  <url><loc>https://atbh.vercel.app/stay</loc><priority>0.9</priority></url>
+  <url><loc>https://atbh.vercel.app/events</loc><priority>0.8</priority></url>
+  <url><loc>https://atbh.vercel.app/gallery</loc><priority>0.8</priority></url>
+  <url><loc>https://atbh.vercel.app/map</loc><priority>0.8</priority></url>
+  <url><loc>https://atbh.vercel.app/experience</loc><priority>0.9</priority></url>
+  <url><loc>https://atbh.vercel.app/business</loc><priority>0.7</priority></url>
+  <url><loc>https://atbh.vercel.app/schools</loc><priority>0.7</priority></url>
+  <url><loc>https://atbh.vercel.app/blog</loc><priority>0.8</priority></url>
+  <url><loc>https://atbh.vercel.app/trip-planner</loc><priority>0.7</priority></url>
+  <url><loc>https://atbh.vercel.app/donate</loc><priority>0.7</priority></url>
+  <url><loc>https://atbh.vercel.app/terms</loc><priority>0.3</priority></url>
+  <url><loc>https://atbh.vercel.app/privacy</loc><priority>0.3</priority></url>
+</urlset>

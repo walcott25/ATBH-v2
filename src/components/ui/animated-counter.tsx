@@ -13,6 +13,7 @@ function easeOutCubic(t: number): number {
 }
 
 export default function AnimatedCounter({ value, suffix = '', prefix = '', decimals = 0 }: AnimatedCounterProps) {
+  const numValue = Number(value) || 0
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -30,20 +31,22 @@ export default function AnimatedCounter({ value, suffix = '', prefix = '', decim
       const elapsed = now - startTime
       const progress = Math.min(elapsed / duration, 1)
       const easedProgress = easeOutCubic(progress)
-      const currentValue = easedProgress * value
+      const currentValue = easedProgress * numValue
 
       setCount(currentValue)
 
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(animate)
       } else {
-        setCount(value)
+        setCount(numValue)
       }
     }
 
     rafRef.current = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [isInView, value])
+  }, [isInView, numValue])
+
+  const display = isNaN(count) ? '0' : count.toFixed(decimals)
 
   return (
     <motion.span
@@ -53,7 +56,7 @@ export default function AnimatedCounter({ value, suffix = '', prefix = '', decim
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       className="inline-block"
     >
-      {prefix}{count.toFixed(decimals)}{suffix}
+      {prefix}{display}{suffix}
     </motion.span>
   )
 }

@@ -16,11 +16,16 @@ const Business = lazy(() => import('./pages/Business'));
 const Experience = lazy(() => import('./pages/Experience'));
 const ItemPage = lazy(() => import('./pages/ItemPage'));
 import ChatConcierge from './components/chat/chat-concierge';
+import WhatsAppButton from './components/ui/whatsapp-button';
+import WeatherWidget from './components/ui/weather-widget';
 const ScrollToTopButton = lazy(() => import('./components/ui/scroll-to-top'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Donate = lazy(() => import('./pages/Donate'));
 const Admin = lazy(() => import('./pages/Admin'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const TripPlanner = lazy(() => import('./pages/TripPlanner'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -92,6 +97,24 @@ export default function App() {
             <Route path="/experience" element={
               <Suspense fallback={<PageSkeleton />}><PageTransition><Experience /></PageTransition></Suspense>
             } />
+            <Route path="/donate" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Donate /></PageTransition></Suspense>
+            } />
+            <Route path="/terms" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Terms /></PageTransition></Suspense>
+            } />
+            <Route path="/privacy" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Privacy /></PageTransition></Suspense>
+            } />
+            <Route path="/blog" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Blog /></PageTransition></Suspense>
+            } />
+            <Route path="/blog/:id" element={
+              <Suspense fallback={<PageSkeleton />}><BlogPost /></Suspense>
+            } />
+            <Route path="/trip-planner" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><TripPlanner /></PageTransition></Suspense>
+            } />
             <Route path="/:type/:id" element={
               <Suspense fallback={<PageSkeleton />}><ItemPage /></Suspense>
             } />
@@ -99,19 +122,11 @@ export default function App() {
           <Route path="/admin" element={
             <Suspense fallback={<PageSkeleton />}><PageTransition><Admin /></PageTransition></Suspense>
           } />
-          <Route path="/donate" element={
-            <Suspense fallback={<PageSkeleton />}><PageTransition><Donate /></PageTransition></Suspense>
-          } />
-          <Route path="/terms" element={
-            <Suspense fallback={<PageSkeleton />}><PageTransition><Terms /></PageTransition></Suspense>
-          } />
-          <Route path="/privacy" element={
-            <Suspense fallback={<PageSkeleton />}><PageTransition><Privacy /></PageTransition></Suspense>
-          } />
         </Routes>
       </AnimatePresence>
       <Suspense fallback={null}><ScrollToTopButton /></Suspense>
       {!isMapPage && <ChatConcierge />}
+      {!isMapPage && <WhatsAppButton />}
     </AppProvider>
   );
 }

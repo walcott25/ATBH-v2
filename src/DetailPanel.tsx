@@ -233,17 +233,14 @@ export default function DetailPanel({
         </motion.button>
 
         {/* Hero Section */}
-        <div className="relative h-[70vh] min-h-[520px] overflow-hidden">
+        <div className="relative w-full min-h-[50vh] md:min-h-[60vh] flex items-center justify-center bg-fg/5">
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/10 to-fg/60" />
           <motion.img
             src={item.image}
             alt={item.name}
-            className="absolute inset-0 w-full h-full object-cover block max-w-none"
+            className="relative w-full h-full max-h-[85vh] object-contain px-4 py-8"
             loading="lazy"
-            style={{ y: heroParallax, scale: 1.1, height: '100%' }}
-          />
-          <motion.div
-            style={{ opacity: heroOpacity }}
-            className="absolute inset-0 bg-brand-dark/70"
+            style={{ y: heroParallax }}
           />
           <motion.div
             style={{ opacity: heroOpacity }}

@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, GraduationCap, Globe, Building2, Loader2, CheckCircle, AlertCircle, TrendingUp, Users, Repeat, Sparkles } from 'lucide-react';
 import AnimatedCounter from '../components/ui/animated-counter';
 import AnimatedSection from '../components/animations/animated-section';
 import PageHero from '../components/ui/page-hero';
 
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '';
+const PAYSTACK_PUBLIC_KEY = 'pk_live_6ccdb6efe27eefe9c10a527caaa52a7e8f72c55d';
 
 declare global {
   interface Window {
@@ -63,8 +63,11 @@ export default function Donate() {
   const [stats, setStats] = useState<DonationStats>({
     totalRaised: 0, donorCount: 0, projectsFunded: 0, recentDonors: [],
   });
+  const isPaying = useRef(false);
+  const paystackRef = useRef<InstanceType<typeof window.PaystackPop> | null>(null);
 
   const fetchStats = async () => {
+    if (isPaying.current) return;
     try {
       const res = await fetch('/api/donations/stats');
       if (res.ok) setStats(await res.json());
@@ -107,51 +110,80 @@ export default function Donate() {
       return;
     }
 
+    isPaying.current = true;
     setStatus('processing');
 
     const reference = `ATBH-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-    const handler = window.PaystackPop.setup({
-      key: PAYSTACK_PUBLIC_KEY,
-      email: form.email,
-      amount: amountVal * 100,
-      currency: 'GHS',
-      ref: reference,
-      metadata: {
-        custom_fields: [
-          { display_name: 'Donor Name', variable_name: 'donor_name', value: form.name },
-          { display_name: 'Message', variable_name: 'message', value: form.message || 'No message' },
-        ],
-      },
-      callback: async () => {
-        setStatus('success');
-        setForm({ amount: '', name: '', email: '', message: '' });
-        fetch('/api/donations/record', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            reference,
-            amount: amountVal,
-            currency: 'GHS',
-            channel: 'card',
-            donorName: form.name,
-            donorEmail: form.email,
-            purpose: 'general',
-            message: form.message || '',
-          }),
-        }).then(() => fetchStats()).catch(() => {});
-        setTimeout(() => setStatus('idle'), 5000);
-      },
-      onClose: () => {
-        setStatus('idle');
-      },
-    });
+    if (!window.PaystackPop) {
+      isPaying.current = false;
+      setErrorMsg('Payment system is loading. Please try again in a moment.');
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+      return;
+    }
 
-    handler.openIframe();
+    try {
+      paystackRef.current = new window.PaystackPop();
+      paystackRef.current.checkout({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: form.email,
+        amount: amountVal * 100,
+        currency: 'GHS',
+        ref: reference,
+        metadata: {
+          custom_fields: [
+            { display_name: 'Donor Name', variable_name: 'donor_name', value: form.name },
+            { display_name: 'Message', variable_name: 'message', value: form.message || 'No message' },
+          ],
+        },
+        onSuccess: async () => {
+          isPaying.current = false;
+          paystackRef.current = null;
+          setStatus('success');
+          setForm({ amount: '', name: '', email: '', message: '' });
+          const savedName = form.name;
+          const savedEmail = form.email;
+          fetch('/api/donations/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              reference,
+              amount: amountVal,
+              currency: 'GHS',
+              channel: 'card',
+              donorName: savedName,
+              donorEmail: savedEmail,
+              purpose: 'general',
+              message: form.message || '',
+            }),
+          }).then(() => fetchStats()).catch(() => {});
+          setTimeout(() => setStatus('idle'), 5000);
+        },
+        onCancel: () => {
+          isPaying.current = false;
+          paystackRef.current = null;
+          setStatus('idle');
+        },
+        onError: (err: any) => {
+          isPaying.current = false;
+          paystackRef.current = null;
+          setErrorMsg(err?.message || 'Payment gateway failed to open. Check that your Paystack key is valid.');
+          setStatus('error');
+          setTimeout(() => setStatus('idle'), 5000);
+        },
+      });
+    } catch (err) {
+      isPaying.current = false;
+      paystackRef.current = null;
+      setErrorMsg('Payment gateway failed to open. Check that your Paystack key is valid.');
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
-    <main className="min-h-screen bg-bg">
+    <div className="min-h-screen bg-bg">
       <PageHero
         title="Support Asuogyaman"
         description="Your contributions directly fund community-led projects that preserve our culture, improve education, develop tourism infrastructure, and create lasting opportunities for the people of Asuogyaman."
@@ -339,6 +371,7 @@ export default function Donate() {
             whileHover={status === 'idle' ? { scale: 1.01 } : {}}
             whileTap={status === 'idle' ? { scale: 0.99 } : {}}
             className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-fg transition-all hover:bg-accent/90 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            type="button"
           >
             {status === 'processing' ? (
               <><Loader2 className="h-4 w-4 animate-spin" /> Processing...</>
@@ -367,6 +400,6 @@ export default function Donate() {
           )}
         </motion.div>
       </div>
-    </main>
+    </div>
   );
 }

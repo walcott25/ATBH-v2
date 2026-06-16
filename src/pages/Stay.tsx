@@ -379,11 +379,11 @@ function StayCard({ item, index, onClick }: { item: Stay; index: number; onClick
           <div className="p-4 md:p-5 space-y-2" style={{ transform: 'translateZ(20px)' }}>
             <h3 className="text-sm font-medium text-fg group-hover:text-accent transition-colors duration-300 line-clamp-1">{item.name}</h3>
             <p className="text-xs text-muted leading-relaxed line-clamp-2">{item.description}</p>
-            {(item.phone || item.email || item.bookingUrl) && (
+            {(item.phone || item.email || item.website) && (
               <div className="flex items-center gap-2 pt-0.5">
                 {item.phone && <a href={`tel:${item.phone}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.phone}><Phone className="w-3 h-3" /></a>}
                 {item.email && <a href={`mailto:${item.email}`} onClick={(e) => e.stopPropagation()} className="text-[10px] text-muted hover:text-accent transition-colors flex items-center gap-1" title={item.email}><Mail className="w-3 h-3" /></a>}
-                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
+                {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[10px] text-accent hover:text-accent/80 transition-colors flex items-center gap-1 font-medium" title="Book online"><ExternalLink className="w-3 h-3" /><span>Book</span></a>}
               </div>
             )}
             <div className="flex items-center justify-between pt-1"><span className={`text-[9px] font-semibold uppercase tracking-widest ${catColor}`}>{item.category}</span>
@@ -508,7 +508,7 @@ function StayDetailPanel({ item, onClose, onNavigate }: { item: Stay; onClose: (
                   <div className="w-10 h-10 rounded-xl bg-brand-gold/10 flex items-center justify-center shrink-0 ring-1 ring-brand-gold/20"><Mail className="w-5 h-5 text-brand-gold" /></div>
                   <div className="min-w-0"><div className="text-[9px] uppercase tracking-[0.25em] font-bold text-white/40 mb-1">Email</div><div className="text-sm text-white/70 truncate">{item.email}</div></div>
                 </a>}
-                {item.bookingUrl && <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-5 rounded-xl bg-brand-gold/[0.08] border border-brand-gold/20 hover:bg-brand-gold/[0.12] transition-all group">
+                {item.website && <a href={item.website} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-5 rounded-xl bg-brand-gold/[0.08] border border-brand-gold/20 hover:bg-brand-gold/[0.12] transition-all group">
                   <div className="w-10 h-10 rounded-xl bg-brand-gold/20 flex items-center justify-center shrink-0 ring-1 ring-brand-gold/30"><ExternalLink className="w-5 h-5 text-brand-gold" /></div>
                   <div className="min-w-0"><div className="text-[9px] uppercase tracking-[0.25em] font-bold text-brand-gold/60 mb-1">Book Online</div><div className="text-sm text-brand-gold">Book Now</div></div>
                 </a>}

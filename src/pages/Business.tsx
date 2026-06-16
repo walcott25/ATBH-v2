@@ -261,12 +261,7 @@ export default function Business() {
                               </a>
                             )}
                             {item.website && (
-                              <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-muted hover:text-accent transition-colors">
-                                <ExternalLink className="w-3 h-3 shrink-0" /><span>Website</span>
-                              </a>
-                            )}
-                            {item.bookingUrl && (
-                              <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-accent hover:text-accent/80 transition-colors font-medium">
+                              <a href={item.website} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-[10px] text-accent hover:text-accent/80 transition-colors font-medium">
                                 <ExternalLink className="w-3 h-3 shrink-0" /><span>Book</span>
                               </a>
                             )}

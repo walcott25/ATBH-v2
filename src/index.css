@@ -25,6 +25,14 @@
   --color-glass-dark: rgba(0, 0, 0, 0.4);
   --color-glass-border-dark: rgba(255, 255, 255, 0.08);
 
+  --color-dark-bg: #0F0F0F;
+  --color-dark-fg: #F0F0F0;
+  --color-dark-muted: #A0A0A0;
+  --color-dark-border: #2A2A2A;
+  --color-dark-surface: #1A1A1A;
+  --color-dark-glass: rgba(15, 15, 15, 0.6);
+  --color-dark-glass-border: rgba(255, 255, 255, 0.06);
+
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-slide-up: slide-up 0.5s ease-out forwards;
   --animate-glow: glow 3s ease-in-out infinite;
@@ -230,6 +238,39 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── Dark Mode ── */
+
+.dark {
+  --color-bg: var(--color-dark-bg);
+  --color-fg: var(--color-dark-fg);
+  --color-muted: var(--color-dark-muted);
+  --color-border: var(--color-dark-border);
+  --color-surface: var(--color-dark-surface);
+  --color-glass: var(--color-dark-glass);
+  --color-glass-border: var(--color-dark-glass-border);
+  --color-glass-dark: rgba(255, 255, 255, 0.1);
+  --color-glass-border-dark: rgba(255, 255, 255, 0.08);
+}
+
+.dark img:not(.leaflet-tile) {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+.dark .leaflet-container {
+  background: #1a1a1a !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background: #1A1A1A !important;
+  color: #F0F0F0 !important;
+}
+
+.dark .leaflet-popup-tip {
+  background: #1A1A1A !important;
 }
 
 /* ── Map / Leaflet fixes ── */

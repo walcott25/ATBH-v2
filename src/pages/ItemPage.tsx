@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ATTRACTIONS, DINING, STAY, EVENTS, EXPERIENCES, BUSINESS, SCHOOLS } from '../data'
-import { Star, MapPin, Phone, Mail, ExternalLink, ArrowLeft, Navigation, BookOpen, GraduationCap, Clock, Compass, Calendar } from 'lucide-react'
+import { Star, MapPin, Phone, Mail, ExternalLink, ArrowLeft, Navigation, BookOpen, GraduationCap, Clock, Compass, Calendar, Eye } from 'lucide-react'
 import type { Attraction, Dining, Stay, Event, Experience, Business, School } from '../data'
+import VirtualTour from '../components/ui/virtual-tour'
+import StructuredData from '../components/seo/structured-data'
 
 const DATA: Record<string, (Attraction | Dining | Stay | Event | Experience | Business | School)[]> = {
   attractions: ATTRACTIONS,
@@ -25,6 +28,7 @@ const LABELS: Record<string, { back: string; section: string }> = {
 
 export default function ItemPage() {
   const { type, id } = useParams<{ type: string; id: string }>()
+  const [tourOpen, setTourOpen] = useState(false)
   if (!type || !id || !DATA[type]) return <NotFound />
 
   const items = DATA[type]
@@ -36,8 +40,34 @@ export default function ItemPage() {
   const prevItem = idx > 0 ? items[idx - 1] : null
   const nextItem = idx < items.length - 1 ? items[idx + 1] : null
 
+  const hasPanorama = 'panorama' in item && item.panorama
+
   return (
     <div className="min-h-screen bg-bg">
+      {hasPanorama && tourOpen && (
+        <VirtualTour
+          panorama={(item as any).panorama}
+          attractionName={item.name}
+          onClose={() => setTourOpen(false)}
+        />
+      )}
+      <StructuredData
+        type={
+          type === 'attractions' ? 'TouristAttraction' :
+          type === 'dining' ? 'Restaurant' :
+          type === 'stay' ? 'Hotel' :
+          type === 'events' ? 'Event' :
+          'TouristDestination'
+        }
+        name={item.name}
+        description={item.description}
+        image={item.image}
+        telephone={'phone' in item ? (item as any).phone : undefined}
+        email={'email' in item ? (item as any).email : undefined}
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
+        geo={'coordinates' in item ? { latitude: (item as any).coordinates?.[0], longitude: (item as any).coordinates?.[1] } : undefined}
+        rating={'rating' in item ? { value: (item as any).rating || 0 } : undefined}
+      />
       {/* Back nav */}
       <div className="sticky top-0 z-50 bg-bg/80 backdrop-blur-xl border-b border-border/40">
         <div className="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
@@ -176,6 +206,19 @@ export default function ItemPage() {
           </section>
         )}
 
+        {/* Virtual Tour */}
+        {hasPanorama && (
+          <section>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Virtual Tour</h2>
+            <button
+              onClick={() => setTourOpen(true)}
+              className="flex items-center gap-2 px-4 py-2.5 bg-accent text-accent-fg border border-accent rounded-xl text-xs font-medium hover:bg-accent/90 transition-all"
+            >
+              <Eye className="w-4 h-4" /> 360° Virtual Tour
+            </button>
+          </section>
+        )}
+
         {/* Contact */}
         <section>
           <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Contact</h2>
@@ -195,8 +238,8 @@ export default function ItemPage() {
                 <ExternalLink className="w-4 h-4" />Website
               </a>
             )}
-            {'bookingUrl' in item && item.bookingUrl && (
-              <a href={item.bookingUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-accent text-accent-fg border border-accent rounded-xl text-xs font-medium hover:bg-accent/90 transition-all">
+            {'website' in item && item.website && (
+              <a href={item.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-accent text-accent-fg border border-accent rounded-xl text-xs font-medium hover:bg-accent/90 transition-all">
                 <ExternalLink className="w-4 h-4" />Book Now
               </a>
             )}

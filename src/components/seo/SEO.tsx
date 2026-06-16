@@ -10,7 +10,7 @@ interface SEOProps {
 }
 
 const SITE_NAME = 'Asuogyaman Tourism & Business Hub';
-const SITE_URL = 'https://asuogyaman-tourism-hub.com';
+const SITE_URL = 'https://atbh.vercel.app';
 const DEFAULT_IMAGE = '/Images/adomi-bridge-hero.jpg';
 const DEFAULT_DESC = 'Explore the beauty, culture, and adventure of Asuogyaman District — your gateway to the Volta Region. Discover attractions, dining, stay, events, and more.';
 

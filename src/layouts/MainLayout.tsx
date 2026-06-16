@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import WeatherWidget from '../components/ui/weather-widget';
+import PushNotificationToggle from '../components/ui/push-notification-toggle';
+import SiteNotificationBanner from '../components/ui/site-notification-banner';
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -11,9 +14,11 @@ const navItems = [
   { label: 'Gallery', path: '/gallery' },
   { label: 'Map', path: '/map' },
   { label: 'Experience', path: '/experience' },
+  { label: 'Blog', path: '/blog' },
   { label: 'More', path: '#', children: [
     { label: 'Business', path: '/business' },
     { label: 'Schools', path: '/schools' },
+    { label: 'Trip Planner', path: '/trip-planner' },
   ]},
 ];
 
@@ -133,6 +138,8 @@ export default function MainLayout() {
               >
                 Donate
               </Link>
+              <div className="ml-2 hidden md:block"><WeatherWidget /></div>
+              <div className="ml-1 hidden md:block"><PushNotificationToggle /></div>
             </nav>
 
             <button
@@ -200,6 +207,7 @@ export default function MainLayout() {
         </AnimatePresence>
       </motion.header>
 
+      <SiteNotificationBanner />
       <main><Outlet /></main>
 
       <footer className="border-t border-border mt-24 bg-surface">

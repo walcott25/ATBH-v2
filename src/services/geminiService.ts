@@ -150,6 +150,30 @@ ${knowledgeBase}
     throw new Error('No response text');
   } catch (error) {
     console.error("AI Service Error:", error);
-    return "I'm having trouble connecting to my AI service right now. Please try again in a moment! Is there anything else I can help you with?";
+    return fallbackResponse(question);
   }
+}
+
+function fallbackResponse(question: string): string {
+  const q = question.toLowerCase();
+
+  const qa: [RegExp, string][] = [
+    [/ghana/i, "Ghana, officially the Republic of Ghana, is a country in West Africa along the Gulf of Guinea. It is known for its rich history, diverse cultures, beautiful landscapes, and vibrant cities like Accra, Kumasi, and Takoradi. Ghana is home to the Asuogyaman District in the Eastern Region, which is a prime tourism destination featuring the Akosombo Dam, Dodi Island, and the Volta River. The official language is English, and the country is known for its stability, friendly people ('Akwaaba' means welcome), and growing economy."],
+    [/eastern region/i, "The Eastern Region is one of Ghana's 16 administrative regions, with its capital at Koforidua. It's known for its stunning natural beauty — rolling hills, cocoa farms, botanical gardens, and the Volta River. The region is home to the Akosombo Dam (Ghana's main hydroelectric dam), the Akwapim-Togo mountain ranges, and several tourist attractions including the Boti Falls, Umbrella Rock, and the Asuogyaman District. The Eastern Region is also rich in cultural heritage with festivals like Odwira and Ahobaa."],
+    [/asuogyaman|asugyaman|asuogyaman district/i, "Asuogyaman District is a beautiful district in Ghana's Eastern Region, situated along the eastern banks of the Volta River. It is one of Ghana's premier tourism destinations! Key highlights include: the magnificent Akosombo Dam (hydroelectric dam), Dodi Island (a resort island with boat cruises), Akosombo town, Volta River cruises, and stunning lake views. The district offers a range of activities from water sports to eco-tourism, and is easily accessible from Accra (about 1.5-2 hours drive). It is the heart of tourism development in the Eastern Region, with growing infrastructure in hospitality, transportation, and community-based tourism initiatives."],
+    [/akosombo/i, "Akosombo is a town in Ghana's Eastern Region, best known as the home of the Akosombo Dam — Ghana's main hydroelectric power station built on the Volta River. The dam created Lake Volta, one of the largest man-made lakes in the world by surface area. Akosombo is a popular tourism hub with attractions like the dam itself (tours available), Dodi Island resort, Volta River boat cruises, and beautiful hillside views. It serves as the gateway to the Asuogyaman District."],
+    [/dodi island|dodi/i, "Dodi Island is a beautiful resort island located on the Volta River in the Asuogyaman District. It's a popular destination for boat cruises, picnics, swimming, and relaxation. Visitors can take boat rides from the Akosombo shoreline to the island, enjoy local food, music, and the serene river environment. It's one of the top tourist attractions in the Eastern Region of Ghana."],
+    [/dam|hydro|electric/i, "The Akosombo Dam (also known as the Akosombo Hydroelectric Project) is Ghana's largest power station, located on the Volta River in the Eastern Region. Completed in 1965, it created Lake Volta, which covers 8,502 km² and supplies hydroelectric power to Ghana and neighboring countries. The dam is a major landmark in Asuogyaman District and an important part of Ghana's industrial development. Tours of the dam are available for visitors."],
+    [/volta lake|lake volta|volta river/i, "The Volta River and Lake Volta are central to Ghana's geography and economy. The Volta River flows through the Eastern Region, and the Akosombo Dam creates Lake Volta — one of the world's largest man-made lakes. The river and lake offer excellent opportunities for boat cruises, fishing, water sports, and tourism. Dodi Island resort on the Volta River is a popular attraction in the Asuogyaman District."],
+    [/weather|temperature|climate/i, "Asuogyaman District has a tropical climate with warm temperatures year-round. You can check our live weather widget on the homepage for current conditions including temperature, humidity, and weather description. Generally, the area has a rainy season (April-October) and a dry season (November-March). Average temperatures range from 25°C to 33°C."],
+    [/tourist|attraction|visit|things to do/i, "Asuogyaman District is packed with attractions! Here are the highlights:\n\n🏛️ **Akosombo Dam** — Ghana's hydroelectric power station with tours available\n🏝️ **Dodi Island** — Resort island with boat cruises and relaxation\n🚢 **Volta River Cruises** — Scenic boat trips on the Volta River\n🌳 **Eco-tourism** — Nature walks, bird watching, hiking\n🎣 **Fishing** — Local fishing communities and experiences\n\nOur website has detailed pages for all attractions — check out the Attractions page for more!"],
+  ];
+
+  for (const [pattern, answer] of qa) {
+    if (pattern.test(q)) {
+      return answer;
+    }
+  }
+
+  return "I'm having trouble connecting to my AI service right now. In the meantime, you can browse our Attractions, Dining, Accommodation, and Schools pages to learn more about Asuogyaman! Is there something specific I can help you find?";
 }

@@ -12,6 +12,9 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
+        srcDir: 'src',
+        filename: 'sw.ts',
+        strategies: 'injectManifest',
         includeAssets: [
           'Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png',
           'Images/adomi-bridge-hero.jpg',
@@ -53,89 +56,7 @@ export default defineConfig(({mode}) => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,svg,woff,woff2,ico}'],
-          // Images excluded from precaching — handled by runtime CacheFirst strategy below
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-          runtimeCaching: [
-            {
-              urlPattern: /^https?:\/\/.*\/api\/.*/i,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'api-cache',
-                expiration: {
-                  maxEntries: 100,
-                  maxAgeSeconds: 60 * 60 * 24,
-                },
-                networkTimeoutSeconds: 10,
-              },
-            },
-            {
-              urlPattern: /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg|ico|avif)$/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'image-cache',
-                expiration: {
-                  maxEntries: 500,
-                  maxAgeSeconds: 60 * 60 * 24 * 365,
-                },
-              },
-            },
-            {
-              urlPattern: /^(https:)?\/\/www\.googletagmanager\.com\/.*/i,
-              handler: 'NetworkOnly',
-            },
-            {
-              urlPattern: /^(https:)?\/\/www\.google-analytics\.com\/.*/i,
-              handler: 'NetworkOnly',
-            },
-            {
-              // Google Fonts CSS — CacheFirst to avoid SW no-response errors offline
-              urlPattern: /^https?:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'google-fonts-css',
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
-                },
-              },
-            },
-            {
-              // Google Fonts assets — CacheFirst for the actual font files
-              urlPattern: /^https?:\/\/fonts\.gstatic\.com\/.*/i,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'google-fonts-files',
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 60 * 24 * 365,
-                },
-              },
-            },
-            {
-              // OpenStreetMap tiles — StaleWhileRevalidate for fast UX
-              urlPattern: /^https?:\/\/.*\.tile\.openstreetmap\.org\/.*/i,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'map-tile-cache',
-                expiration: {
-                  maxEntries: 1000,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
-                },
-              },
-            },
-            {
-              urlPattern: /^https?:\/\/.*/i,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'page-cache',
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 60 * 24,
-                },
-                networkTimeoutSeconds: 5,
-              },
-            },
-          ],
         },
       }),
     ],
