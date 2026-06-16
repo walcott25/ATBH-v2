@@ -34,6 +34,9 @@ registerRoute(/^https?:\/\/.*\.tile\.openstreetmap\.org\/.*/i, new StaleWhileRev
 }))
 
 
+registerRoute(/^https?:\/\/(?:www\.)?googletagmanager\.com\/.*/i, new NetworkOnly())
+registerRoute(/^https?:\/\/(?:www\.)?google-analytics\.com\/.*/i, new NetworkOnly())
+
 registerRoute(/^https?:\/\/.*/i, new NetworkFirst({
   cacheName: 'page-cache',
   networkTimeoutSeconds: 5,
