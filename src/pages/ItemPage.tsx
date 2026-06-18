@@ -82,7 +82,7 @@ export default function ItemPage() {
       </div>
 
       {/* Hero */}
-      <div className="relative h-[45vh] min-h-[320px] overflow-hidden bg-surface">
+      <div className={`relative overflow-hidden bg-surface ${type === 'business' ? 'h-dvh min-h-[500px]' : 'h-[45vh] min-h-[320px]'}`}>
         <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className={`absolute inset-0 ${(type === 'events' || type === 'schools') ? 'bg-gradient-to-t from-black/80 via-black/40 to-transparent' : 'bg-gradient-to-t from-bg via-bg/30 to-transparent'}`} />
         <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 max-w-7xl mx-auto">
