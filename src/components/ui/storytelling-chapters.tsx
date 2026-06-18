@@ -38,6 +38,20 @@ const chapters: Chapter[] = [
     image: '/Images/luxury-resort-infinity.jpg',
     color: 'from-stone-900/70 via-stone-800/30 to-transparent',
   },
+  {
+    title: 'Wildlife & Nature',
+    subtitle: 'A sanctuary for biodiversity',
+    body: 'The Volta Basin teems with life. From the graceful African fish eagle soaring above the lake to the playful monkeys that inhabit the riverside forests, Asuogyaman is a paradise for nature lovers. The wetlands and riverine ecosystems support an astonishing variety of bird species, making it a premier destination for birdwatching. Hippos wallow in the shallows while colourful kingfishers dart across the water — a living tapestry of West Africa\'s natural heritage.',
+    image: '/Images/story-nature.jpg',
+    color: 'from-teal-900/70 via-teal-800/30 to-transparent',
+  },
+  {
+    title: 'Adventure & Exploration',
+    subtitle: 'Where every day is an expedition',
+    body: 'For the adventurous traveller, Asuogyaman offers endless horizons. Cruise the calm waters of Lake Volta on a traditional canoe, hike the dramatic Akwamu Gorge with its breathtaking views, or cycle through quaint riverside villages. Dodi Island\'s sandy beaches invite you to unwind after days of exploration. Whether you seek adrenaline or serenity, the landscape here delivers an experience you will never forget.',
+    image: '/Images/story-adventure.jpg',
+    color: 'from-orange-900/70 via-orange-800/30 to-transparent',
+  },
 ]
 
 function ChapterCard({ chapter, index }: { chapter: Chapter; index: number }) {
