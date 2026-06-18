@@ -255,7 +255,9 @@ export interface Business {
   id: string;
   name: string;
   description: string;
+  longDescription?: string;
   image: string;
+  gallery?: string[];
   category: 'Tourism' | 'Hospitality' | 'Retail' | 'Transport' | 'Services' | 'Agriculture' | 'Manufacturing';
   coordinates?: [number, number];
   rating?: number;
@@ -265,6 +267,10 @@ export interface Business {
   bookingUrl?: string;
   website?: string;
   location?: string;
+  services?: string[];
+  founded?: string;
+  employees?: string;
+  impact?: string;
 }
 
 export interface Event {
@@ -822,89 +828,129 @@ export const BUSINESS: Business[] = [
     id: 'volta-river-authority',
     name: 'Volta River Authority',
     description: 'The state-owned agency responsible for the generation and transmission of electricity from the Akosombo Dam, a cornerstone of Ghana\'s energy sector.',
+    longDescription: 'The Volta River Authority (VRA) is Ghana\'s premier power generation utility, established to harness the hydroelectric potential of the Volta River Basin. Operating the Akosombo Hydroelectric Dam — one of Africa\'s largest man-made lakes — VRA generates reliable, low-cost electricity that powers industries, homes, and businesses across the nation. Beyond power generation, VRA is deeply committed to sustainable development, managing water resources for irrigation, inland transportation, and aquaculture while championing environmental stewardship along the Volta Lake watershed.',
     image: '/Images/VRA.jpg',
     category: 'Services',
     coordinates: [6.3005, 0.0597],
     rating: 4.7,
     contact: '+233 34 229 3041',
-    location: 'Akosombo'
+    location: 'Akosombo',
+    services: ['Hydroelectric Power Generation', 'Electricity Transmission', 'Water Resource Management', 'Environmental Stewardship', 'Lake Transport Facilitation'],
+    founded: '1961',
+    employees: '3,000+',
+    impact: 'Powers over 70% of Ghana\'s grid-connected communities and supports the livelihoods of thousands through Volta Lake management.'
   },
   {
     id: 'volta-lake-transport',
     name: 'Volta Lake Transport Limited',
     description: 'A key transport operator providing ferry and cargo services across the Volta Lake, connecting communities and facilitating trade along the waterway.',
+    longDescription: 'Volta Lake Transport Limited (VLTL) is the primary marine transport operator on Lake Volta, providing vital ferry and cargo services that connect lakeside communities across the Eastern, Volta, and Northern regions. Operating a fleet of passenger ferries, cargo vessels, and landing craft, VLTL moves people, goods, and vehicles across the vast waterway — often the only viable transport route in remote areas. With a strong safety record and commitment to reliability, VLTL plays an indispensable role in regional trade, market access, and social connectivity.',
     image: '/Images/vltc.png',
     category: 'Transport',
     coordinates: [6.3000, 0.0600],
     rating: 4.4,
     contact: '+233 24 777 1234',
-    location: 'Akosombo'
+    location: 'Akosombo',
+    services: ['Passenger Ferry Services', 'Cargo Freight Transport', 'Vehicle Ferry Crossings', 'Lake Cruises & Tourism', 'Logistics & Supply Chain'],
+    founded: '1967',
+    employees: '500+',
+    impact: 'Connects over 100 lakeside communities and transports millions of passengers annually across the Volta Lake.'
   },
   {
     id: 'akosombo-industrial',
     name: 'Akosombo Industrial Company Limited',
     description: 'A major industrial enterprise based in Akosombo, contributing to manufacturing and economic development within the Asuogyaman District.',
+    longDescription: 'Akosombo Industrial Company Limited stands as a cornerstone of manufacturing and industrial development in the Asuogyaman District. Strategically located near the Akosombo Dam, the company leverages reliable power infrastructure to drive production, create jobs, and stimulate local economic growth. The company\'s operations span multiple manufacturing verticals, supplying essential goods to regional and national markets while championing local workforce development and industrial skills training.',
     image: '/Images/623867663_2071003400300427_61196.jpg',
     category: 'Manufacturing',
     coordinates: [6.3005, 0.0597],
     rating: 4.3,
     contact: '+233 24 555 6789',
-    location: 'Akosombo'
+    location: 'Akosombo',
+    services: ['Industrial Manufacturing', 'Processing & Production', 'Supply Chain Distribution', 'Industrial Skills Training'],
+    founded: '1970s',
+    employees: '200+',
+    impact: 'A major employer in the Akosombo area, supporting local families and positioning the district as an emerging industrial hub.'
   },
   {
     id: 'goodroll-africa',
     name: 'GoodRoll Africa Ltd',
     description: 'An innovative agribusiness company focused on producing high-quality cassava-based products for local and international markets.',
+    longDescription: 'GoodRoll Africa Ltd is a dynamic agribusiness enterprise at the forefront of cassava value-addition in Ghana. By sourcing from local smallholder farmers and applying modern processing techniques, GoodRoll produces premium cassava-based products including high-quality gari, cassava flour, and specialty starches for both domestic and export markets. The company\'s operations support hundreds of farming families, reduce post-harvest losses, and promote food security — all while creating sustainable economic opportunities in the Asuogyaman District.',
     image: '/Images/good roll.jpg',
     category: 'Agriculture',
     coordinates: [6.2400, 0.0900],
     rating: 4.5,
     contact: '+233 24 333 2109',
-    location: 'Atimpoku'
+    location: 'Atimpoku',
+    services: ['Cassava Processing', 'Gari Production', 'Cassava Flour Milling', 'Export & Distribution', 'Smallholder Farmer Support'],
+    founded: '2015',
+    employees: '150+',
+    impact: 'Empowers over 500 smallholder farmers and significantly reduces post-harvest losses in the cassava value chain.'
   },
   {
     id: 'tropo-farms',
     name: 'Tropo Farms Ltd',
     description: 'A leading aquaculture farm specialising in tilapia fish farming on Lake Volta, supplying fresh fish to markets across Ghana.',
+    longDescription: 'Tropo Farms Ltd is a flagship aquaculture operation on Lake Volta and one of Ghana\'s largest tilapia producers. Using modern cage culture systems in the pristine waters of the lake, Tropo Farms produces high-quality, sustainably farmed tilapia that reaches markets across Ghana and the West African region. The farm\'s integrated approach combines responsible fish farming with community engagement, providing direct employment, training programs for local youth, and a reliable supply of affordable protein to urban and rural consumers alike.',
     image: '/Images/tropo.jpg',
     category: 'Agriculture',
     coordinates: [6.3500, 0.0500],
     rating: 4.6,
     contact: '+233 24 666 8765',
-    location: 'Akosombo'
+    location: 'Akosombo',
+    services: ['Tilapia Fish Farming', 'Fish Processing & Packaging', 'Cold Chain Distribution', 'Aquaculture Training', 'Wholesale Supply'],
+    founded: '2008',
+    employees: '300+',
+    impact: 'Produces over 3,000 metric tons of tilapia annually and provides direct livelihoods for hundreds of local workers.'
   },
   {
     id: 'west-africa-fish',
     name: 'West Africa Fish Ltd',
     description: 'A major fish processing and export company based on the Volta Lake, providing premium fish products to regional and international markets.',
+    longDescription: 'West Africa Fish Ltd is a premier fish processing and export company operating on the Volta Lake, specialising in high-value fish products for discerning markets. With state-of-the-art processing facilities, cold chain logistics, and rigorous quality control, the company processes a variety of freshwater fish species into fillets, portions, and value-added products. Serving both regional West African markets and international buyers, West Africa Fish Ltd has built a reputation for excellence in food safety, sustainability, and traceability.',
     image: '/Images/west.jpg',
     category: 'Agriculture',
     coordinates: [6.2500, 0.0800],
     rating: 4.5,
     contact: '+233 24 444 3210',
-    location: 'Senchi'
+    location: 'Senchi',
+    services: ['Fish Processing', 'Cold Storage & Logistics', 'Export Quality Control', 'Value-Added Fish Products', 'International Distribution'],
+    founded: '2010',
+    employees: '250+',
+    impact: 'Exports premium fish products to markets across Europe, North America, and West Africa, earning significant foreign exchange.'
   },
   {
     id: 'cassava-processing',
     name: 'Cassava Processing Center',
     description: 'A local agro-processing facility that transforms cassava into gari, flour, and other value-added products for domestic consumption and export.',
+    longDescription: 'The Cassava Processing Center is a community-driven agro-processing facility that adds value to one of Ghana\'s most important staple crops. By converting locally harvested cassava into gari, cassava flour, tapioca, and other products, the center provides a reliable market for farmers while creating nutritious food products for consumers. The facility operates with a strong social mission — empowering women processors, reducing food waste, and demonstrating how rural agro-processing can drive economic transformation in agricultural communities.',
     image: '/Images/cassava-processing.jpg',
     category: 'Agriculture',
     coordinates: [6.2400, 0.0900],
     rating: 4.2,
     contact: '+233 24 888 5678',
-    location: 'Atimpoku'
+    location: 'Atimpoku',
+    services: ['Gari Processing', 'Cassava Flour Production', 'Tapioca Manufacturing', 'Farmer Outgrower Scheme', 'Women\'s Cooperative Support'],
+    founded: '2012',
+    employees: '80+',
+    impact: 'Supports over 200 local farming families and empowers women through employment and cooperative membership.'
   },
   {
     id: 'quarrying-construction',
     name: 'Quarrying and Construction Services',
     description: 'A critical local industry providing granite, stone, and construction materials for infrastructure development across the Asuogyaman District and beyond.',
+    longDescription: 'Quarrying and Construction Services is a vital supplier of construction materials serving the Asuogyaman District and the broader Eastern Region. Operating a large-scale granite quarry, the company produces high-quality aggregates, stone base, and construction-grade materials that form the foundation of roads, bridges, buildings, and public infrastructure projects. With modern crushing and screening equipment, the company meets the growing demand for construction materials driven by both public infrastructure investments and private development across the region.',
     image: '/Images/quarry-aerial.jpg',
     category: 'Services',
     coordinates: [6.2200, 0.0900],
     rating: 4.3,
     contact: '+233 24 999 4321',
-    location: 'Atimpoku'
+    location: 'Atimpoku',
+    services: ['Granite Quarrying', 'Aggregate Production', 'Stone Crushing & Screening', 'Construction Material Supply', 'Infrastructure Development Support'],
+    founded: '2005',
+    employees: '180+',
+    impact: 'Provides essential construction materials for major road and infrastructure projects across the Eastern Region.'
   }
 ];
 

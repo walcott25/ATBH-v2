@@ -138,6 +138,44 @@ export default function ItemPage() {
 
         {/* Type-specific sections */}
 
+        {/* Business services */}
+        {'services' in item && (item as Business).services && (item as Business).services!.length > 0 && (
+          <section>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Services & Offerings</h2>
+            <div className="flex flex-wrap gap-2">
+              {(item as Business).services!.map((s) => (
+                <span key={s} className="text-xs text-muted bg-surface border border-border/60 px-3 py-1.5 rounded-lg font-medium">{s}</span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Business key info */}
+        {type === 'business' && (('founded' in item && (item as Business).founded) || ('employees' in item && (item as Business).employees)) && (
+          <div className="grid grid-cols-2 gap-4">
+            {'founded' in item && (item as Business).founded && (
+              <div className="text-center p-4 rounded-xl bg-surface border border-border/60">
+                <div className="text-[9px] uppercase tracking-widest font-semibold text-muted mb-1">Established</div>
+                <div className="text-sm font-medium text-fg">{(item as Business).founded}</div>
+              </div>
+            )}
+            {'employees' in item && (item as Business).employees && (
+              <div className="text-center p-4 rounded-xl bg-surface border border-border/60">
+                <div className="text-[9px] uppercase tracking-widest font-semibold text-muted mb-1">Employees</div>
+                <div className="text-sm font-medium text-fg">{(item as Business).employees}</div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Business impact */}
+        {'impact' in item && (item as Business).impact && (
+          <section className="p-4 rounded-xl bg-surface border border-border/60">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-2">Community Impact</h2>
+            <p className="text-sm text-fg leading-relaxed">{(item as Business).impact}</p>
+          </section>
+        )}
+
         {/* Attraction extras */}
         {'highlights' in item && (item as Experience).highlights && (item as Experience).highlights!.length > 0 && (
           <section>
