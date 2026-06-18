@@ -6,6 +6,20 @@ import { Star, MapPin, Phone, Mail, ExternalLink, ArrowLeft, BookOpen, Graduatio
 import type { Attraction, Dining, Stay, Event, Experience, Business, School } from '../data'
 import VirtualTour from '../components/ui/virtual-tour'
 import StructuredData from '../components/seo/structured-data'
+import { BarChart, Bar, Cell, XAxis, YAxis, ResponsiveContainer } from 'recharts'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import L from 'leaflet'
+
+const DefaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [30, 46],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+})
+L.Marker.prototype.options.icon = DefaultIcon
 
 const DATA: Record<string, (Attraction | Dining | Stay | Event | Experience | Business | School)[]> = {
   attractions: ATTRACTIONS,
@@ -176,6 +190,31 @@ export default function ItemPage() {
           </section>
         )}
 
+        {/* Business rating chart */}
+        {type === 'business' && 'rating' in item && item.rating && (
+          <section>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Rating Overview</h2>
+            <div className="p-4 rounded-xl bg-surface border border-border/60">
+              <ResponsiveContainer width="100%" height={60}>
+                <BarChart data={[{ name: item.name, rating: item.rating, max: 5 }]} layout="vertical" margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+                  <Bar dataKey="rating" radius={[0, 4, 4, 0]} maxBarSize={24}>
+                    <Cell fill="#C5954A" />
+                  </Bar>
+                  <XAxis type="number" domain={[0, 5]} hide />
+                  <YAxis type="category" hide />
+                </BarChart>
+              </ResponsiveContainer>
+              <div className="flex items-center justify-between mt-1">
+                <span className="text-[10px] text-muted">0</span>
+                <span className="flex items-center gap-1 text-xs font-semibold text-accent">
+                  <Star className="w-3 h-3 fill-accent text-accent" />{item.rating} / 5
+                </span>
+                <span className="text-[10px] text-muted">5</span>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Attraction extras */}
         {'highlights' in item && (item as Experience).highlights && (item as Experience).highlights!.length > 0 && (
           <section>
@@ -297,6 +336,45 @@ export default function ItemPage() {
             )}
           </div>
         </section>
+
+        {/* Map */}
+        {type === 'business' && 'coordinates' in item && item.coordinates && (
+          <section>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Location</h2>
+            <div className="h-[250px] rounded-xl overflow-hidden border border-border/60">
+              <MapContainer center={item.coordinates} zoom={14} scrollWheelZoom={false} className="h-full w-full" zoomControl={false}>
+                <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={item.coordinates}>
+                  <Popup><div className="text-sm font-medium">{item.name}</div></Popup>
+                </Marker>
+              </MapContainer>
+            </div>
+          </section>
+        )}
+
+        {/* Related businesses */}
+        {type === 'business' && (() => {
+          const related = BUSINESS.filter(b => b.id !== item.id && b.category === (item as Business).category)
+          if (related.length === 0) return null
+          return (
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted mb-3">Related Businesses</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {related.slice(0, 4).map(r => (
+                  <Link key={r.id} to={`/business/${r.id}`} className="flex items-center gap-3 p-3 rounded-xl bg-surface border border-border/60 hover:border-accent/30 hover:bg-accent/5 transition-all">
+                    <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-bg">
+                      <img src={r.image} alt={r.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-medium text-fg truncate">{r.name}</div>
+                      <div className="text-[10px] text-muted mt-0.5">{r.location} · {r.rating && <><Star className="w-2.5 h-2.5 inline fill-accent text-accent -mt-0.5" /> {r.rating}</>}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )
+        })()}
 
         {/* Prev/Next footer */}
         <div className="flex items-center justify-between pt-4 border-t border-border/40">
