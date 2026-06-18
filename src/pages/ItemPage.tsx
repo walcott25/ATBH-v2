@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { ATTRACTIONS, DINING, STAY, EVENTS, EXPERIENCES, BUSINESS, SCHOOLS } from '../data'
-import { Star, MapPin, Phone, Mail, ExternalLink, ArrowLeft, Navigation, BookOpen, GraduationCap, Clock, Compass, Calendar, Eye } from 'lucide-react'
+import { Star, MapPin, Phone, Mail, ExternalLink, ArrowLeft, BookOpen, GraduationCap, Clock, Compass, Calendar, Eye } from 'lucide-react'
 import type { Attraction, Dining, Stay, Event, Experience, Business, School } from '../data'
 import VirtualTour from '../components/ui/virtual-tour'
 import StructuredData from '../components/seo/structured-data'
@@ -29,6 +30,11 @@ const LABELS: Record<string, { back: string; section: string }> = {
 export default function ItemPage() {
   const { type, id } = useParams<{ type: string; id: string }>()
   const [tourOpen, setTourOpen] = useState(false)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const scaleIn = useTransform(scrollYProgress, [0, 1], [1, 1.1])
+
   if (!type || !id || !DATA[type]) return <NotFound />
 
   const items = DATA[type]
@@ -82,8 +88,16 @@ export default function ItemPage() {
       </div>
 
       {/* Hero */}
-      <div className={`relative overflow-hidden bg-surface ${type === 'business' ? 'h-dvh min-h-[500px]' : 'h-[45vh] min-h-[320px]'}`}>
-        <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
+      <div ref={heroRef} className={`relative overflow-hidden bg-surface ${type === 'business' ? 'h-dvh min-h-[500px]' : 'h-[45vh] min-h-[320px]'}`}>
+        {type === 'business' ? (
+          <motion.img
+            src={item.image} alt={item.name}
+            className="absolute inset-0 w-full h-full object-cover will-change-transform"
+            style={{ y: parallaxY, scale: scaleIn }}
+          />
+        ) : (
+          <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
+        )}
         {type !== 'business' && <div className={`absolute inset-0 ${(type === 'events' || type === 'schools') ? 'bg-gradient-to-t from-black/80 via-black/40 to-transparent' : 'bg-gradient-to-t from-bg via-bg/30 to-transparent'}`} />}
         <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -104,7 +118,7 @@ export default function ItemPage() {
               </span>
             )}
           </div>
-          <h1 className="text-2xl md:text-4xl font-medium text-white tracking-tight">{item.name}</h1>
+          <h1 className="text-2xl md:text-4xl font-medium text-white tracking-tight drop-shadow-lg">{item.name}</h1>
           {'location' in item && item.location && (
             <div className="flex items-center gap-1.5 mt-2 text-xs text-white/70">
               <MapPin className="w-3.5 h-3.5" />{item.location}
