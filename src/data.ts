@@ -694,7 +694,7 @@ export const STAY: Stay[] = [
     id: 'odo-so-royal',
     name: 'Odo So Royal Hotel',
     description: 'Comfortable mid-range choice on the Akosombo Road.',
-    image: '/Images/odo.jpg',
+    image: '/Images/odo-so.jpg',
     category: 'Mid-Range',
     coordinates: [6.2800, 0.0700],
     rating: 4.2,
