@@ -88,7 +88,7 @@ export default function ItemPage() {
       </div>
 
       {/* Hero */}
-      <div ref={heroRef} className={`relative overflow-hidden bg-surface ${type === 'business' ? 'h-dvh min-h-[500px]' : 'h-[45vh] min-h-[320px]'}`}>
+      <div ref={heroRef} className={`relative overflow-hidden bg-surface ${type === 'business' ? 'h-[55vh] min-h-[380px]' : 'h-[45vh] min-h-[320px]'}`}>
         {type === 'business' ? (
           <motion.img
             src={item.image} alt={item.name}
