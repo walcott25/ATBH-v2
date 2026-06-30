@@ -7,8 +7,10 @@ interface FakeAuthUser {
 interface FakeAuthContextType {
   user: FakeAuthUser | null
   isLoggedIn: boolean
+  showWelcome: boolean
   signIn: (email: string) => void
   signOut: () => void
+  dismissWelcome: () => void
 }
 
 const FakeAuthContext = createContext<FakeAuthContextType | null>(null)
@@ -33,11 +35,13 @@ function saveUser(user: FakeAuthUser | null) {
 
 export function FakeAuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<FakeAuthUser | null>(loadUser)
+  const [showWelcome, setShowWelcome] = useState(false)
 
   const signIn = useCallback((email: string) => {
     const u = { email }
     setUser(u)
     saveUser(u)
+    setShowWelcome(true)
   }, [])
 
   const signOut = useCallback(() => {
@@ -45,8 +49,12 @@ export function FakeAuthProvider({ children }: { children: ReactNode }) {
     saveUser(null)
   }, [])
 
+  const dismissWelcome = useCallback(() => {
+    setShowWelcome(false)
+  }, [])
+
   return (
-    <FakeAuthContext.Provider value={{ user, isLoggedIn: !!user, signIn, signOut }}>
+    <FakeAuthContext.Provider value={{ user, isLoggedIn: !!user, showWelcome, signIn, signOut, dismissWelcome }}>
       {children}
     </FakeAuthContext.Provider>
   )

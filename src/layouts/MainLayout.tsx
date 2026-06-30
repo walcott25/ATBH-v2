@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { LogIn } from 'lucide-react';
 import WeatherWidget from '../components/ui/weather-widget';
-import PushNotificationToggle from '../components/ui/push-notification-toggle';
+
 import SiteNotificationBanner from '../components/ui/site-notification-banner';
 import { useFakeAuth } from '../context/FakeAuthContext';
 import FakeSignIn from '../components/auth/FakeSignIn';
@@ -153,7 +153,7 @@ export default function MainLayout() {
                 </button>
               )}
               <div className="ml-2 hidden md:block"><WeatherWidget /></div>
-              <div className="ml-1 hidden md:block"><PushNotificationToggle /></div>
+
             </nav>
 
             <button
