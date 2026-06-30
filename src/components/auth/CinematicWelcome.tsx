@@ -10,9 +10,9 @@ export default function CinematicWelcome({ email, onComplete }: CinematicWelcome
   const [phase, setPhase] = useState<'welcome' | 'explore' | 'done'>('welcome')
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('explore'), 2600)
-    const t2 = setTimeout(() => setPhase('done'), 5200)
-    const t3 = setTimeout(onComplete, 6000)
+    const t1 = setTimeout(() => setPhase('explore'), 4000)
+    const t2 = setTimeout(() => setPhase('done'), 8000)
+    const t3 = setTimeout(onComplete, 8500)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [onComplete])
 
