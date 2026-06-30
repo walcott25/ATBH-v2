@@ -146,7 +146,7 @@ export const ATTRACTIONS: Attraction[] = [
     id: 'gyakiti-beach',
     name: 'Gyakiti Lakeside Beach',
     description: 'A quiet sandy stretch along Lake Volta perfect for swimming, sunbathing, and picnicking. The calm waters make it ideal for families and casual relaxation away from busier spots.',
-    image: '/Images/sajuna.jpg',
+    image: '/Images/gyakiti-beach.jpg',
     category: 'Nature',
     coordinates: [6.3200, 0.1200],
     rating: 4.5
