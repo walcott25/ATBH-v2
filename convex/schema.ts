@@ -45,6 +45,19 @@ export default defineSchema({
     updatedAt: v.number(),
   }).index('by_session', ['sessionId']),
 
+  featureFlags: defineTable({
+    chatbot: v.boolean(),
+    whatsapp: v.boolean(),
+    notifications: v.boolean(),
+    donate: v.boolean(),
+    gallery: v.boolean(),
+    blog: v.boolean(),
+    events: v.boolean(),
+    experience: v.boolean(),
+    tripPlanner: v.boolean(),
+    map: v.boolean(),
+  }),
+
   notifications: defineTable({
     title: v.string(),
     message: v.string(),

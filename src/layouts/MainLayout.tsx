@@ -8,6 +8,7 @@ import SiteNotificationBanner from '../components/ui/site-notification-banner';
 import { useFakeAuth } from '../context/FakeAuthContext';
 import FakeSignIn from '../components/auth/FakeSignIn';
 import UserBadge from '../components/auth/UserBadge';
+import { useFeatureFlags } from '../hooks/useFeatureFlags';
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -33,6 +34,36 @@ export default function MainLayout() {
   const [moreOpen, setMoreOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
   const { isLoggedIn, user, signOut } = useFakeAuth();
+  const flags = useFeatureFlags();
+
+  const pathToFlag: Record<string, string | null> = {
+    '/attractions': null,
+    '/dining': null,
+    '/stay': null,
+    '/events': 'events',
+    '/gallery': 'gallery',
+    '/map': 'map',
+    '/experience': 'experience',
+    '/blog': 'blog',
+    '/business': null,
+    '/schools': null,
+    '/trip-planner': 'tripPlanner',
+    '/donate': 'donate',
+  }
+
+  const visibleNavItems = navItems.filter(item => {
+    if (item.children) {
+      const visible = item.children.some(c => {
+        const flag = pathToFlag[c.path]
+        return !flag || (flags as any)[flag]
+      })
+      return visible
+    }
+    const flag = pathToFlag[item.path!]
+    return !flag || (flags as any)[flag]
+  })
+
+  const donateEnabled = !flags.isLoading && (flags as any).donate
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -74,7 +105,7 @@ export default function MainLayout() {
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => {
+              {visibleNavItems.map((item) => {
                 if (item.children) {
                   const hasActiveChild = item.children.some(c => isActive(c.path));
                   return (
@@ -135,16 +166,18 @@ export default function MainLayout() {
                   </Link>
                 );
               })}
-              <Link
-                to="/donate"
-                className={`ml-2 px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
-                  scrolled
-                    ? 'bg-accent text-accent-fg hover:bg-accent/90 shadow-sm shadow-accent/20'
-                    : 'bg-accent/90 text-accent-fg hover:bg-accent backdrop-blur-sm'
-                }`}
-              >
-                Donate
-              </Link>
+              {donateEnabled && (
+                <Link
+                  to="/donate"
+                  className={`ml-2 px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
+                    scrolled
+                      ? 'bg-accent text-accent-fg hover:bg-accent/90 shadow-sm shadow-accent/20'
+                      : 'bg-accent/90 text-accent-fg hover:bg-accent backdrop-blur-sm'
+                  }`}
+                >
+                  Donate
+                </Link>
+              )}
               {isLoggedIn ? (
                 <div className="ml-2"><UserBadge /></div>
               ) : (
@@ -194,7 +227,7 @@ export default function MainLayout() {
               className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-border overflow-hidden"
             >
               <div className="px-6 py-4 space-y-1">
-                {navItems.map((item) => {
+                {visibleNavItems.map((item) => {
                   if (item.children) {
                     return item.children.map((child) => (
                       <motion.div key={child.path} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
@@ -213,7 +246,7 @@ export default function MainLayout() {
                   );
                 })}
                 <div className="pt-2 border-t border-border mt-2 space-y-1">
-                  <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>
+                  {donateEnabled && <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>}
                   {isLoggedIn ? (
                     <div className="py-2 space-y-2">
                       <div className="text-xs text-muted">Signed in as {user?.email}</div>

@@ -1,10 +1,14 @@
 import { motion } from 'motion/react'
 import { MessageCircle } from 'lucide-react'
+import { useFeatureFlags } from '../../hooks/useFeatureFlags'
 
 const PHONE_NUMBER = '233593770853'
 const MESSAGE = 'Hello! I would like to know more about Asuogyaman tourism.'
 
 export default function WhatsAppButton() {
+  const { isLoading: _wl, ...flags } = useFeatureFlags()
+  if (!flags.whatsapp) return null
+
   const href = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(MESSAGE)}`
 
   return (

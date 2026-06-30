@@ -9,10 +9,11 @@ import {
   DollarSign, Users, Eye, TrendingUp, TrendingDown, RefreshCw,
   Loader2, UserPlus, Building2, Activity, Clock, ArrowRight,
   Calendar, Target, Wallet, Shield, LayoutDashboard, ChevronRight,
-  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus,
+  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus, Eye,
 } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
+import { useFeatureFlags } from '../hooks/useFeatureFlags'
 
 const CURRENCY = 'GH₵';
 
@@ -128,6 +129,10 @@ export default function Admin() {
   const publishNotification = useMutation(api.notifications.publish)
   const deactivateNotification = useMutation(api.notifications.deactivate)
   const deleteNotification = useMutation(api.notifications.remove)
+
+  const flags = useFeatureFlags()
+  const updateFeatureFlag = useMutation(api.featureFlags.update)
+  const [togglingFlag, setTogglingFlag] = useState<string | null>(null)
 
   const [authenticated, setAuthenticated] = useState(() => {
     try { return sessionStorage.getItem('atbh_admin_auth') === '1' } catch { return false }
@@ -887,6 +892,65 @@ export default function Admin() {
                   <p className="text-xs text-muted/50">No notifications sent yet</p>
                 </div>
               )}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Feature Flags */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-surface border border-border rounded-sm p-5 mt-8 hover:border-accent/15 transition-colors duration-300"
+        >
+          <div className="flex items-center gap-2.5 mb-6">
+            <Eye className="w-4 h-4 text-accent" />
+            <h2 className="text-sm font-semibold text-fg">Feature Flags</h2>
+            <span className="text-[10px] text-muted/50">Toggle features on/off site-wide</span>
+          </div>
+
+          {flags.isLoading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <Skeleton key={i} className="h-16 rounded-sm" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+              {(Object.keys(flags) as Array<keyof typeof flags>)
+                .filter(k => k !== 'isLoading')
+                .map(flag => (
+                  <div
+                    key={flag}
+                    className="bg-bg/40 border border-border/60 rounded-sm p-3.5 hover:border-accent/20 transition-all"
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] text-muted font-medium uppercase tracking-wider">
+                        {flag.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}
+                      </span>
+                      <span className={`text-[10px] font-medium ${flags[flag] ? 'text-emerald-500' : 'text-red-400'}`}>
+                        {flags[flag] ? 'ON' : 'OFF'}
+                      </span>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        setTogglingFlag(flag)
+                        try {
+                          await updateFeatureFlag({ [flag]: !flags[flag] })
+                        } catch {}
+                        setTogglingFlag(null)
+                      }}
+                      disabled={togglingFlag === flag}
+                      className={`relative w-9 h-5 rounded-full transition-colors ${flags[flag] ? 'bg-accent' : 'bg-border'} ${togglingFlag === flag ? 'opacity-50 pointer-events-none' : ''}`}
+                    >
+                      {togglingFlag === flag ? (
+                        <Loader2 className="w-3 h-3 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" />
+                      ) : (
+                        <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${flags[flag] ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
+                      )}
+                    </button>
+                  </div>
+                ))}
             </div>
           )}
         </motion.div>

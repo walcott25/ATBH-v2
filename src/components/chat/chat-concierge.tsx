@@ -3,6 +3,7 @@ import { MessageSquare, X, Send, Sparkles, Bot, User, ChevronDown } from 'lucide
 import { useApp } from '../../context/AppContext';
 import { useState, useRef, KeyboardEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useFeatureFlags } from '../../hooks/useFeatureFlags';
 
 const quickReplies = [
   'What attractions are there?',
@@ -92,6 +93,9 @@ function ChatMessage({ msg }: { msg: { role: string; text: string } }) {
 }
 
 export default function ChatConcierge() {
+  const { isLoading: _flagsLoading, ...featureFlags } = useFeatureFlags()
+  if (!featureFlags.chatbot) return null
+
   const {
     isChatOpen, setIsChatOpen,
     messages, chatInput, setChatInput, handleSendMessage, isTyping, chatEndRef,

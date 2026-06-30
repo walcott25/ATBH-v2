@@ -3,6 +3,7 @@ import { useQuery } from 'convex/react'
 import { motion, AnimatePresence } from 'motion/react'
 import { api } from '../../../convex/_generated/api'
 import { X, ArrowRight, AlertTriangle, Info, CheckCircle, AlertOctagon } from 'lucide-react'
+import { useFeatureFlags } from '../../hooks/useFeatureFlags'
 
 const typeConfig = {
   info: {
@@ -42,6 +43,9 @@ const typeConfig = {
 const DISMISSED_KEY = 'atbh_notification_dismissed'
 
 export default function SiteNotificationBanner() {
+  const { isLoading: _nl, ...notifFlags } = useFeatureFlags()
+  if (!notifFlags.notifications) return null
+
   const notification = useQuery(api.notifications.getActive)
   const [dismissed, setDismissed] = useState(() => {
     try { return sessionStorage.getItem(DISMISSED_KEY) === '1' } catch { return false }
