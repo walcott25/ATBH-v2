@@ -5,10 +5,11 @@ import { useFakeAuth } from '../../context/FakeAuthContext'
 
 interface FakeSignInProps {
   open: boolean
-  onClose: () => void
+  onClose?: () => void
+  required?: boolean
 }
 
-export default function FakeSignIn({ open, onClose }: FakeSignInProps) {
+export default function FakeSignIn({ open, onClose, required }: FakeSignInProps) {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const { signIn } = useFakeAuth()
@@ -23,7 +24,7 @@ export default function FakeSignIn({ open, onClose }: FakeSignInProps) {
     }
     signIn(trimmed)
     setEmail('')
-    onClose()
+    onClose?.()
   }
 
   return (
@@ -36,7 +37,7 @@ export default function FakeSignIn({ open, onClose }: FakeSignInProps) {
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4"
         >
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={required ? undefined : onClose} />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -44,16 +45,18 @@ export default function FakeSignIn({ open, onClose }: FakeSignInProps) {
             transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-8"
           >
-            <button onClick={onClose} className="absolute top-4 right-4 text-muted hover:text-fg transition-colors">
-              <X className="w-4 h-4" />
-            </button>
+            {!required && onClose && (
+              <button onClick={onClose} className="absolute top-4 right-4 text-muted hover:text-fg transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            )}
 
             <div className="flex flex-col items-center text-center mb-6">
               <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4">
                 <Mail className="w-5 h-5 text-accent" />
               </div>
-              <h2 className="text-lg font-semibold text-fg">Sign in</h2>
-              <p className="text-xs text-muted mt-1 max-w-[220px]">Enter your email to continue. No password needed.</p>
+              <h2 className="text-lg font-semibold text-fg">Welcome</h2>
+              <p className="text-xs text-muted mt-1 max-w-[220px]">{required ? 'Enter your email to explore Asuogyaman.' : 'Enter your email to continue. No password needed.'}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
