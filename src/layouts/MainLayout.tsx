@@ -5,6 +5,7 @@ import { LogIn } from 'lucide-react';
 import WeatherWidget from '../components/ui/weather-widget';
 
 import SiteNotificationBanner from '../components/ui/site-notification-banner';
+import MaintenanceMode from '../components/ui/maintenance-mode';
 import { useFakeAuth } from '../context/FakeAuthContext';
 import FakeSignIn from '../components/auth/FakeSignIn';
 import UserBadge from '../components/auth/UserBadge';
@@ -74,6 +75,11 @@ export default function MainLayout() {
   useEffect(() => { setMoreOpen(false); setMobileOpen(false); }, [location.pathname]);
 
   const isActive = (path: string) => location.pathname === path;
+
+  const inMaintenance = !flags.isLoading && (flags as any).maintenance
+  if (inMaintenance) {
+    return <MaintenanceMode />
+  }
 
   return (
     <div className="min-h-screen bg-bg text-fg">

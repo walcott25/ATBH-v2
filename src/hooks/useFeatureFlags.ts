@@ -7,6 +7,7 @@ export function useFeatureFlags() {
   if (!flags) {
     return {
       isLoading: true,
+      maintenance: false,
       chatbot: true,
       whatsapp: true,
       notifications: true,

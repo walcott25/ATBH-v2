@@ -2,6 +2,7 @@ import { v } from 'convex/values'
 import { query, mutation } from './_generated/server'
 
 const DEFAULTS = {
+  maintenance: false,
   chatbot: true,
   whatsapp: true,
   notifications: true,
@@ -23,6 +24,7 @@ export const getAll = query({
 
 export const update = mutation({
   args: {
+    maintenance: v.optional(v.boolean()),
     chatbot: v.optional(v.boolean()),
     whatsapp: v.optional(v.boolean()),
     notifications: v.optional(v.boolean()),

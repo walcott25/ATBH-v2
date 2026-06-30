@@ -9,7 +9,7 @@ import {
   DollarSign, Users, Eye, TrendingUp, TrendingDown, RefreshCw,
   Loader2, UserPlus, Building2, Activity, Clock, ArrowRight,
   Calendar, Target, Wallet, Shield, LayoutDashboard, ChevronRight,
-  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus, Eye,
+  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus, Eye, Construction,
 } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
@@ -911,47 +911,88 @@ export default function Admin() {
 
           {flags.isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-              {Array.from({ length: 10 }).map((_, i) => (
+              {Array.from({ length: 11 }).map((_, i) => (
                 <Skeleton key={i} className="h-16 rounded-sm" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-              {(Object.keys(flags) as Array<keyof typeof flags>)
-                .filter(k => k !== 'isLoading')
-                .map(flag => (
-                  <div
-                    key={flag}
-                    className="bg-bg/40 border border-border/60 rounded-sm p-3.5 hover:border-accent/20 transition-all"
-                  >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] text-muted font-medium uppercase tracking-wider">
-                        {flag.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}
-                      </span>
-                      <span className={`text-[10px] font-medium ${flags[flag] ? 'text-emerald-500' : 'text-red-400'}`}>
-                        {flags[flag] ? 'ON' : 'OFF'}
-                      </span>
+            <>
+              {/* Master Maintenance Toggle */}
+              <div className={`mb-6 p-4 rounded-sm border-2 transition-all ${flags.maintenance ? 'bg-red-50 border-red-300' : 'bg-bg/40 border-border/60'}`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${flags.maintenance ? 'bg-red-100' : 'bg-accent/10'}`}>
+                      <Construction className={`w-5 h-5 ${flags.maintenance ? 'text-red-600' : 'text-accent'}`} />
                     </div>
-                    <button
-                      onClick={async () => {
-                        setTogglingFlag(flag)
-                        try {
-                          await updateFeatureFlag({ [flag]: !flags[flag] })
-                        } catch {}
-                        setTogglingFlag(null)
-                      }}
-                      disabled={togglingFlag === flag}
-                      className={`relative w-9 h-5 rounded-full transition-colors ${flags[flag] ? 'bg-accent' : 'bg-border'} ${togglingFlag === flag ? 'opacity-50 pointer-events-none' : ''}`}
-                    >
-                      {togglingFlag === flag ? (
-                        <Loader2 className="w-3 h-3 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" />
-                      ) : (
-                        <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${flags[flag] ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
-                      )}
-                    </button>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-fg">Maintenance Mode</span>
+                        {flags.maintenance && (
+                          <span className="text-[10px] font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded-full">ACTIVE</span>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-muted mt-0.5">
+                        {flags.maintenance
+                          ? 'All pages are hidden from users. The site shows a maintenance notice.'
+                          : 'Toggle ON to hide all pages and show a maintenance notice to users.'}
+                      </p>
+                    </div>
                   </div>
-                ))}
-            </div>
+                  <button
+                    onClick={async () => {
+                      setTogglingFlag('maintenance')
+                      try { await updateFeatureFlag({ maintenance: !flags.maintenance }) } catch {}
+                      setTogglingFlag(null)
+                    }}
+                    disabled={togglingFlag === 'maintenance'}
+                    className={`relative w-12 h-6 rounded-full transition-all ${flags.maintenance ? 'bg-red-500' : 'bg-border'} ${togglingFlag === 'maintenance' ? 'opacity-50 pointer-events-none' : ''}`}
+                  >
+                    {togglingFlag === 'maintenance' ? (
+                      <Loader2 className="w-4 h-4 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" />
+                    ) : (
+                      <span className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-transform ${flags.maintenance ? 'translate-x-[22px]' : 'translate-x-0.5'}`} />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Individual toggles */}
+              <p className="text-[10px] text-muted uppercase tracking-wider font-medium mb-3">Individual Features</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                {(Object.keys(flags) as Array<keyof typeof flags>)
+                  .filter(k => k !== 'isLoading' && k !== 'maintenance')
+                  .map(flag => (
+                    <div
+                      key={flag}
+                      className={`bg-bg/40 border border-border/60 rounded-sm p-3.5 hover:border-accent/20 transition-all ${flags.maintenance ? 'opacity-40 pointer-events-none' : ''}`}
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-[10px] text-muted font-medium uppercase tracking-wider">
+                          {flag.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}
+                        </span>
+                        <span className={`text-[10px] font-medium ${flags[flag] ? 'text-emerald-500' : 'text-red-400'}`}>
+                          {flags[flag] ? 'ON' : 'OFF'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={async () => {
+                          setTogglingFlag(flag)
+                          try { await updateFeatureFlag({ [flag]: !flags[flag] }) } catch {}
+                          setTogglingFlag(null)
+                        }}
+                        disabled={togglingFlag === flag || flags.maintenance}
+                        className={`relative w-9 h-5 rounded-full transition-colors ${flags[flag] ? 'bg-accent' : 'bg-border'} ${togglingFlag === flag ? 'opacity-50 pointer-events-none' : ''}`}
+                      >
+                        {togglingFlag === flag ? (
+                          <Loader2 className="w-3 h-3 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" />
+                        ) : (
+                          <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${flags[flag] ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
+                        )}
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </>
           )}
         </motion.div>
       </div>

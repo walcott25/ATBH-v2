@@ -46,6 +46,7 @@ export default defineSchema({
   }).index('by_session', ['sessionId']),
 
   featureFlags: defineTable({
+    maintenance: v.boolean(),
     chatbot: v.boolean(),
     whatsapp: v.boolean(),
     notifications: v.boolean(),
