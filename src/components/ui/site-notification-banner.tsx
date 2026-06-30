@@ -44,8 +44,6 @@ const DISMISSED_KEY = 'atbh_notification_dismissed'
 
 export default function SiteNotificationBanner() {
   const { isLoading: _nl, ...notifFlags } = useFeatureFlags()
-  if (!notifFlags.notifications) return null
-
   const notification = useQuery(api.notifications.getActive)
   const [dismissed, setDismissed] = useState(() => {
     try { return sessionStorage.getItem(DISMISSED_KEY) === '1' } catch { return false }
@@ -59,6 +57,8 @@ export default function SiteNotificationBanner() {
     }
     setVisible(false)
   }, [notification, dismissed])
+
+  if (!notifFlags.notifications) return null
 
   if (!notification) return null
 

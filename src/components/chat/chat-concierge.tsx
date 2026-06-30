@@ -94,8 +94,6 @@ function ChatMessage({ msg }: { msg: { role: string; text: string } }) {
 
 export default function ChatConcierge() {
   const { isLoading: _flagsLoading, ...featureFlags } = useFeatureFlags()
-  if (!featureFlags.chatbot) return null
-
   const {
     isChatOpen, setIsChatOpen,
     messages, chatInput, setChatInput, handleSendMessage, isTyping, chatEndRef,
@@ -103,6 +101,8 @@ export default function ChatConcierge() {
   const [showBanner, setShowBanner] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  if (!featureFlags.chatbot) return null
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
