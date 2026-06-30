@@ -82,8 +82,7 @@ export default function SiteNotificationBanner() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={handleDismiss}
+            className="absolute inset-0 bg-black/40 backdrop-blur-md"
           />
 
           <motion.div
@@ -91,7 +90,7 @@ export default function SiteNotificationBanner() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 20 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320, mass: 0.8 }}
-            className="relative w-full max-w-md"
+            className="relative w-full max-w-lg"
           >
             <div
               className={`relative rounded-2xl bg-white border shadow-2xl overflow-hidden ${config.border}`}
@@ -135,6 +134,15 @@ export default function SiteNotificationBanner() {
                         <ArrowRight className="w-3.5 h-3.5" />
                       </a>
                     )}
+
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <button
+                        onClick={handleDismiss}
+                        className="w-full py-2 rounded-lg text-xs font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 transition-all"
+                      >
+                        Dismiss
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
