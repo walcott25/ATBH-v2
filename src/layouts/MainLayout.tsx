@@ -32,7 +32,7 @@ export default function MainLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
-  const { isLoggedIn, user } = useFakeAuth();
+  const { isLoggedIn, user, signOut } = useFakeAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -215,7 +215,10 @@ export default function MainLayout() {
                 <div className="pt-2 border-t border-border mt-2 space-y-1">
                   <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>
                   {isLoggedIn ? (
-                    <div className="py-2 text-xs text-muted">Signed in as {user?.email}</div>
+                    <div className="py-2 space-y-2">
+                      <div className="text-xs text-muted">Signed in as {user?.email}</div>
+                      <button onClick={() => { signOut(); setMobileOpen(false) }} className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors">Sign out</button>
+                    </div>
                   ) : (
                     <button onClick={() => { setSignInOpen(true); setMobileOpen(false) }} className="block py-2.5 text-sm text-muted hover:text-fg w-full text-left">Sign In</button>
                   )}
