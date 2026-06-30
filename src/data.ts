@@ -981,7 +981,7 @@ export const EVENTS: Event[] = [
     id: 'green-ghana',
     name: 'Green Ghana Day',
     description: 'A national tree-planting campaign aimed at restoring forest cover, combating climate change, and creating a greener environment for future generations.',
-    image: '/Images/cleanup.jpg',
+    image: '/Images/green-ghana-planting.jpg',
     category: 'National',
     coordinates: [6.2400, 0.0900],
     rating: 4.6,
