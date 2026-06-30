@@ -1,6 +1,8 @@
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 
+const SYSTEM_KEYS = ['_id', '_creationTime']
+
 export function useFeatureFlags() {
   const flags = useQuery(api.featureFlags.getAll)
 
@@ -21,5 +23,9 @@ export function useFeatureFlags() {
     }
   }
 
-  return { isLoading: false, ...flags }
+  const clean = Object.fromEntries(
+    Object.entries(flags).filter(([k]) => !SYSTEM_KEYS.includes(k))
+  )
+
+  return { isLoading: false, ...clean } as typeof flags & { isLoading: boolean }
 }
