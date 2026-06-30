@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ATTRACTIONS, DINING, STAY, REVIEWS, EXPERIENCES, EVENTS } from '../data';
-import { Star, MapPin, ArrowRight, Compass, Sun, Car, Sparkles, Droplets, Landmark, TreePine, Tent } from 'lucide-react';
+import { Star, MapPin, ArrowRight, Compass, Sun, Car, Sparkles, Droplets, Landmark, TreePine, Tent, LogIn } from 'lucide-react';
 import AnimatedSection from '../components/animations/animated-section';
 import GlassCard from '../components/ui/glass-card';
 import AppSection from '../components/ui/app-section';
@@ -11,6 +11,8 @@ import { FloatingOrbs } from '../components/ui/floating-orbs';
 import StorytellingChapters from '../components/ui/storytelling-chapters';
 import HorizonTimeline from '../components/ui/horizon-timeline';
 import MagneticButton from '../components/ui/magnetic-button';
+import { useFakeAuth } from '../context/FakeAuthContext';
+import FakeSignIn from '../components/auth/FakeSignIn';
 
 const easeOut = [0.25, 0.1, 0.25, 1] as const;
 
@@ -183,6 +185,8 @@ function EventCard({ item }: { item: any }) {
 
 export default function Home() {
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [signInOpen, setSignInOpen] = useState(false);
+  const { isLoggedIn } = useFakeAuth();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroImgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
@@ -191,6 +195,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      <FakeSignIn open={signInOpen} onClose={() => setSignInOpen(false)} />
       {/* Hero */}
       <section ref={heroRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
@@ -280,6 +285,17 @@ export default function Home() {
                 View Map
               </Link>
             </MagneticButton>
+            {!isLoggedIn && (
+              <MagneticButton>
+                <button
+                  onClick={() => setSignInOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-xl text-white/80 border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-sm"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Sign In — Get Started
+                </button>
+              </MagneticButton>
+            )}
           </motion.div>
         </motion.div>
 

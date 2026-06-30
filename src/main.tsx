@@ -4,6 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import App from './App.tsx';
 import ErrorBoundary from './components/error-boundary';
+import {FakeAuthProvider} from './context/FakeAuthContext';
 import './index.css';
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL!);
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <BrowserRouter>
         <ErrorBoundary>
-          <App />
+          <FakeAuthProvider>
+            <App />
+          </FakeAuthProvider>
         </ErrorBoundary>
       </BrowserRouter>
     </HelmetProvider>
