@@ -301,7 +301,7 @@ export default function Admin() {
                 <Shield className="w-6 h-6 text-accent" />
               </div>
               <h1 className="text-lg font-semibold text-fg">Admin Login</h1>
-              <p className="text-xs text-muted mt-1">Asuogyaman Tourism Hub</p>
+              <p className="text-xs text-muted mt-1">Asuogyaman Tourism, Business and Investment</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-4">

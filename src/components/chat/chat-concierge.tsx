@@ -174,7 +174,7 @@ export default function ChatConcierge() {
                     <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-brand-dark rounded-full" />
                   </div>
                   <div>
-                    <h3 className="text-white text-sm font-semibold tracking-tight">ATBH Concierge</h3>
+                    <h3 className="text-white text-sm font-semibold tracking-tight">ATBI Concierge</h3>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       <span className="text-[10px] text-white/40 font-medium">Online</span>

@@ -40,7 +40,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'ai', text: '👋 Hey there! I\'m the ATBH Concierge — your friendly AI guide. Chat with me about anything at all! Ask about Asuogyaman attractions, dining, stay, how to donate and support the community, or just have a conversation. I\'m here for you!' }
+    { role: 'ai', text: '👋 Hey there! I\'m the ATBI Concierge — your friendly AI guide. Chat with me about anything at all! Ask about Asuogyaman attractions, dining, stay, how to donate and support the community, or just have a conversation. I\'m here for you!' }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);

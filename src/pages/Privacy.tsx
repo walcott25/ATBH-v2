@@ -49,7 +49,7 @@ const sections = [
   },
   {
     heading: 'Contact and Complaints',
-    body: 'For privacy-related inquiries or to file a complaint, contact our Data Protection Officer at dpo@asuogyamantourismhub.com or write to ATBH, Akosombo, Eastern Region, Ghana. You also have the right to lodge a complaint with your local data protection authority.'
+    body: 'For privacy-related inquiries or to file a complaint, contact our Data Protection Officer at dpo@asuogyamantourismhub.com or write to ATBI, Akosombo, Eastern Region, Ghana. You also have the right to lodge a complaint with your local data protection authority.'
   }
 ]
 
@@ -93,7 +93,7 @@ export default function Privacy() {
         <div className="max-w-3xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2, ease: easeOut }}>
             <p className="text-sm text-muted leading-relaxed mb-12 p-5 rounded-xl bg-surface border border-border">
-              This Privacy Policy explains how Asuogyaman Tourism Hub collects, uses, and protects your personal data.
+              This Privacy Policy explains how Asuogyaman Tourism, Business and Investment collects, uses, and protects your personal data.
             </p>
           </motion.div>
 
@@ -122,7 +122,7 @@ export default function Privacy() {
             <p className="text-xs text-muted leading-relaxed">
               For privacy-related inquiries, contact our Data Protection Officer at{' '}
               <a href="mailto:dpo@asuogyamantourismhub.com" className="text-accent hover:text-accent/80 transition-colors">dpo@asuogyamantourismhub.com</a>
-              {' '}or write to ATBH, Akosombo, Eastern Region, Ghana.
+              {' '}or write to ATBI, Akosombo, Eastern Region, Ghana.
             </p>
           </motion.div>
         </div>

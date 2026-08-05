@@ -44,7 +44,7 @@ registerRoute(/^https?:\/\/.*/i, new NetworkFirst({
 }))
 
 self.addEventListener('push', (event) => {
-  const data = event.data?.json() ?? { title: 'ATBH', body: 'New update from Asuogyaman Tourism Hub' }
+  const data = event.data?.json() ?? { title: 'ATBI', body: 'New update from Asuogyaman Tourism, Business and Investment' }
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,

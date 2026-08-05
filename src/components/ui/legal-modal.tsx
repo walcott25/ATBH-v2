@@ -8,7 +8,7 @@ const content = {
     sections: [
       {
         heading: 'Acceptance of Terms',
-        body: 'By accessing or using the Asuogyaman Tourism Hub (ATBH) website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services. We reserve the right to update these terms at any time; continued use constitutes acceptance of changes.'
+        body: 'By accessing or using the Asuogyaman Tourism, Business and Investment (ATBI) website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services. We reserve the right to update these terms at any time; continued use constitutes acceptance of changes.'
       },
       {
         heading: 'Use of Services',
@@ -20,7 +20,7 @@ const content = {
       },
       {
         heading: 'Intellectual Property',
-        body: 'All content on this platform — including text, images, logos, graphics, and software — is the property of ATBH or its licensors and is protected by applicable copyright, trademark, and intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit permission.'
+        body: 'All content on this platform — including text, images, logos, graphics, and software — is the property of ATBI or its licensors and is protected by applicable copyright, trademark, and intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit permission.'
       },
       {
         heading: 'Third-Party Services',
@@ -28,11 +28,11 @@ const content = {
       },
       {
         heading: 'Limitation of Liability',
-        body: 'ATBH provides its services on an "as is" and "as available" basis. To the fullest extent permitted by law, we disclaim all warranties, express or implied. We shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.'
+        body: 'ATBI provides its services on an "as is" and "as available" basis. To the fullest extent permitted by law, we disclaim all warranties, express or implied. We shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.'
       },
       {
         heading: 'Indemnification',
-        body: 'You agree to indemnify and hold harmless ATBH, its affiliates, officers, and employees from any claims, damages, or expenses arising from your violation of these Terms or your misuse of our services.'
+        body: 'You agree to indemnify and hold harmless ATBI, its affiliates, officers, and employees from any claims, damages, or expenses arising from your violation of these Terms or your misuse of our services.'
       },
       {
         heading: 'Termination',
@@ -44,7 +44,7 @@ const content = {
       },
       {
         heading: 'Contact',
-        body: 'For questions about these Terms, please contact us at legal@asuoagyamantourismhub.com or write to ATBH, Akosombo, Eastern Region, Ghana.'
+        body: 'For questions about these Terms, please contact us at legal@asuoagyamantourismhub.com or write to ATBI, Akosombo, Eastern Region, Ghana.'
       }
     ]
   },
@@ -98,7 +98,7 @@ const content = {
       },
       {
         heading: 'Contact and Complaints',
-        body: 'For privacy-related inquiries or to file a complaint, contact our Data Protection Officer at dpo@asuoagyamantourismhub.com or write to ATBH, Akosombo, Eastern Region, Ghana. You also have the right to lodge a complaint with your local data protection authority.'
+        body: 'For privacy-related inquiries or to file a complaint, contact our Data Protection Officer at dpo@asuoagyamantourismhub.com or write to ATBI, Akosombo, Eastern Region, Ghana. You also have the right to lodge a complaint with your local data protection authority.'
       }
     ]
   }

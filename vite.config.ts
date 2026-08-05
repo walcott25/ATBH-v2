@@ -26,8 +26,8 @@ export default defineConfig(({mode}) => {
           'Images/ghana-events-bg.jpg',
         ],
         manifest: {
-          name: 'Asuogyaman Tourism & Business Hub',
-          short_name: 'ATBH',
+          name: 'Asuogyaman Tourism, Business and Investment',
+          short_name: 'ATBI',
           description: 'Explore the beauty, culture, and adventure of Asuogyaman - your gateway to the Volta Region',
           theme_color: '#1A1A1A',
           background_color: '#FDFBF7',

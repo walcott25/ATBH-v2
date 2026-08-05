@@ -10,7 +10,7 @@ const milestones = [
   { year: '1972', title: 'Adomi Bridge Opens', description: 'Ghana\'s first suspension bridge spans the Volta River at Atimpoku, connecting the Eastern and Volta Regions for the first time.', icon: '03' },
   { year: '2000s', title: 'Tourism Awakens', description: 'Luxury lakeside resorts begin to emerge along the Volta\'s pristine shores, attracting international visitors to the region.', icon: '04' },
   { year: '2010s', title: 'Cultural Renaissance', description: 'The Akwamu Traditional Council revitalises festivals and cultural sites, drawing visitors to experience authentic Ghanaian heritage.', icon: '05' },
-  { year: '2024', title: 'ATBH Launches', description: 'The Asuogyaman Tourism & Business Hub goes live — a digital gateway to the region\'s attractions, dining, stays, and experiences.', icon: '06' },
+  { year: '2024', title: 'ATBI Launches', description: 'The Asuogyaman Tourism, Business and Investment platform goes live — a digital gateway to the region\'s attractions, dining, stays, and experiences.', icon: '06' },
 ]
 
 export default function HorizonTimeline() {

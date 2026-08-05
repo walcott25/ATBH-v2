@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       await webpush.sendNotification(sub, JSON.stringify({
         title: 'Notifications Enabled',
-        body: 'You will now receive updates from Asuogyaman Tourism Hub',
+        body: 'You will now receive updates from Asuogyaman Tourism, Business and Investment',
         url: '/',
       }))
     } catch {}

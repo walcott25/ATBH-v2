@@ -113,7 +113,7 @@ export default function Donate() {
     isPaying.current = true;
     setStatus('processing');
 
-    const reference = `ATBH-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const reference = `ATBI-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
     if (!window.PaystackPop) {
       isPaying.current = false;

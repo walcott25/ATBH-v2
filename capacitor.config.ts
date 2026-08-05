@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.atbh.app',
-  appName: 'ATBH',
+  appId: 'com.atbi.app',
+  appName: 'ATBI',
   webDir: 'dist'
 };
 

@@ -21,7 +21,7 @@ Designed by the British firm Freeman Fox & Partners (who also designed the Humbe
 
 The bridge is located on the main Accra–Akosombo road, approximately 90 minutes from Accra. Regular buses and tro-tros run from major terminals.`,
     image: '/Images/adomi-bridge-hero.jpg',
-    author: 'ATBH Editorial',
+    author: 'ATBI Editorial',
     date: '2026-06-10',
     readTime: '4 min read',
     category: 'Attractions',
@@ -44,7 +44,7 @@ The dry season (November to March) offers the calmest waters and clearest skies.
 
 Sunscreen, a hat, sunglasses, a camera, and light clothing. Most cruises provide life jackets and refreshments.`,
     image: '/Images/Dodi4.jpg',
-    author: 'ATBH Editorial',
+    author: 'ATBI Editorial',
     date: '2026-06-05',
     readTime: '6 min read',
     category: 'Experiences',
@@ -72,7 +72,7 @@ Sunscreen, a hat, sunglasses, a camera, and light clothing. Most cruises provide
 
 Book ahead during peak season (December–January and August). Many resorts offer discounts for midweek stays and group bookings.`,
     image: '/Images/volta-river-landscape.jpg',
-    author: 'ATBH Editorial',
+    author: 'ATBI Editorial',
     date: '2026-05-28',
     readTime: '5 min read',
     category: 'Stay',
@@ -99,7 +99,7 @@ Book ahead during peak season (December–January and August). Many resorts offe
 
 Ask your hotel about guided food tours that take you to local markets, farms, and cooking demonstrations. It is a fantastic way to learn about Ghanaian food culture.`,
     image: '/Images/ghana-dining-bg.jpg',
-    author: 'ATBH Editorial',
+    author: 'ATBI Editorial',
     date: '2026-05-20',
     readTime: '5 min read',
     category: 'Dining',
@@ -126,7 +126,7 @@ Festivals in Asuogyaman are colourful, loud, and welcoming. Visitors are encoura
 
 Check with your hotel or the Asuogyaman District Assembly for exact dates, as many festivals follow the traditional calendar and dates vary from year to year.`,
     image: '/Images/ghana-events-bg.jpg',
-    author: 'ATBH Editorial',
+    author: 'ATBI Editorial',
     date: '2026-05-15',
     readTime: '7 min read',
     category: 'Events',

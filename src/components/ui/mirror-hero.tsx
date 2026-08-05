@@ -44,7 +44,7 @@ export default function MirrorHero({ image, badge, title, description, cta }: Mi
               className="w-full h-full object-contain"
             />
           </div>
-          <span className="text-xs font-semibold text-white/70 tracking-tight">ATBH</span>
+          <span className="text-xs font-semibold text-white/70 tracking-tight">ATBI</span>
         </div>
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-medium tracking-[0.2em] uppercase text-accent border border-accent/20 bg-accent/8">
           <Sparkles className="w-3 h-3" />
@@ -88,7 +88,7 @@ export default function MirrorHero({ image, badge, title, description, cta }: Mi
 
       {/* Bottom-right subtle watermark */}
       <div className="absolute bottom-6 md:bottom-10 right-6 md:right-10 z-20 text-[10px] text-white/10 font-medium tracking-[0.3em] uppercase pointer-events-none">
-        Asuogyaman Tourism Hub
+        Asuogyaman Tourism, Business and Investment
       </div>
 
       {/* Bottom gradient edge */}

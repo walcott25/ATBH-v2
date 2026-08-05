@@ -5,7 +5,7 @@ import { ArrowLeft, FileText } from 'lucide-react'
 const sections = [
   {
     heading: 'Acceptance of Terms',
-    body: 'By accessing or using the Asuogyaman Tourism Hub (ATBH) website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services. We reserve the right to update these terms at any time; continued use constitutes acceptance of changes.'
+    body: 'By accessing or using the Asuogyaman Tourism, Business and Investment (ATBI) website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services. We reserve the right to update these terms at any time; continued use constitutes acceptance of changes.'
   },
   {
     heading: 'Use of Services',
@@ -17,7 +17,7 @@ const sections = [
   },
   {
     heading: 'Intellectual Property',
-    body: 'All content on this platform — including text, images, logos, graphics, and software — is the property of ATBH or its licensors and is protected by applicable copyright, trademark, and intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit permission.'
+    body: 'All content on this platform — including text, images, logos, graphics, and software — is the property of ATBI or its licensors and is protected by applicable copyright, trademark, and intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit permission.'
   },
   {
     heading: 'Third-Party Services',
@@ -25,11 +25,11 @@ const sections = [
   },
   {
     heading: 'Limitation of Liability',
-    body: 'ATBH provides its services on an "as is" and "as available" basis. To the fullest extent permitted by law, we disclaim all warranties, express or implied. We shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.'
+    body: 'ATBI provides its services on an "as is" and "as available" basis. To the fullest extent permitted by law, we disclaim all warranties, express or implied. We shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.'
   },
   {
     heading: 'Indemnification',
-    body: 'You agree to indemnify and hold harmless ATBH, its affiliates, officers, and employees from any claims, damages, or expenses arising from your violation of these Terms or your misuse of our services.'
+    body: 'You agree to indemnify and hold harmless ATBI, its affiliates, officers, and employees from any claims, damages, or expenses arising from your violation of these Terms or your misuse of our services.'
   },
   {
     heading: 'Termination',
@@ -41,7 +41,7 @@ const sections = [
   },
   {
     heading: 'Contact',
-    body: 'For questions about these Terms, please contact us at legal@asuogyamantourismhub.com or write to ATBH, Akosombo, Eastern Region, Ghana.'
+    body: 'For questions about these Terms, please contact us at legal@asuogyamantourismhub.com or write to ATBI, Akosombo, Eastern Region, Ghana.'
   }
 ]
 
@@ -85,7 +85,7 @@ export default function Terms() {
         <div className="max-w-3xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2, ease: easeOut }}>
             <p className="text-sm text-muted leading-relaxed mb-12 p-5 rounded-xl bg-surface border border-border">
-              Please read these Terms and Conditions carefully before using the Asuogyaman Tourism Hub platform.
+              Please read these Terms and Conditions carefully before using the Asuogyaman Tourism, Business and Investment platform.
             </p>
           </motion.div>
 
@@ -114,7 +114,7 @@ export default function Terms() {
             <p className="text-xs text-muted leading-relaxed">
               If you have any questions about these Terms, please contact us at{' '}
               <a href="mailto:legal@asuogyamantourismhub.com" className="text-accent hover:text-accent/80 transition-colors">legal@asuogyamantourismhub.com</a>
-              {' '}or write to ATBH, Akosombo, Eastern Region, Ghana.
+              {' '}or write to ATBI, Akosombo, Eastern Region, Ghana.
             </p>
           </motion.div>
         </div>

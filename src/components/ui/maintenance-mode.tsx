@@ -26,7 +26,7 @@ export default function MaintenanceMode() {
 
         <div className="flex items-center justify-center gap-2 mt-8 text-[10px] text-muted/50">
           <Wrench className="w-3 h-3" />
-          <span>Asuogyaman Tourism Hub</span>
+          <span>Asuogyaman Tourism, Business and Investment</span>
         </div>
       </motion.div>
     </div>

@@ -9,7 +9,7 @@ interface SEOProps {
   jsonLd?: Record<string, unknown>;
 }
 
-const SITE_NAME = 'Asuogyaman Tourism & Business Hub';
+const SITE_NAME = 'Asuogyaman Tourism, Business and Investment';
 const SITE_URL = 'https://atbh.vercel.app';
 const DEFAULT_IMAGE = '/Images/adomi-bridge-hero.jpg';
 const DEFAULT_DESC = 'Explore the beauty, culture, and adventure of Asuogyaman District — your gateway to the Volta Region. Discover attractions, dining, stay, events, and more.';
@@ -18,7 +18,7 @@ const DEFAULT_DESC = 'Explore the beauty, culture, and adventure of Asuogyaman D
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Asuogyaman Tourism & Business Hub',
+  name: 'Asuogyaman Tourism, Business and Investment',
   url: SITE_URL,
   logo: `${SITE_URL}/Images/a-minimalist-app-icon-design-of-a-tourist--vector-.png`,
   description: DEFAULT_DESC,
