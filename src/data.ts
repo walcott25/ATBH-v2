@@ -951,6 +951,22 @@ export const BUSINESS: Business[] = [
     founded: '2005',
     employees: '180+',
     impact: 'Provides essential construction materials for major road and infrastructure projects across the Eastern Region.'
+  },
+  {
+    id: 'asuogyaman-district-assembly',
+    name: 'Asuogyaman District Assembly',
+    description: 'The local government authority for the Asuogyaman District, driving development, public services, and destination promotion across Akosombo, Atimpoku, Senchi, and surrounding communities.',
+    longDescription: 'The Asuogyaman District Assembly is the highest political and administrative authority in the district, responsible for the holistic development of communities along the eastern bank of the Volta River. Beyond core governance functions — development planning, revenue mobilisation, sanitation, and social services — the Assembly is a driving force behind the district\'s tourism and investment agenda. As host of the Asuogyaman Tourism and Investment Festival, it works with partners such as AmCham Ghana and the National Development Planning Commission to connect investment-ready opportunities with national and international investors. From the engineering marvel of the Akosombo Dam to the waterside towns of Atimpoku and Senchi, the Assembly coordinates the infrastructure, enterprise, and destination promotion that make the district one of Ghana\'s most promising tourism frontiers.',
+    image: '/Images/smiling-community-1.jpg',
+    category: 'Services',
+    coordinates: [6.2400, 0.0900],
+    rating: 4.7,
+    phone: '+233 34 209 8787',
+    location: 'Atimpoku',
+    services: ['Local Governance & Administration', 'Development Planning & Control', 'Business Licensing & Permits', 'Sanitation & Environmental Management', 'Tourism & Investment Promotion'],
+    founded: '1988',
+    employees: '250+',
+    impact: 'Governs the Asuogyaman District — home of the Akosombo Dam and the Asuogyaman Tourism and Investment Festival — serving over 100,000 residents across lakeside communities.'
   }
 ];
 

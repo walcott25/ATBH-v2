@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogIn } from 'lucide-react';
 import WeatherWidget from '../components/ui/weather-widget';
 
 import SiteNotificationBanner from '../components/ui/site-notification-banner';
 import MaintenanceMode from '../components/ui/maintenance-mode';
-import { useFakeAuth } from '../context/FakeAuthContext';
-import FakeSignIn from '../components/auth/FakeSignIn';
-import UserBadge from '../components/auth/UserBadge';
 import { useFeatureFlags } from '../hooks/useFeatureFlags';
 
 const navItems = [
@@ -34,8 +30,6 @@ export default function MainLayout() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  const [signInOpen, setSignInOpen] = useState(false);
-  const { isLoggedIn, user, signOut } = useFakeAuth();
   const flags = useFeatureFlags();
 
   const pathToFlag: Record<string, string | null> = {
@@ -84,7 +78,6 @@ export default function MainLayout() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <FakeSignIn open={signInOpen} onClose={() => setSignInOpen(false)} />
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -185,13 +178,6 @@ export default function MainLayout() {
                   Donate
                 </Link>
               )}
-              {isLoggedIn ? (
-                <div className="ml-2"><UserBadge /></div>
-              ) : (
-                <button onClick={() => setSignInOpen(true)} className={`ml-2 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${scrolled ? 'text-muted hover:text-fg hover:bg-accent/5 border border-border' : 'text-white/70 hover:text-white hover:bg-white/15 border border-white/20'}`}>
-                  <LogIn className="w-3.5 h-3.5" /> Sign In
-                </button>
-              )}
               <div className="ml-2 hidden md:block"><WeatherWidget /></div>
 
             </nav>
@@ -254,14 +240,6 @@ export default function MainLayout() {
                 })}
                 <div className="pt-2 border-t border-border mt-2 space-y-1">
                   {donateEnabled && <Link to="/donate" className="block py-2.5 text-sm text-accent font-medium">Donate</Link>}
-                  {isLoggedIn ? (
-                    <div className="py-2 space-y-2">
-                      <div className="text-xs text-muted">Signed in as {user?.email}</div>
-                      <button onClick={() => { signOut(); setMobileOpen(false) }} className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors">Sign out</button>
-                    </div>
-                  ) : (
-                    <button onClick={() => { setSignInOpen(true); setMobileOpen(false) }} className="block py-2.5 text-sm text-muted hover:text-fg w-full text-left">Sign In</button>
-                  )}
                 </div>
               </div>
             </motion.div>

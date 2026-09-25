@@ -4,9 +4,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import { AppProvider } from './context/AppContext';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
-import { useFakeAuth } from './context/FakeAuthContext';
-import FakeSignIn from './components/auth/FakeSignIn';
-import CinematicWelcome from './components/auth/CinematicWelcome';
 
 const Attractions = lazy(() => import('./pages/Attractions'));
 const Dining = lazy(() => import('./pages/Dining'));
@@ -66,19 +63,6 @@ function PageSkeleton() {
 export default function App() {
   const location = useLocation();
   const isMapPage = location.pathname === '/map';
-  const { isLoggedIn, showWelcome, user, dismissWelcome } = useFakeAuth();
-
-  if (!isLoggedIn) {
-    return (
-      <div className="min-h-screen bg-bg flex items-center justify-center">
-        <FakeSignIn open required />
-      </div>
-    )
-  }
-
-  if (showWelcome && user) {
-    return <CinematicWelcome email={user.email} onComplete={dismissWelcome} />
-  }
 
   return (
     <AppProvider>
