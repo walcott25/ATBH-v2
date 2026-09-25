@@ -8,7 +8,7 @@ import {
   DollarSign, Users, Eye, TrendingUp, TrendingDown, RefreshCw,
   Loader2, UserPlus, Building2, Activity, Clock, ArrowRight,
   Calendar, Target, Wallet, Shield, LayoutDashboard, ChevronRight,
-  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus, Eye, Construction,
+  Bell, BellRing, Send, EyeOff, Trash2, Megaphone, Plus, Construction,
 } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
@@ -132,6 +132,29 @@ export default function Admin() {
   const flags = useFeatureFlags()
   const updateFeatureFlag = useMutation(api.featureFlags.update)
   const [togglingFlag, setTogglingFlag] = useState<string | null>(null)
+
+  const [authenticated, setAuthenticated] = useState(() => {
+    try { return sessionStorage.getItem('atbh_admin_auth') === '1' } catch { return false }
+  })
+  const [loginUser, setLoginUser] = useState('')
+  const [loginPass, setLoginPass] = useState('')
+  const [loginError, setLoginError] = useState('')
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginError('')
+    if (loginUser === 'Admin' && loginPass === 'Asuda@1234') {
+      setAuthenticated(true)
+      try { sessionStorage.setItem('atbh_admin_auth', '1') } catch {}
+    } else {
+      setLoginError('Invalid username or password')
+    }
+  }
+
+  const handleLogout = () => {
+    setAuthenticated(false)
+    try { sessionStorage.removeItem('atbh_admin_auth') } catch {}
+  }
 
   const fetchAnalytics = useCallback(async () => {
     try {
@@ -261,6 +284,73 @@ export default function Admin() {
 
   const monthlyPct = num(d?.monthlyGoal) ? Math.min(100, (num(d?.monthlyRaised) / num(d?.monthlyGoal)) * 100) : 0;
 
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-bg flex items-center justify-center px-4">
+        <div className="w-full max-w-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="bg-surface border border-border rounded-sm p-8"
+          >
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-6 h-6 text-accent" />
+              </div>
+              <h1 className="text-lg font-semibold text-fg">Admin Login</h1>
+              <p className="text-xs text-muted mt-1">Asuogyaman Tourism, Business and Investment</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="text-[10px] text-muted font-medium uppercase tracking-wider block mb-1.5">Username</label>
+                <input
+                  value={loginUser}
+                  onChange={e => setLoginUser(e.target.value)}
+                  className="w-full bg-bg/60 border border-border rounded-sm px-3 py-2.5 text-sm text-fg focus:outline-none focus:border-accent/50 transition-colors"
+                  placeholder="Enter username"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="text-[10px] text-muted font-medium uppercase tracking-wider block mb-1.5">Password</label>
+                <input
+                  type="password"
+                  value={loginPass}
+                  onChange={e => setLoginPass(e.target.value)}
+                  className="w-full bg-bg/60 border border-border rounded-sm px-3 py-2.5 text-sm text-fg focus:outline-none focus:border-accent/50 transition-colors"
+                  placeholder="Enter password"
+                />
+              </div>
+
+              {loginError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-red-500"
+                >
+                  {loginError}
+                </motion.p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full bg-accent text-accent-fg py-2.5 text-sm font-medium rounded-sm hover:bg-accent/90 transition-all"
+              >
+                Sign In
+              </button>
+            </form>
+
+            <p className="text-[10px] text-muted/50 text-center mt-6">
+              Authorized personnel only
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    )
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-bg">
@@ -330,6 +420,12 @@ export default function Admin() {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-medium text-muted border border-border rounded-sm hover:border-red-300 hover:text-red-600 transition-all duration-300"
+            >
+              Logout
+            </button>
             <button
               onClick={fetchAnalytics}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-medium text-muted border border-border rounded-sm hover:border-accent/30 hover:text-fg transition-all duration-300"
