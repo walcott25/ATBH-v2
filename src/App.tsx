@@ -29,6 +29,7 @@ const Admin = lazy(() => import('./pages/Admin'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const TripPlanner = lazy(() => import('./pages/TripPlanner'));
+const Activity = lazy(() => import('./pages/Activity'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -130,6 +131,9 @@ export default function App() {
             } />
             <Route path="/trip-planner" element={
               <Suspense fallback={<PageSkeleton />}><PageTransition><TripPlanner /></PageTransition></Suspense>
+            } />
+            <Route path="/activity" element={
+              <Suspense fallback={<PageSkeleton />}><PageTransition><Activity /></PageTransition></Suspense>
             } />
             <Route path="/:type/:id" element={
               <Suspense fallback={<PageSkeleton />}><ItemPage /></Suspense>

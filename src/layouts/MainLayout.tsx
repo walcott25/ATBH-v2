@@ -25,6 +25,7 @@ const navItems = [
     { label: 'Business', path: '/business' },
     { label: 'Schools', path: '/schools' },
     { label: 'Trip Planner', path: '/trip-planner' },
+    { label: 'Activities', path: '/activity' },
   ]},
 ];
 
