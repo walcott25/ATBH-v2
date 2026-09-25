@@ -957,7 +957,7 @@ export const BUSINESS: Business[] = [
     name: 'Asuogyaman District Assembly',
     description: 'The local government authority for the Asuogyaman District, driving development, public services, and destination promotion across Akosombo, Atimpoku, Senchi, and surrounding communities.',
     longDescription: 'The Asuogyaman District Assembly is the highest political and administrative authority in the district, responsible for the holistic development of communities along the eastern bank of the Volta River. Beyond core governance functions — development planning, revenue mobilisation, sanitation, and social services — the Assembly is a driving force behind the district\'s tourism and investment agenda. As host of the Asuogyaman Tourism and Investment Festival, it works with partners such as AmCham Ghana and the National Development Planning Commission to connect investment-ready opportunities with national and international investors. From the engineering marvel of the Akosombo Dam to the waterside towns of Atimpoku and Senchi, the Assembly coordinates the infrastructure, enterprise, and destination promotion that make the district one of Ghana\'s most promising tourism frontiers.',
-    image: '/Images/smiling-community-1.jpg',
+    image: '/Images/logo.jpg',
     category: 'Services',
     coordinates: [6.2400, 0.0900],
     rating: 4.7,
