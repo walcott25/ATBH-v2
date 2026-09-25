@@ -167,8 +167,9 @@ export default function Activity() {
             <RevealSection>
               <div className="rounded-3xl bg-surface border border-border/70 overflow-hidden relative">
                 <div className="absolute top-0 left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-                <div className="p-6 md:p-10 flex flex-col md:flex-row gap-8 md:gap-12">
-                  <div className="shrink-0">
+                <div className="p-6 md:p-10">
+                  {/* Key Participants */}
+                  <div>
                     <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-accent mb-4">
                       Key Participants
                     </p>
@@ -190,25 +191,31 @@ export default function Activity() {
                       ))}
                     </div>
                   </div>
-                  <div className="flex-1 border-t md:border-t-0 md:border-l border-border/70 pt-8 md:pt-0 md:pl-12">
-                    <Quote className="w-6 h-6 text-accent/30 mb-4" />
-                    <p className="text-[15px] md:text-base text-fg/90 leading-[1.9] font-light italic">
-                      Ms. Afanyedey welcomed the district's proposal and reaffirmed AmCham Ghana's
-                      commitment to connecting member companies with investment-ready opportunities
-                      across Ghana's regions — including support for the district's engagement with
-                      national investment promotion partners ahead of the festival.
-                    </p>
-                    <div className="flex flex-wrap items-center gap-2 mt-6 text-[10px]">
-                      <span className="text-muted">Learn more here:</span>
-                      <a
-                        href={LEARN_MORE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-accent font-medium hover:text-accent/80 transition-colors"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        bit.ly/4xdDVBz
-                      </a>
+                  {/* Quote — full-width landscape band */}
+                  <div className="mt-8 md:mt-12 border-t border-border/70 pt-8 md:pt-10">
+                    <div className="flex flex-col sm:flex-row items-start gap-4 md:gap-6 md:px-6 lg:px-12">
+                      <Quote className="w-7 h-7 text-accent/30 shrink-0 sm:mt-1" />
+                      <div className="flex-1">
+                        <p className="text-[15px] md:text-lg text-fg/90 leading-[1.9] font-light italic">
+                          Ms. Afanyedey welcomed the district's proposal and reaffirmed AmCham
+                          Ghana's commitment to connecting member companies with investment-ready
+                          opportunities across Ghana's regions — including support for the
+                          district's engagement with national investment promotion partners ahead
+                          of the festival.
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2 mt-5 text-[10px]">
+                          <span className="text-muted">Learn more here:</span>
+                          <a
+                            href={LEARN_MORE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-accent font-medium hover:text-accent/80 transition-colors"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            bit.ly/4xdDVBz
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -243,7 +250,7 @@ export default function Activity() {
             </div>
           </RevealSection>
 
-          <div className="grid sm:grid-cols-2 gap-5 md:gap-7">
+          <div className="grid sm:grid-cols-2 gap-5 md:gap-7 auto-rows-fr">
             {partners.map((partner, i) => (
               <motion.div
                 key={partner.image}
@@ -251,9 +258,9 @@ export default function Activity() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.55, delay: (i % 2) * 0.08, ease: easeOut }}
-                className="group"
+                className="group h-full"
               >
-                <div className="relative overflow-hidden rounded-[1.5rem] bg-surface border border-border/70 group-hover:border-accent/25 transition-all duration-500">
+                <div className="relative overflow-hidden rounded-[1.5rem] bg-surface border border-border/70 group-hover:border-accent/25 transition-all duration-500 h-full flex flex-col">
                   <div className="relative overflow-hidden aspect-[4/3]">
                     <img
                       src={partner.image}
@@ -268,7 +275,7 @@ export default function Activity() {
                       <span className="text-[11px] font-semibold text-white/90">{String(i + 1).padStart(2, '0')}</span>
                     </span>
                   </div>
-                  <div className="p-5 md:p-6">
+                  <div className="p-5 md:p-6 flex-1 flex flex-col justify-end">
                     <div className="w-8 h-0.5 bg-accent/50 mb-3 transition-all duration-500 group-hover:w-14" />
                     <p className="text-sm md:text-[15px] font-medium text-fg leading-relaxed group-hover:text-accent transition-colors duration-300">
                       {partner.caption}
