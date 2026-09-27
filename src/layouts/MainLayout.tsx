@@ -6,6 +6,43 @@ import WeatherWidget from '../components/ui/weather-widget';
 import SiteNotificationBanner from '../components/ui/site-notification-banner';
 import MaintenanceMode from '../components/ui/maintenance-mode';
 import { useFeatureFlags } from '../hooks/useFeatureFlags';
+import SEO from '../components/seo/SEO';
+
+const PAGE_TITLES: Record<string, string> = {
+  '/': 'Asuogyaman Tourism Hub',
+  '/attractions': 'Attractions & Landmarks',
+  '/dining': 'Dining & Restaurants',
+  '/stay': 'Stay & Accommodation',
+  '/schools': 'Schools & Education',
+  '/events': 'Events & Festivals',
+  '/map': 'Interactive Map',
+  '/gallery': 'Photo Gallery',
+  '/business': 'Business Directory',
+  '/experience': 'Experiences',
+  '/donate': 'Support Us',
+  '/terms': 'Terms of Use',
+  '/privacy': 'Privacy Policy',
+  '/blog': 'Blog & News',
+  '/trip-planner': 'Trip Planner',
+  '/activity': 'Activities',
+};
+
+const DETAIL_TITLES: Record<string, string> = {
+  attractions: 'Attraction',
+  dining: 'Restaurant',
+  stay: 'Accommodation',
+  events: 'Event',
+  business: 'Business',
+  schools: 'School',
+};
+
+function pageLabel(pathname: string): string {
+  if (PAGE_TITLES[pathname]) return PAGE_TITLES[pathname];
+  if (pathname.startsWith('/blog/')) return 'Blog Post';
+  const segment = pathname.split('/')[1] || '';
+  const base = DETAIL_TITLES[segment];
+  return base ? `${base} in Asuogyaman, Ghana` : 'Asuogyaman Tourism Hub';
+}
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -78,6 +115,14 @@ export default function MainLayout() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
+      <SEO
+        title={pageLabel(location.pathname)}
+        description={
+          location.pathname === '/'
+            ? 'Discover Asuogyaman District tourism — Adomi Bridge, Akosombo Dam, Lake Volta cruises, hotels, restaurants, events and businesses. Plan your visit to the Volta Region, Ghana.'
+            : 'Explore Asuogyaman District, Ghana — attractions, dining, stay, events, businesses and travel planning in the Volta Region.'
+        }
+      />
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
