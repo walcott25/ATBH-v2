@@ -11,7 +11,7 @@
     <strong>Discover the beauty, culture, and adventure of Asuogyaman District — your gateway to Ghana's Volta Region.</strong>
   </p>
   <p>
-    <a href="https://atbh.vercel.app"><img src="https://img.shields.io/badge/Live-Website-0A0A0A?style=flat-square" alt="Website"/></a>
+    <a href="https://atbh-v2.vercel.app"><img src="https://img.shields.io/badge/Live-Website-0A0A0A?style=flat-square" alt="Website"/></a>
     <a href="#tech-stack"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React 19"/></a>
     <a href="#tech-stack"><img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript" alt="TypeScript"/></a>
     <a href="#tech-stack"><img src="https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite" alt="Vite 6"/></a>
@@ -287,7 +287,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <div align="center">
   <p>
-    <a href="https://atbh.vercel.app">🌐 Visit the Live Site</a> ·
+    <a href="https://atbh-v2.vercel.app">🌐 Visit the Live Site</a> ·
     <a href="mailto:asuogyamantourismboard@gmail.com">📧 Contact</a> ·
     <a href="https://github.com/walcott25/ATBH-v2/issues">🐛 Report a Bug</a>
   </p>

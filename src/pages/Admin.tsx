@@ -159,11 +159,15 @@ export default function Admin() {
   const fetchAnalytics = useCallback(async () => {
     try {
       setError(false);
-      const res = await fetch('/api/admin/analytics');
+      const res = await fetch(`/api/admin/analytics?t=${Date.now()}`);
       if (res.ok) {
         const json = await res.json();
-        setData(json);
-        setLastUpdated(new Date());
+        if (json && typeof json === 'object' && 'donations' in json) {
+          setData(json);
+          setLastUpdated(new Date());
+        } else {
+          setError(true);
+        }
       } else {
         setError(true);
       }

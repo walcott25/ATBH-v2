@@ -17,7 +17,7 @@ We will acknowledge receipt within 48 hours and work on a fix before public disc
 ## Scope
 
 This policy covers:
-- The live application at https://atbh.vercel.app
+- The live application at https://atbh-v2.vercel.app
 - All code in this repository
 - API endpoints and serverless functions
 
